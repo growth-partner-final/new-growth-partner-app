@@ -80,6 +80,11 @@ interface PrototypeHubOrchestratorScreenProps {
   onNavigateToOpsMilestoneClaims?: () => void;
   onNavigateToJourneyNavigator?: () => void;
   onNavigateToReferralHistory?: () => void;
+  onNavigateToWithdrawals?: () => void;
+  onNavigateToMobileMarketing?: () => void;
+  onNavigateToMarketingMaterial?: () => void;
+  onNavigateToPartnerLevels?: () => void;
+  onNavigateToNotifications?: () => void;
 }
 
 export const PrototypeHubOrchestratorScreen: React.FC<PrototypeHubOrchestratorScreenProps> = ({
@@ -105,7 +110,12 @@ export const PrototypeHubOrchestratorScreen: React.FC<PrototypeHubOrchestratorSc
   onNavigateToMobileRewards,
   onNavigateToOpsMilestoneClaims,
   onNavigateToJourneyNavigator,
-  onNavigateToReferralHistory
+  onNavigateToReferralHistory,
+  onNavigateToWithdrawals,
+  onNavigateToMobileMarketing,
+  onNavigateToMarketingMaterial,
+  onNavigateToPartnerLevels,
+  onNavigateToNotifications
 }) => {
   // Journey Selector Tab: 'growth-partner' | 'salon-owner' | 'admin-risk'
   const [activeJourney, setActiveJourney] = useState<'growth-partner' | 'salon-owner' | 'admin-risk'>('growth-partner');
@@ -213,6 +223,13 @@ export const PrototypeHubOrchestratorScreen: React.FC<PrototypeHubOrchestratorSc
       action: onNavigateToEarningsLedger
     },
     {
+      uri: '/partner/withdrawals',
+      archetype: 'Secure Settlements',
+      target: 'Desktop / Tablet',
+      hash: '3928acbbf049a218...',
+      action: onNavigateToWithdrawals
+    },
+    {
       uri: '/partner/onboarding-rewards',
       archetype: 'Bounty Rewards',
       target: 'Responsive / Mobile',
@@ -288,6 +305,34 @@ export const PrototypeHubOrchestratorScreen: React.FC<PrototypeHubOrchestratorSc
       target: 'Mobile (390px) / Canary',
       hash: '88c1902a7b38d10f...',
       action: onNavigateToJourneyNavigator
+    },
+    {
+      uri: '/partner/mobile-marketing',
+      archetype: 'Mobile Approved Creative Hub',
+      target: 'Mobile (390px) / Canary',
+      hash: 'da7192a8b38d30fa...',
+      action: onNavigateToMobileMarketing
+    },
+    {
+      uri: '/partner/marketing-materials',
+      archetype: 'Marketing Materials Creative Library',
+      target: 'Desktop / Multi-Device',
+      hash: 'c801bc210f92abef...',
+      action: onNavigateToMarketingMaterial
+    },
+    {
+      uri: '/partner/levels',
+      archetype: 'Partner Levels Progression Roadmap',
+      target: 'Mobile (390px) / Canary',
+      hash: 'fa2093e11cb89da0...',
+      action: onNavigateToPartnerLevels
+    },
+    {
+      uri: '/partner/notifications',
+      archetype: 'Partner Notifications Hub',
+      target: 'Mobile (390px) / Canary',
+      hash: 'be8192a83b109e21...',
+      action: onNavigateToNotifications
     }
   ];
 

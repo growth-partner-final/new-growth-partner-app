@@ -31,7 +31,9 @@ import {
   HelpCircle,
   FileText,
   Touchpad,
-  Globe
+  Globe,
+  Trophy,
+  Bell
 } from 'lucide-react';
 
 interface MobileJourneyNavigatorScreenProps {
@@ -57,6 +59,10 @@ interface MobileJourneyNavigatorScreenProps {
   onNavigateToMobileRewards?: () => void;
   onNavigateToOpsMilestoneClaims?: () => void;
   onNavigateToPrototypeOrchestrator?: () => void;
+  onNavigateToMobileMarketing?: () => void;
+  onNavigateToMarketingMaterial?: () => void;
+  onNavigateToPartnerLevels?: () => void;
+  onNavigateToNotifications?: () => void;
 }
 
 export const MobileJourneyNavigatorScreen: React.FC<MobileJourneyNavigatorScreenProps> = ({
@@ -81,7 +87,11 @@ export const MobileJourneyNavigatorScreen: React.FC<MobileJourneyNavigatorScreen
   onNavigateToMilestoneUnlock,
   onNavigateToMobileRewards,
   onNavigateToOpsMilestoneClaims,
-  onNavigateToPrototypeOrchestrator
+  onNavigateToPrototypeOrchestrator,
+  onNavigateToMobileMarketing,
+  onNavigateToMarketingMaterial,
+  onNavigateToPartnerLevels,
+  onNavigateToNotifications
 }) => {
   // Main Journey Selector Tab: 'journey' (Salon Onboarding) | 'growth' (Partner Growth) | 'matrix' (State Matrix)
   const [mainTab, setMainTab] = useState<'journey' | 'growth' | 'matrix'>('journey');
@@ -621,14 +631,14 @@ export const MobileJourneyNavigatorScreen: React.FC<MobileJourneyNavigatorScreen
             </div>
           </section>
 
-          {/* 3. Mobile Route Index & Clickable Nodes (8 Verified Nodes) */}
+          {/* 3. Mobile Route Index & Clickable Nodes (11 Verified Nodes) */}
           <section className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Compass className="w-5 h-5 text-[#b1005e]" />
                 <span className="text-base font-bold text-[#1c1c19]">Mobile Route Index</span>
               </div>
-              <span className="text-xs text-[#8d6f77] font-semibold">8 Verified Nodes</span>
+              <span className="text-xs text-[#8d6f77] font-semibold">11 Verified Nodes</span>
             </div>
             <p className="text-xs text-[#594047]">
               Direct deeplinks to production mobile screens with clean query signatures.
@@ -846,6 +856,114 @@ export const MobileJourneyNavigatorScreen: React.FC<MobileJourneyNavigatorScreen
                 <div className="flex items-center gap-1 flex-shrink-0">
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#ffd8e5] text-[#3c0223] font-bold">
                     Tiers
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-[#8d6f77]" />
+                </div>
+              </button>
+
+              {/* Node 9 */}
+              <button
+                onClick={() => onNavigateToMobileMarketing && onNavigateToMobileMarketing()}
+                className="flex items-center justify-between p-3 min-h-[56px] rounded-2xl bg-[#ffffff] border border-[#e5e2dd] shadow-xs hover:border-[#b1005e] active:scale-[0.98] transition-all text-left cursor-pointer"
+                type="button"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#ffd9e2] flex items-center justify-center text-[#8e004a] flex-shrink-0">
+                    <Smartphone className="w-5 h-5" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-xs sm:text-sm font-bold text-[#1c1c19] truncate">
+                      Mobile Marketing Hub
+                    </span>
+                    <span className="text-[11px] text-[#b1005e] font-mono truncate">
+                      /partner/mobile-marketing
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 flex-shrink-0">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#ffd8e5] text-[#3c0223] font-bold">
+                    Creatives
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-[#8d6f77]" />
+                </div>
+              </button>
+
+              {/* Node 10 */}
+              <button
+                onClick={() => onNavigateToMarketingMaterial && onNavigateToMarketingMaterial()}
+                className="flex items-center justify-between p-3 min-h-[56px] rounded-2xl bg-[#ffffff] border border-[#e5e2dd] shadow-xs hover:border-[#b1005e] active:scale-[0.98] transition-all text-left cursor-pointer"
+                type="button"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#ebe8e3] flex items-center justify-center text-[#1c1c19] flex-shrink-0">
+                    <Layers className="w-5 h-5" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-xs sm:text-sm font-bold text-[#1c1c19] truncate">
+                      Marketing Materials (Desktop)
+                    </span>
+                    <span className="text-[11px] text-[#b1005e] font-mono truncate">
+                      /partner/marketing-materials
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 flex-shrink-0">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#ebe8e3] text-[#594047] font-bold">
+                    Library
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-[#8d6f77]" />
+                </div>
+              </button>
+
+              {/* Node 11 */}
+              <button
+                onClick={() => onNavigateToPartnerLevels && onNavigateToPartnerLevels()}
+                className="flex items-center justify-between p-3 min-h-[56px] rounded-2xl bg-[#ffffff] border border-[#e5e2dd] shadow-xs hover:border-[#b1005e] active:scale-[0.98] transition-all text-left cursor-pointer"
+                type="button"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#ffd8e5] flex items-center justify-center text-[#b1005e] flex-shrink-0">
+                    <Trophy className="w-5 h-5" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-xs sm:text-sm font-bold text-[#1c1c19] truncate">
+                      Partner Levels Roadmap
+                    </span>
+                    <span className="text-[11px] text-[#b1005e] font-mono truncate">
+                      /partner/levels
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 flex-shrink-0">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#ffd8e5] text-[#3c0223] font-bold">
+                    Roadmap
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-[#8d6f77]" />
+                </div>
+              </button>
+
+              {/* Node 12 */}
+              <button
+                onClick={() => onNavigateToNotifications && onNavigateToNotifications()}
+                className="flex items-center justify-between p-3 min-h-[56px] rounded-2xl bg-[#ffffff] border border-[#e5e2dd] shadow-xs hover:border-[#b1005e] active:scale-[0.98] transition-all text-left cursor-pointer"
+                type="button"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#ffd9e2] flex items-center justify-center text-[#b1005e] flex-shrink-0">
+                    <Bell className="w-5 h-5" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-xs sm:text-sm font-bold text-[#1c1c19] truncate">
+                      Partner Notifications Hub
+                    </span>
+                    <span className="text-[11px] text-[#b1005e] font-mono truncate">
+                      /partner/notifications
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 flex-shrink-0">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#ffd9e2] text-[#8e004a] font-bold">
+                    Realtime
                   </span>
                   <ChevronRight className="w-4 h-4 text-[#8d6f77]" />
                 </div>

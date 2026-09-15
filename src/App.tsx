@@ -38,9 +38,14 @@ import { OpsConsoleMilestoneAssetClaimsScreen } from './components/OpsConsoleMil
 import { MobileJourneyNavigatorScreen } from './components/MobileJourneyNavigatorScreen';
 import { PrototypeHubOrchestratorScreen } from './components/PrototypeHubOrchestratorScreen';
 import { ReferralHistoryScreen } from './components/ReferralHistoryScreen';
+import { PartnerWithdrawalsScreen } from './components/PartnerWithdrawalsScreen';
+import { PartnerMarketingMaterialScreen } from './components/PartnerMarketingMaterialScreen';
+import { PartnerMobileMarketingMaterialScreen } from './components/PartnerMobileMarketingMaterialScreen';
+import { PartnerLevelsScreen } from './components/PartnerLevelsScreen';
+import { PartnerNotificationsScreen } from './components/PartnerNotificationsScreen';
 
 function MainApp() {
-  const [currentScreen, setCurrentScreen] = useState<'leaderboard' | 'referral-timeline' | 'salon-intelligence' | 'dashboard' | 'auth' | 'hub' | 'add-salon' | 'share-earn' | 'merchant-register' | 'locked-onboarding' | 'step-audit-workspace' | 'mobile-fast-track' | 'website-templates' | 'profile-settings' | 'secure-handoff' | 'handoff-hub' | 'earnings-ledger' | 'extra-onboarding-reward' | 'milestone-claims' | 'milestone-unlock' | 'mobile-rewards' | 'ops-milestone-claims' | 'prototype-orchestrator' | 'journey-navigator' | 'referral-history'>('prototype-orchestrator');
+  const [currentScreen, setCurrentScreen] = useState<'leaderboard' | 'referral-timeline' | 'salon-intelligence' | 'dashboard' | 'auth' | 'hub' | 'add-salon' | 'share-earn' | 'merchant-register' | 'locked-onboarding' | 'step-audit-workspace' | 'mobile-fast-track' | 'website-templates' | 'profile-settings' | 'secure-handoff' | 'handoff-hub' | 'earnings-ledger' | 'withdrawals' | 'extra-onboarding-reward' | 'milestone-claims' | 'milestone-unlock' | 'mobile-rewards' | 'ops-milestone-claims' | 'prototype-orchestrator' | 'journey-navigator' | 'referral-history' | 'marketing-material' | 'mobile-marketing' | 'partner-levels' | 'partner-notifications'>('prototype-orchestrator');
   const [isApplyOpen, setIsApplyOpen] = useState<boolean>(false);
   const [isSupportOpen, setIsSupportOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>('home');
@@ -114,6 +119,39 @@ function MainApp() {
           >
             <span>📱</span>
             <span>Mobile Rewards</span>
+          </button>
+          <button
+            onClick={() => setCurrentScreen('partner-levels')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'partner-levels'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>🏆</span>
+            <span>Partner Levels</span>
+          </button>
+          <button
+            onClick={() => setCurrentScreen('mobile-marketing')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'mobile-marketing'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>📢</span>
+            <span>Mobile Marketing</span>
+          </button>
+          <button
+            onClick={() => setCurrentScreen('marketing-material')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'marketing-material'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>🖼️</span>
+            <span>Marketing Materials</span>
           </button>
           <button
             onClick={() => setCurrentScreen('milestone-unlock')}
@@ -368,6 +406,11 @@ function MainApp() {
           onNavigateToOpsMilestoneClaims={() => setCurrentScreen('ops-milestone-claims')}
           onNavigateToJourneyNavigator={() => setCurrentScreen('journey-navigator')}
           onNavigateToReferralHistory={() => setCurrentScreen('referral-history')}
+          onNavigateToWithdrawals={() => setCurrentScreen('withdrawals')}
+          onNavigateToMobileMarketing={() => setCurrentScreen('mobile-marketing')}
+          onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
+          onNavigateToPartnerLevels={() => setCurrentScreen('partner-levels')}
+          onNavigateToNotifications={() => setCurrentScreen('partner-notifications')}
         />
       ) : currentScreen === 'journey-navigator' ? (
         /* SCREEN: Mobile Journey Navigator (Canary Sandbox & Mobile UX Sandbox) */
@@ -394,6 +437,9 @@ function MainApp() {
           onNavigateToMobileRewards={() => setCurrentScreen('mobile-rewards')}
           onNavigateToOpsMilestoneClaims={() => setCurrentScreen('ops-milestone-claims')}
           onNavigateToPrototypeOrchestrator={() => setCurrentScreen('prototype-orchestrator')}
+          onNavigateToMobileMarketing={() => setCurrentScreen('mobile-marketing')}
+          onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
+          onNavigateToPartnerLevels={() => setCurrentScreen('partner-levels')}
         />
       ) : currentScreen === 'ops-milestone-claims' ? (
         /* SCREEN: Ops Console Milestone Asset Claims & Dispatch Protocol (Risk Audit, Telemetry Gate & Adjudication) */
@@ -527,6 +573,102 @@ function MainApp() {
           onNavigateToHandoffHub={() => setCurrentScreen('handoff-hub')}
           onNavigateToExtraOnboardingReward={() => setCurrentScreen('extra-onboarding-reward')}
           onNavigateToRewardsMilestones={() => setCurrentScreen('milestone-claims')}
+          onNavigateToWithdrawals={() => setCurrentScreen('withdrawals')}
+          onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
+        />
+      ) : currentScreen === 'withdrawals' ? (
+        /* SCREEN: Partner Withdrawals & Secure Settlements Portal */
+        <PartnerWithdrawalsScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
+          onNavigateToLockedOnboarding={() => setCurrentScreen('locked-onboarding')}
+          onNavigateToStepAuditWorkspace={() => setCurrentScreen('step-audit-workspace')}
+          onNavigateToMobileFastTrack={() => setCurrentScreen('mobile-fast-track')}
+          onNavigateToWebsiteTemplates={() => setCurrentScreen('website-templates')}
+          onNavigateToProfileSettings={() => setCurrentScreen('profile-settings')}
+          onNavigateToSecureHandoff={() => setCurrentScreen('secure-handoff')}
+          onNavigateToHandoffHub={() => setCurrentScreen('handoff-hub')}
+          onNavigateToExtraOnboardingReward={() => setCurrentScreen('extra-onboarding-reward')}
+          onNavigateToRewardsMilestones={() => setCurrentScreen('milestone-claims')}
+          onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
+          onNavigateToWithdrawals={() => setCurrentScreen('withdrawals')}
+          onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
+        />
+      ) : currentScreen === 'marketing-material' ? (
+        /* SCREEN: Marketing Materials and approved creative templates */
+        <PartnerMarketingMaterialScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
+          onNavigateToLockedOnboarding={() => setCurrentScreen('locked-onboarding')}
+          onNavigateToStepAuditWorkspace={() => setCurrentScreen('step-audit-workspace')}
+          onNavigateToMobileFastTrack={() => setCurrentScreen('mobile-fast-track')}
+          onNavigateToWebsiteTemplates={() => setCurrentScreen('website-templates')}
+          onNavigateToProfileSettings={() => setCurrentScreen('profile-settings')}
+          onNavigateToSecureHandoff={() => setCurrentScreen('secure-handoff')}
+          onNavigateToHandoffHub={() => setCurrentScreen('handoff-hub')}
+          onNavigateToExtraOnboardingReward={() => setCurrentScreen('extra-onboarding-reward')}
+          onNavigateToRewardsMilestones={() => setCurrentScreen('milestone-claims')}
+          onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
+          onNavigateToWithdrawals={() => setCurrentScreen('withdrawals')}
+          onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
+        />
+      ) : currentScreen === 'mobile-marketing' ? (
+        /* SCREEN: Mobile Approved Marketing Materials Creative Hub */
+        <PartnerMobileMarketingMaterialScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
+          onNavigateToLockedOnboarding={() => setCurrentScreen('locked-onboarding')}
+          onNavigateToStepAuditWorkspace={() => setCurrentScreen('step-audit-workspace')}
+          onNavigateToMobileFastTrack={() => setCurrentScreen('mobile-fast-track')}
+          onNavigateToWebsiteTemplates={() => setCurrentScreen('website-templates')}
+          onNavigateToProfileSettings={() => setCurrentScreen('profile-settings')}
+          onNavigateToSecureHandoff={() => setCurrentScreen('secure-handoff')}
+          onNavigateToHandoffHub={() => setCurrentScreen('handoff-hub')}
+          onNavigateToExtraOnboardingReward={() => setCurrentScreen('extra-onboarding-reward')}
+          onNavigateToRewardsMilestones={() => setCurrentScreen('milestone-claims')}
+          onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
+          onNavigateToMobileRewards={() => setCurrentScreen('mobile-rewards')}
+        />
+      ) : currentScreen === 'partner-levels' ? (
+        /* SCREEN: Partner Levels and verified progression tiers status */
+        <PartnerLevelsScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
+          onNavigateToLockedOnboarding={() => setCurrentScreen('locked-onboarding')}
+          onNavigateToStepAuditWorkspace={() => setCurrentScreen('step-audit-workspace')}
+          onNavigateToMobileFastTrack={() => setCurrentScreen('mobile-fast-track')}
+          onNavigateToWebsiteTemplates={() => setCurrentScreen('website-templates')}
+          onNavigateToProfileSettings={() => setCurrentScreen('profile-settings')}
+          onNavigateToSecureHandoff={() => setCurrentScreen('secure-handoff')}
+          onNavigateToHandoffHub={() => setCurrentScreen('handoff-hub')}
+          onNavigateToExtraOnboardingReward={() => setCurrentScreen('extra-onboarding-reward')}
+          onNavigateToRewardsMilestones={() => setCurrentScreen('milestone-claims')}
+          onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
+          onNavigateToMobileRewards={() => setCurrentScreen('mobile-rewards')}
         />
       ) : currentScreen === 'handoff-hub' ? (
         /* SCREEN: Salon Launchpad Cryptographic Handoff Hub & Interactive Lifecycle State Simulator (Full Desktop/Tablet Suite) */
@@ -710,6 +852,9 @@ function MainApp() {
           onNavigateToAuth={() => setCurrentScreen('auth')}
           onNavigateToHub={() => setCurrentScreen('hub')}
           onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
+          onNavigateToWithdrawals={() => setCurrentScreen('withdrawals')}
+          onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
         />
       ) : currentScreen === 'auth' ? (
         /* SCREEN 3: Partner Auth Master Portal */

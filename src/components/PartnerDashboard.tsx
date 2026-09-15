@@ -4,12 +4,18 @@ interface PartnerDashboardProps {
   onNavigateToAuth?: () => void;
   onNavigateToHub?: () => void;
   onNavigateToLeaderboard?: () => void;
+  onNavigateToEarningsLedger?: () => void;
+  onNavigateToWithdrawals?: () => void;
+  onNavigateToMarketingMaterial?: () => void;
 }
 
 export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
   onNavigateToAuth,
   onNavigateToHub,
-  onNavigateToLeaderboard
+  onNavigateToLeaderboard,
+  onNavigateToEarningsLedger,
+  onNavigateToWithdrawals,
+  onNavigateToMarketingMaterial
 }) => {
   const [activeState, setActiveState] = useState<'active' | 'empty' | 'restricted' | 'skeleton' | 'error'>('active');
   const [copied, setCopied] = useState<boolean>(false);
@@ -120,26 +126,46 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
             </button>
 
             {[
-              { label: 'Earnings', icon: 'account_balance_wallet' },
-              { label: 'Withdrawals', icon: 'payments' },
-              { label: 'Marketing Material', icon: 'campaign' },
-              { label: 'Partner Levels', icon: 'stars' },
-              { label: 'Notifications', icon: 'notifications' },
-              { label: 'Support', icon: 'headset_mic' }
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="flex items-center justify-between px-4 py-2 rounded-lg text-[#594047] opacity-75 text-xs font-medium"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
-                  <span>{item.label}</span>
+              { label: 'Earnings', icon: 'account_balance_wallet', action: onNavigateToEarningsLedger },
+              { label: 'Withdrawals', icon: 'payments', action: onNavigateToWithdrawals },
+              { label: 'Marketing Material', icon: 'campaign', action: onNavigateToMarketingMaterial },
+              { label: 'Partner Levels', icon: 'stars', action: undefined },
+              { label: 'Notifications', icon: 'notifications', action: undefined },
+              { label: 'Support', icon: 'headset_mic', action: undefined }
+            ].map((item) => {
+              if (item.action) {
+                return (
+                  <button
+                    key={item.label}
+                    onClick={item.action}
+                    className="flex items-center justify-between px-4 py-2 rounded-lg text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] text-xs font-bold transition-all cursor-pointer text-left w-full"
+                    type="button"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
+                      <span>{item.label}</span>
+                    </div>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">
+                      Active
+                    </span>
+                  </button>
+                );
+              }
+              return (
+                <div
+                  key={item.label}
+                  className="flex items-center justify-between px-4 py-2 rounded-lg text-[#594047] opacity-75 text-xs font-medium"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
+                    <span>{item.label}</span>
+                  </div>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#e5e2dd] text-[#594047]">
+                    Soon
+                  </span>
                 </div>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#e5e2dd] text-[#594047]">
-                  Soon
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

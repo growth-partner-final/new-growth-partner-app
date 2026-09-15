@@ -20,6 +20,8 @@ interface PartnerEarningsLedgerScreenProps {
   onNavigateToHandoffHub?: () => void;
   onNavigateToExtraOnboardingReward?: () => void;
   onNavigateToRewardsMilestones?: () => void;
+  onNavigateToWithdrawals?: () => void;
+  onNavigateToMarketingMaterial?: () => void;
 }
 
 interface LedgerTransaction {
@@ -164,7 +166,9 @@ export const PartnerEarningsLedgerScreen: React.FC<PartnerEarningsLedgerScreenPr
   onNavigateToSecureHandoff,
   onNavigateToHandoffHub,
   onNavigateToExtraOnboardingReward,
-  onNavigateToRewardsMilestones
+  onNavigateToRewardsMilestones,
+  onNavigateToWithdrawals,
+  onNavigateToMarketingMaterial
 }) => {
   const [activeLedgerTab, setActiveLedgerTab] = useState<'all' | 'paid' | 'pending' | 'disputed'>('all');
   const [cycleFilter, setCycleFilter] = useState<string>('current');
@@ -277,6 +281,14 @@ export const PartnerEarningsLedgerScreen: React.FC<PartnerEarningsLedgerScreenPr
               <span>Earnings &amp; Ledger</span>
             </button>
             <button
+              onClick={() => onNavigateToWithdrawals && onNavigateToWithdrawals()}
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[20px]">payments</span>
+              <span>Withdrawals</span>
+            </button>
+            <button
               onClick={() => {
                 if (onNavigateToExtraOnboardingReward) {
                   onNavigateToExtraOnboardingReward();
@@ -303,6 +315,14 @@ export const PartnerEarningsLedgerScreen: React.FC<PartnerEarningsLedgerScreenPr
             >
               <span className="material-symbols-outlined text-[20px]">military_tech</span>
               <span>Rewards &amp; Milestones</span>
+            </button>
+            <button
+              onClick={() => onNavigateToMarketingMaterial && onNavigateToMarketingMaterial()}
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[20px]">campaign</span>
+              <span>Marketing Material</span>
             </button>
 
             <span className="px-3 text-[10px] font-black text-[#8d6f77] uppercase tracking-wider mt-4 mb-1">
