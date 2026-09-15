@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { HowItWorks } from './components/HowItWorks';
@@ -37,20 +38,12 @@ import { OpsConsoleMilestoneAssetClaimsScreen } from './components/OpsConsoleMil
 import { MobileJourneyNavigatorScreen } from './components/MobileJourneyNavigatorScreen';
 import { PrototypeHubOrchestratorScreen } from './components/PrototypeHubOrchestratorScreen';
 
-export default function App() {
+function MainApp() {
   const [currentScreen, setCurrentScreen] = useState<'leaderboard' | 'referral-timeline' | 'salon-intelligence' | 'dashboard' | 'auth' | 'hub' | 'add-salon' | 'share-earn' | 'merchant-register' | 'locked-onboarding' | 'step-audit-workspace' | 'mobile-fast-track' | 'website-templates' | 'profile-settings' | 'secure-handoff' | 'handoff-hub' | 'earnings-ledger' | 'extra-onboarding-reward' | 'milestone-claims' | 'milestone-unlock' | 'mobile-rewards' | 'ops-milestone-claims' | 'prototype-orchestrator' | 'journey-navigator'>('prototype-orchestrator');
   const [isApplyOpen, setIsApplyOpen] = useState<boolean>(false);
   const [isSupportOpen, setIsSupportOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>('home');
-  const [registeredPartner, setRegisteredPartner] = useState<{
-    name: string;
-    partnerId: string;
-    referralLink: string;
-  } | null>({
-    name: 'Growth Partner [DEV SAMPLE]',
-    partnerId: 'REF-5A45019655',
-    referralLink: 'https://nexora.network/join?ref=REF-5A45019655'
-  });
+  const { registeredPartner, setRegisteredPartner } = useAuth();
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -786,5 +779,13 @@ export default function App() {
         onScrollToFAQ={() => scrollToSection('faq')}
       />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <MainApp />
+    </AuthProvider>
   );
 }
