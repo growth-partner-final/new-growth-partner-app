@@ -18,9 +18,17 @@ import { PartnerDashboard } from './components/PartnerDashboard';
 import { SalonIntelligenceDashboard } from './components/SalonIntelligenceDashboard';
 import { ReferralStatusTimeline } from './components/ReferralStatusTimeline';
 import { TopPerformersLeaderboard } from './components/TopPerformersLeaderboard';
+import { AddSalonScreen } from './components/AddSalonScreen';
+import { ShareAndEarnScreen } from './components/ShareAndEarnScreen';
+import { SalonMerchantRegistrationScreen } from './components/SalonMerchantRegistrationScreen';
+import { SalonLockedOnboardingScreen } from './components/SalonLockedOnboardingScreen';
+import { SalonStepAuditWorkspaceScreen } from './components/SalonStepAuditWorkspaceScreen';
+import { SalonMobileFastTrackScreen } from './components/SalonMobileFastTrackScreen';
+import { SalonWebsiteTemplatesScreen } from './components/SalonWebsiteTemplatesScreen';
+import { PartnerProfileSettingsScreen } from './components/PartnerProfileSettingsScreen';
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState<'leaderboard' | 'referral-timeline' | 'salon-intelligence' | 'dashboard' | 'auth' | 'hub'>('leaderboard');
+  const [currentScreen, setCurrentScreen] = useState<'leaderboard' | 'referral-timeline' | 'salon-intelligence' | 'dashboard' | 'auth' | 'hub' | 'add-salon' | 'share-earn' | 'merchant-register' | 'locked-onboarding' | 'step-audit-workspace' | 'mobile-fast-track' | 'website-templates' | 'profile-settings'>('profile-settings');
   const [isApplyOpen, setIsApplyOpen] = useState<boolean>(false);
   const [isSupportOpen, setIsSupportOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>('home');
@@ -60,6 +68,104 @@ export default function App() {
         </div>
         <div className="flex items-center gap-1.5 flex-wrap">
           <button
+            onClick={() => setCurrentScreen('profile-settings')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'profile-settings'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>👤</span>
+            <span>Partner Settings</span>
+          </button>
+          <button
+            onClick={() => setCurrentScreen('website-templates')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'website-templates'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>🎨</span>
+            <span>Website Templates</span>
+          </button>
+          <button
+            onClick={() => setCurrentScreen('mobile-fast-track')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'mobile-fast-track'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>📍</span>
+            <span>Mobile Step 3 (Fast-Track)</span>
+          </button>
+          <button
+            onClick={() => setCurrentScreen('step-audit-workspace')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'step-audit-workspace'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>📋</span>
+            <span>5-Step Audit Workspace</span>
+          </button>
+          <button
+            onClick={() => setCurrentScreen('locked-onboarding')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'locked-onboarding'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>🔒</span>
+            <span>Locked Referral Onboarding</span>
+          </button>
+          <button
+            onClick={() => setCurrentScreen('merchant-register')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'merchant-register'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>📝</span>
+            <span>Merchant Register Portal</span>
+          </button>
+          <button
+            onClick={() => setCurrentScreen('share-earn')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'share-earn'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>📲</span>
+            <span>Share &amp; Earn (QR)</span>
+          </button>
+          <button
+            onClick={() => setCurrentScreen('add-salon')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'add-salon'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#fda4c9] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>➕</span>
+            <span>Refer New Salon</span>
+          </button>
+          <button
+            onClick={() => setCurrentScreen('salon-intelligence')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+              currentScreen === 'salon-intelligence'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-zinc-300 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            💈 Salon Intelligence
+          </button>
+          <button
             onClick={() => setCurrentScreen('leaderboard')}
             className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
               currentScreen === 'leaderboard'
@@ -78,16 +184,6 @@ export default function App() {
             }`}
           >
             ⏱️ Referral Timeline
-          </button>
-          <button
-            onClick={() => setCurrentScreen('salon-intelligence')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-              currentScreen === 'salon-intelligence'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-zinc-300 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            💈 Salon Intelligence
           </button>
           <button
             onClick={() => setCurrentScreen('dashboard')}
@@ -122,7 +218,108 @@ export default function App() {
         </div>
       </div>
 
-      {currentScreen === 'leaderboard' ? (
+      {currentScreen === 'profile-settings' ? (
+        /* SCREEN: Partner Profile Settings & Bank Payout Management */
+        <PartnerProfileSettingsScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
+          onNavigateToLockedOnboarding={() => setCurrentScreen('locked-onboarding')}
+          onNavigateToStepAuditWorkspace={() => setCurrentScreen('step-audit-workspace')}
+          onNavigateToMobileFastTrack={() => setCurrentScreen('mobile-fast-track')}
+          onNavigateToWebsiteTemplates={() => setCurrentScreen('website-templates')}
+        />
+      ) : currentScreen === 'website-templates' ? (
+        /* SCREEN: Salon Website & Booking Templates Explorer (Live Simulator) */
+        <SalonWebsiteTemplatesScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
+          onNavigateToLockedOnboarding={() => setCurrentScreen('locked-onboarding')}
+          onNavigateToStepAuditWorkspace={() => setCurrentScreen('step-audit-workspace')}
+          onNavigateToMobileFastTrack={() => setCurrentScreen('mobile-fast-track')}
+        />
+      ) : currentScreen === 'mobile-fast-track' ? (
+        /* SCREEN: Mobile-Optimized Salon Location Fast-Track (Step 3 of 5) */
+        <SalonMobileFastTrackScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
+          onNavigateToLockedOnboarding={() => setCurrentScreen('locked-onboarding')}
+          onNavigateToStepAuditWorkspace={() => setCurrentScreen('step-audit-workspace')}
+        />
+      ) : currentScreen === 'step-audit-workspace' ? (
+        /* SCREEN: 5-Step Locked Salon Onboarding & Compliance Audit Workspace */
+        <SalonStepAuditWorkspaceScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
+          onNavigateToLockedOnboarding={() => setCurrentScreen('locked-onboarding')}
+        />
+      ) : currentScreen === 'locked-onboarding' ? (
+        /* SCREEN: Mobile-First Salon Locked Referral Registration & Audit State Simulator */
+        <SalonLockedOnboardingScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
+        />
+      ) : currentScreen === 'merchant-register' ? (
+        /* SCREEN: Salon Merchant Direct Registration & Attribution */
+        <SalonMerchantRegistrationScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+        />
+      ) : currentScreen === 'share-earn' ? (
+        /* SCREEN: Share & Earn / Exclusive Code & In-Store QR Scanner */
+        <ShareAndEarnScreen
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToAuth={() => setCurrentScreen('auth')}
+        />
+      ) : currentScreen === 'add-salon' ? (
+        /* SCREEN: Refer / Add New Salon */
+        <AddSalonScreen
+          onNavigateBack={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToHub={() => setCurrentScreen('hub')}
+        />
+      ) : currentScreen === 'leaderboard' ? (
         /* SCREEN 1: Top Performers Leaderboard */
         <TopPerformersLeaderboard
           onNavigateToAuth={() => setCurrentScreen('auth')}
@@ -139,6 +336,8 @@ export default function App() {
           onNavigateToWorkspace={() => setCurrentScreen('dashboard')}
           onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
           onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
         />
       ) : currentScreen === 'salon-intelligence' ? (
         /* SCREEN 3: Growth Partner Intelligence (Salon Distribution Network) */
@@ -148,6 +347,8 @@ export default function App() {
           onNavigateToWorkspace={() => setCurrentScreen('dashboard')}
           onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
           onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
         />
       ) : currentScreen === 'dashboard' ? (
         /* SCREEN 4: Partner Workspace Telemetry Dashboard */

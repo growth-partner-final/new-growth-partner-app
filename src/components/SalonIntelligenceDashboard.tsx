@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NotificationBell } from './NotificationBell';
 
 interface SalonIntelligenceDashboardProps {
   onNavigateToAuth?: () => void;
@@ -6,6 +7,8 @@ interface SalonIntelligenceDashboardProps {
   onNavigateToWorkspace?: () => void;
   onNavigateToReferralTimeline?: () => void;
   onNavigateToLeaderboard?: () => void;
+  onNavigateToAddSalon?: () => void;
+  onNavigateToShareEarn?: () => void;
 }
 
 export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProps> = ({
@@ -13,7 +16,9 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
   onNavigateToHub,
   onNavigateToWorkspace,
   onNavigateToReferralTimeline,
-  onNavigateToLeaderboard
+  onNavigateToLeaderboard,
+  onNavigateToAddSalon,
+  onNavigateToShareEarn
 }) => {
   const [activeNav, setActiveNav] = useState<string>('overview');
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
@@ -67,6 +72,7 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
               { id: 'overview', label: 'Overview', icon: 'space_dashboard' },
               { id: 'my-referral-code', label: 'My Referral Code', icon: 'qr_code_2' },
               { id: 'referred-salons', label: 'Referred Salons', icon: 'storefront' },
+              { id: 'refer-new-salon', label: '+ Refer New Salon', icon: 'add_business', isAction: true },
               { id: 'referral-status-timeline', label: 'Referral Status Timeline', icon: 'timeline' },
               { id: 'rewards-and-milestones', label: 'Rewards & Milestones', icon: 'military_tech' },
               { id: 'extra-onboarding-reward', label: 'Extra Onboarding Reward', icon: 'featured_seasonal_and_gifts' },
@@ -77,13 +83,23 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
                 <button
                   key={item.id}
                   onClick={() => {
+                    if (item.id === 'refer-new-salon' && onNavigateToAddSalon) {
+                      onNavigateToAddSalon();
+                      return;
+                    }
+                    if (item.id === 'my-referral-code' && onNavigateToShareEarn) {
+                      onNavigateToShareEarn();
+                      return;
+                    }
                     setActiveNav(item.id);
                     if (item.id === 'referral-status-timeline' && onNavigateToReferralTimeline) {
                       onNavigateToReferralTimeline();
                     }
                   }}
                   className={`flex items-center gap-3 px-4 py-2.5 transition-all text-xs font-semibold cursor-pointer rounded-xl text-left ${
-                    isActive
+                    item.isAction
+                      ? 'bg-[#ffd9e2] text-[#b1005e] font-bold hover:bg-[#ffd0dd]'
+                      : isActive
                       ? 'bg-[#d91b77] text-white shadow-[0_4px_16px_rgba(217,27,119,0.28)]'
                       : 'text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19]'
                   }`}
@@ -185,15 +201,7 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
               <span>{quickInviteCopied ? 'Link Copied!' : 'Quick Invite'}</span>
             </button>
 
-            <button
-              aria-label="Notifications"
-              className="w-10 h-10 rounded-full flex items-center justify-center text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors relative cursor-pointer"
-              type="button"
-              onClick={() => alert('3 updates: Glow & Grace qualified for milestone bonus!')}
-            >
-              <span className="material-symbols-outlined text-[20px]">notifications</span>
-              <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-[#d91b77]"></span>
-            </button>
+            <NotificationBell onNavigateToReferrals={onNavigateToReferralTimeline} />
 
             <div className="h-6 w-px bg-[#e5e2dd]"></div>
 
@@ -243,6 +251,11 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
                     <button
                       key={item.id}
                       onClick={() => {
+                        if (item.id === 'my-referral-code' && onNavigateToShareEarn) {
+                          setMobileMenuOpen(false);
+                          onNavigateToShareEarn();
+                          return;
+                        }
                         setActiveNav(item.id);
                         setMobileMenuOpen(false);
                       }}
@@ -649,25 +662,37 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
                     </h2>
                   </div>
 
-                  {/* Filter Pills */}
-                  <div className="flex items-center gap-1.5 bg-[#f6f3ee] p-1 rounded-full border border-[#e5e2dd]">
-                    {[
-                      { key: 'all', label: 'All 18' },
-                      { key: 'qualified', label: 'Qualified' },
-                      { key: 'in-progress', label: 'In Progress' }
-                    ].map((f) => (
+                  {/* Filter Pills & Refer New Button */}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center gap-1.5 bg-[#f6f3ee] p-1 rounded-full border border-[#e5e2dd]">
+                      {[
+                        { key: 'all', label: 'All 18' },
+                        { key: 'qualified', label: 'Qualified' },
+                        { key: 'in-progress', label: 'In Progress' }
+                      ].map((f) => (
+                        <button
+                          key={f.key}
+                          onClick={() => setSelectedSalonFilter(f.key as any)}
+                          className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                            selectedSalonFilter === f.key
+                              ? 'bg-[#d91b77] text-white shadow-xs'
+                              : 'text-[#594047] hover:text-[#1c1c19]'
+                          }`}
+                        >
+                          {f.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    {onNavigateToAddSalon && (
                       <button
-                        key={f.key}
-                        onClick={() => setSelectedSalonFilter(f.key as any)}
-                        className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                          selectedSalonFilter === f.key
-                            ? 'bg-[#d91b77] text-white shadow-xs'
-                            : 'text-[#594047] hover:text-[#1c1c19]'
-                        }`}
+                        onClick={onNavigateToAddSalon}
+                        className="px-3.5 py-1.5 rounded-full bg-[#d91b77] hover:bg-[#b1005e] text-white text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
                       >
-                        {f.label}
+                        <span className="material-symbols-outlined text-[16px]">add</span>
+                        <span>Refer New Salon</span>
                       </button>
-                    ))}
+                    )}
                   </div>
                 </div>
 
@@ -954,6 +979,23 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
             </div>
           </div>
         </main>
+      </div>
+
+      {/* Sticky Floating Action Button (Quick Add / Refer New Salon) */}
+      <div className="fixed bottom-6 right-6 z-40">
+        <button
+          onClick={() => {
+            if (onNavigateToAddSalon) onNavigateToAddSalon();
+          }}
+          className="group flex items-center gap-2 px-4 py-3.5 rounded-full bg-[#d91b77] text-white font-bold text-xs sm:text-sm shadow-[0_6px_20px_rgba(217,27,119,0.36)] hover:bg-[#b1005e] active:scale-95 transition-all cursor-pointer"
+          type="button"
+          aria-label="Refer New Salon"
+        >
+          <span className="material-symbols-outlined text-[20px] sm:text-[22px] group-hover:rotate-90 transition-transform">
+            add
+          </span>
+          <span className="tracking-tight">Refer New Salon</span>
+        </button>
       </div>
     </div>
   );

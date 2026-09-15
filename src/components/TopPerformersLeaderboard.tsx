@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { NotificationBell } from './NotificationBell';
 
 export type LeaderboardPeriod = 'current-month' | 'previous-month' | 'ytd';
 
@@ -1228,14 +1229,7 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
               <span>{quickInviteCopied ? 'Link Copied!' : 'Quick Invite'}</span>
             </button>
 
-            <button
-              aria-label="Notifications"
-              className="w-10 h-10 rounded-full flex items-center justify-center text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors relative cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">notifications</span>
-              <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-[#d91b77]"></span>
-            </button>
+            <NotificationBell onNavigateToReferrals={onNavigateToReferralTimeline} />
 
             <div className="h-6 w-px bg-[#e5e2dd]"></div>
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { NotificationBell } from './NotificationBell';
 
 interface ReferralStatusTimelineProps {
   onNavigateToAuth?: () => void;
@@ -6,6 +7,8 @@ interface ReferralStatusTimelineProps {
   onNavigateToWorkspace?: () => void;
   onNavigateToSalonIntelligence?: () => void;
   onNavigateToLeaderboard?: () => void;
+  onNavigateToShareEarn?: () => void;
+  onNavigateToAddSalon?: () => void;
 }
 
 export const ReferralStatusTimeline: React.FC<ReferralStatusTimelineProps> = ({
@@ -13,7 +16,9 @@ export const ReferralStatusTimeline: React.FC<ReferralStatusTimelineProps> = ({
   onNavigateToHub,
   onNavigateToWorkspace,
   onNavigateToSalonIntelligence,
-  onNavigateToLeaderboard
+  onNavigateToLeaderboard,
+  onNavigateToShareEarn,
+  onNavigateToAddSalon
 }) => {
   const [activeNav, setActiveNav] = useState<string>('referral-status-timeline');
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
@@ -254,14 +259,7 @@ export const ReferralStatusTimeline: React.FC<ReferralStatusTimelineProps> = ({
               <span>{quickInviteCopied ? 'Link Copied!' : 'Quick Invite'}</span>
             </button>
 
-            <button
-              aria-label="Notifications"
-              className="w-10 h-10 rounded-full flex items-center justify-center text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors relative cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">notifications</span>
-              <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-[#d91b77]"></span>
-            </button>
+            <NotificationBell />
 
             <div className="h-6 w-px bg-[#e5e2dd]"></div>
 
@@ -1089,6 +1087,83 @@ export const ReferralStatusTimeline: React.FC<ReferralStatusTimelineProps> = ({
             </div>
           </div>
         </main>
+
+        {/* Persistent Bottom Navigation Bar for Mobile */}
+        <nav className="fixed bottom-0 inset-x-0 z-40 pb-safe bg-white/95 backdrop-blur-xl border-t border-[#e5e2dd] shadow-[0_-2px_16px_rgba(74,14,46,0.05)] lg:hidden">
+          <div className="flex justify-around items-center h-16 px-2 max-w-lg mx-auto">
+            <button
+              onClick={() => {
+                if (onNavigateToSalonIntelligence) onNavigateToSalonIntelligence();
+              }}
+              className="flex flex-col items-center justify-center min-w-[56px] h-12 text-[#594047] hover:text-[#b1005e] transition-colors group cursor-pointer"
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[22px] mb-0.5 group-hover:scale-105 transition-transform">
+                dashboard
+              </span>
+              <span className="text-[10px] font-semibold leading-tight text-center tracking-tight">
+                Overview
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                if (onNavigateToShareEarn) onNavigateToShareEarn();
+              }}
+              className="flex flex-col items-center justify-center min-w-[56px] h-12 text-[#594047] hover:text-[#b1005e] transition-colors group cursor-pointer"
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[22px] mb-0.5 group-hover:scale-105 transition-transform">
+                qr_code_2
+              </span>
+              <span className="text-[10px] font-semibold leading-tight text-center tracking-tight">
+                Referral
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                if (onNavigateToAddSalon) onNavigateToAddSalon();
+              }}
+              className="flex flex-col items-center justify-center min-w-[56px] h-12 text-[#594047] hover:text-[#b1005e] transition-colors group cursor-pointer"
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[22px] mb-0.5 group-hover:scale-105 transition-transform">
+                add_circle
+              </span>
+              <span className="text-[10px] font-semibold leading-tight text-center tracking-tight">
+                Add Salon
+              </span>
+            </button>
+
+            <button
+              className="flex flex-col items-center justify-center min-w-[56px] h-12 text-[#b1005e] font-bold transition-colors group cursor-pointer"
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[22px] mb-0.5 group-hover:scale-105 transition-transform">
+                timeline
+              </span>
+              <span className="text-[10px] leading-tight text-center tracking-tight">
+                Status
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                if (onNavigateToLeaderboard) onNavigateToLeaderboard();
+              }}
+              className="flex flex-col items-center justify-center min-w-[56px] h-12 text-[#594047] hover:text-[#b1005e] transition-colors group cursor-pointer"
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[22px] mb-0.5 group-hover:scale-105 transition-transform">
+                military_tech
+              </span>
+              <span className="text-[10px] font-semibold leading-tight text-center tracking-tight">
+                Rewards
+              </span>
+            </button>
+          </div>
+        </nav>
       </div>
     </div>
   );
