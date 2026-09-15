@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { NotificationBell } from './NotificationBell';
+import { InteractiveCommissionSplitSimulator } from './InteractiveCommissionSplitSimulator';
 
 interface PartnerExtraRewardStructureScreenProps {
   onNavigateToHub?: () => void;
@@ -691,6 +692,16 @@ export const PartnerExtraRewardStructureScreen: React.FC<PartnerExtraRewardStruc
                   </table>
                 </div>
               </div>
+            </section>
+
+            {/* INTERACTIVE COMMISSION SPLIT SIMULATOR (SLIDER & MULTI-TIER REVENUE IMPACT) */}
+            <section className="flex flex-col gap-4">
+              <InteractiveCommissionSplitSimulator
+                initialSalons={salonsCount}
+                initialAvgRevenue={monthlyGmv}
+                onNavigateToLedger={onNavigateToEarningsLedger}
+                onNavigateToRewards={onNavigateToRewardsMilestones || onNavigateToLeaderboard}
+              />
             </section>
 
             {/* MODULE 3: Interactive Yield Calculator Widget */}

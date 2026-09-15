@@ -33,9 +33,12 @@ import { PartnerExtraRewardStructureScreen } from './components/PartnerExtraRewa
 import { PartnerMilestoneClaimsScreen } from './components/PartnerMilestoneClaimsScreen';
 import { PartnerMilestoneUnlockCelebrationScreen } from './components/PartnerMilestoneUnlockCelebrationScreen';
 import { PartnerMobileRewardsMilestonesScreen } from './components/PartnerMobileRewardsMilestonesScreen';
+import { OpsConsoleMilestoneAssetClaimsScreen } from './components/OpsConsoleMilestoneAssetClaimsScreen';
+import { MobileJourneyNavigatorScreen } from './components/MobileJourneyNavigatorScreen';
+import { PrototypeHubOrchestratorScreen } from './components/PrototypeHubOrchestratorScreen';
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState<'leaderboard' | 'referral-timeline' | 'salon-intelligence' | 'dashboard' | 'auth' | 'hub' | 'add-salon' | 'share-earn' | 'merchant-register' | 'locked-onboarding' | 'step-audit-workspace' | 'mobile-fast-track' | 'website-templates' | 'profile-settings' | 'secure-handoff' | 'handoff-hub' | 'earnings-ledger' | 'extra-onboarding-reward' | 'milestone-claims' | 'milestone-unlock' | 'mobile-rewards'>('mobile-rewards');
+  const [currentScreen, setCurrentScreen] = useState<'leaderboard' | 'referral-timeline' | 'salon-intelligence' | 'dashboard' | 'auth' | 'hub' | 'add-salon' | 'share-earn' | 'merchant-register' | 'locked-onboarding' | 'step-audit-workspace' | 'mobile-fast-track' | 'website-templates' | 'profile-settings' | 'secure-handoff' | 'handoff-hub' | 'earnings-ledger' | 'extra-onboarding-reward' | 'milestone-claims' | 'milestone-unlock' | 'mobile-rewards' | 'ops-milestone-claims' | 'prototype-orchestrator' | 'journey-navigator'>('prototype-orchestrator');
   const [isApplyOpen, setIsApplyOpen] = useState<boolean>(false);
   const [isSupportOpen, setIsSupportOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>('home');
@@ -74,6 +77,39 @@ export default function App() {
           <span className="font-bold tracking-tight">Nexora Growth Ecosystem</span>
         </div>
         <div className="flex items-center gap-1.5 flex-wrap">
+          <button
+            onClick={() => setCurrentScreen('prototype-orchestrator')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'prototype-orchestrator'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>🧭</span>
+            <span>Prototype Hub &amp; Orchestrator</span>
+          </button>
+          <button
+            onClick={() => setCurrentScreen('journey-navigator')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'journey-navigator'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>📲</span>
+            <span>Mobile Journey Navigator</span>
+          </button>
+          <button
+            onClick={() => setCurrentScreen('ops-milestone-claims')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+              currentScreen === 'ops-milestone-claims'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>🛡️</span>
+            <span>Ops Console Claims</span>
+          </button>
           <button
             onClick={() => setCurrentScreen('mobile-rewards')}
             className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
@@ -302,7 +338,83 @@ export default function App() {
         </div>
       </div>
 
-      {currentScreen === 'mobile-rewards' ? (
+      {currentScreen === 'prototype-orchestrator' ? (
+        /* SCREEN: Prototype Hub & Journey Orchestrator (Live Diagnostic Sandbox & 18-Route Register) */
+        <PrototypeHubOrchestratorScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
+          onNavigateToLockedOnboarding={() => setCurrentScreen('locked-onboarding')}
+          onNavigateToStepAuditWorkspace={() => setCurrentScreen('step-audit-workspace')}
+          onNavigateToMobileFastTrack={() => setCurrentScreen('mobile-fast-track')}
+          onNavigateToWebsiteTemplates={() => setCurrentScreen('website-templates')}
+          onNavigateToProfileSettings={() => setCurrentScreen('profile-settings')}
+          onNavigateToSecureHandoff={() => setCurrentScreen('secure-handoff')}
+          onNavigateToHandoffHub={() => setCurrentScreen('handoff-hub')}
+          onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
+          onNavigateToExtraOnboardingReward={() => setCurrentScreen('extra-onboarding-reward')}
+          onNavigateToRewardsMilestones={() => setCurrentScreen('milestone-claims')}
+          onNavigateToMilestoneUnlock={() => setCurrentScreen('milestone-unlock')}
+          onNavigateToMobileRewards={() => setCurrentScreen('mobile-rewards')}
+          onNavigateToOpsMilestoneClaims={() => setCurrentScreen('ops-milestone-claims')}
+          onNavigateToJourneyNavigator={() => setCurrentScreen('journey-navigator')}
+        />
+      ) : currentScreen === 'journey-navigator' ? (
+        /* SCREEN: Mobile Journey Navigator (Canary Sandbox & Mobile UX Sandbox) */
+        <MobileJourneyNavigatorScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
+          onNavigateToLockedOnboarding={() => setCurrentScreen('locked-onboarding')}
+          onNavigateToStepAuditWorkspace={() => setCurrentScreen('step-audit-workspace')}
+          onNavigateToMobileFastTrack={() => setCurrentScreen('mobile-fast-track')}
+          onNavigateToWebsiteTemplates={() => setCurrentScreen('website-templates')}
+          onNavigateToProfileSettings={() => setCurrentScreen('profile-settings')}
+          onNavigateToSecureHandoff={() => setCurrentScreen('secure-handoff')}
+          onNavigateToHandoffHub={() => setCurrentScreen('handoff-hub')}
+          onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
+          onNavigateToExtraOnboardingReward={() => setCurrentScreen('extra-onboarding-reward')}
+          onNavigateToRewardsMilestones={() => setCurrentScreen('milestone-claims')}
+          onNavigateToMilestoneUnlock={() => setCurrentScreen('milestone-unlock')}
+          onNavigateToMobileRewards={() => setCurrentScreen('mobile-rewards')}
+          onNavigateToOpsMilestoneClaims={() => setCurrentScreen('ops-milestone-claims')}
+          onNavigateToPrototypeOrchestrator={() => setCurrentScreen('prototype-orchestrator')}
+        />
+      ) : currentScreen === 'ops-milestone-claims' ? (
+        /* SCREEN: Ops Console Milestone Asset Claims & Dispatch Protocol (Risk Audit, Telemetry Gate & Adjudication) */
+        <OpsConsoleMilestoneAssetClaimsScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
+          onNavigateToLockedOnboarding={() => setCurrentScreen('locked-onboarding')}
+          onNavigateToStepAuditWorkspace={() => setCurrentScreen('step-audit-workspace')}
+          onNavigateToMobileFastTrack={() => setCurrentScreen('mobile-fast-track')}
+          onNavigateToWebsiteTemplates={() => setCurrentScreen('website-templates')}
+          onNavigateToProfileSettings={() => setCurrentScreen('profile-settings')}
+          onNavigateToSecureHandoff={() => setCurrentScreen('secure-handoff')}
+          onNavigateToHandoffHub={() => setCurrentScreen('handoff-hub')}
+          onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
+          onNavigateToExtraOnboardingReward={() => setCurrentScreen('extra-onboarding-reward')}
+          onNavigateToRewardsMilestones={() => setCurrentScreen('milestone-claims')}
+          onNavigateToMilestoneUnlock={() => setCurrentScreen('milestone-unlock')}
+          onNavigateToMobileRewards={() => setCurrentScreen('mobile-rewards')}
+        />
+      ) : currentScreen === 'mobile-rewards' ? (
         /* SCREEN: Mobile Responsive Rewards & Milestones Hub (7 Incentive Tiers, Dynamic Fill, In-Transit Trackers, POD & Bottom Bar) */
         <PartnerMobileRewardsMilestonesScreen
           onNavigateToHub={() => setCurrentScreen('hub')}

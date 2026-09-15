@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { NotificationBell } from './NotificationBell';
+import { InteractiveCommissionSplitSimulator } from './InteractiveCommissionSplitSimulator';
 
 interface PartnerEarningsLedgerScreenProps {
   onNavigateToHub?: () => void;
@@ -744,6 +745,13 @@ export const PartnerEarningsLedgerScreen: React.FC<PartnerEarningsLedgerScreenPr
                 </div>
               </div>
             </div>
+
+            {/* INTERACTIVE COMMISSION SPLIT SIMULATOR */}
+            <InteractiveCommissionSplitSimulator
+              initialSalons={12}
+              initialAvgRevenue={350000}
+              onNavigateToRewards={onNavigateToRewardsMilestones || onNavigateToLeaderboard}
+            />
 
             {/* Financial Ledger Table Section */}
             <div className="rounded-3xl bg-white/90 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(74,14,46,0.04)] border border-[#e5e2dd] overflow-hidden">
