@@ -1,0 +1,6 @@
+{
+  "name": "Nexora Growth Partner",
+  "description": "Nexora Growth Partner Portal — Zero investment partner program with instant activation rewards, recurring brokerage share, and milestone bonuses.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
