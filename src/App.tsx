@@ -37,9 +37,10 @@ import { PartnerMobileRewardsMilestonesScreen } from './components/PartnerMobile
 import { OpsConsoleMilestoneAssetClaimsScreen } from './components/OpsConsoleMilestoneAssetClaimsScreen';
 import { MobileJourneyNavigatorScreen } from './components/MobileJourneyNavigatorScreen';
 import { PrototypeHubOrchestratorScreen } from './components/PrototypeHubOrchestratorScreen';
+import { ReferralHistoryScreen } from './components/ReferralHistoryScreen';
 
 function MainApp() {
-  const [currentScreen, setCurrentScreen] = useState<'leaderboard' | 'referral-timeline' | 'salon-intelligence' | 'dashboard' | 'auth' | 'hub' | 'add-salon' | 'share-earn' | 'merchant-register' | 'locked-onboarding' | 'step-audit-workspace' | 'mobile-fast-track' | 'website-templates' | 'profile-settings' | 'secure-handoff' | 'handoff-hub' | 'earnings-ledger' | 'extra-onboarding-reward' | 'milestone-claims' | 'milestone-unlock' | 'mobile-rewards' | 'ops-milestone-claims' | 'prototype-orchestrator' | 'journey-navigator'>('prototype-orchestrator');
+  const [currentScreen, setCurrentScreen] = useState<'leaderboard' | 'referral-timeline' | 'salon-intelligence' | 'dashboard' | 'auth' | 'hub' | 'add-salon' | 'share-earn' | 'merchant-register' | 'locked-onboarding' | 'step-audit-workspace' | 'mobile-fast-track' | 'website-templates' | 'profile-settings' | 'secure-handoff' | 'handoff-hub' | 'earnings-ledger' | 'extra-onboarding-reward' | 'milestone-claims' | 'milestone-unlock' | 'mobile-rewards' | 'ops-milestone-claims' | 'prototype-orchestrator' | 'journey-navigator' | 'referral-history'>('prototype-orchestrator');
   const [isApplyOpen, setIsApplyOpen] = useState<boolean>(false);
   const [isSupportOpen, setIsSupportOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>('home');
@@ -299,6 +300,16 @@ function MainApp() {
             ⏱️ Referral Timeline
           </button>
           <button
+            onClick={() => setCurrentScreen('referral-history')}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+              currentScreen === 'referral-history'
+                ? 'bg-[#d91b77] text-white shadow-xs'
+                : 'text-zinc-300 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            📋 Referral History
+          </button>
+          <button
             onClick={() => setCurrentScreen('dashboard')}
             className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
               currentScreen === 'dashboard'
@@ -356,6 +367,7 @@ function MainApp() {
           onNavigateToMobileRewards={() => setCurrentScreen('mobile-rewards')}
           onNavigateToOpsMilestoneClaims={() => setCurrentScreen('ops-milestone-claims')}
           onNavigateToJourneyNavigator={() => setCurrentScreen('journey-navigator')}
+          onNavigateToReferralHistory={() => setCurrentScreen('referral-history')}
         />
       ) : currentScreen === 'journey-navigator' ? (
         /* SCREEN: Mobile Journey Navigator (Canary Sandbox & Mobile UX Sandbox) */
@@ -670,6 +682,16 @@ function MainApp() {
           onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
           onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
           onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+        />
+      ) : currentScreen === 'referral-history' ? (
+        /* SCREEN: Referral History & Stage Portfolio Ledger */
+        <ReferralHistoryScreen
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
         />
       ) : currentScreen === 'salon-intelligence' ? (
         /* SCREEN 3: Growth Partner Intelligence (Salon Distribution Network) */

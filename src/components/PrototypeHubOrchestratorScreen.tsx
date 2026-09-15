@@ -79,6 +79,7 @@ interface PrototypeHubOrchestratorScreenProps {
   onNavigateToMobileRewards?: () => void;
   onNavigateToOpsMilestoneClaims?: () => void;
   onNavigateToJourneyNavigator?: () => void;
+  onNavigateToReferralHistory?: () => void;
 }
 
 export const PrototypeHubOrchestratorScreen: React.FC<PrototypeHubOrchestratorScreenProps> = ({
@@ -103,7 +104,8 @@ export const PrototypeHubOrchestratorScreen: React.FC<PrototypeHubOrchestratorSc
   onNavigateToMilestoneUnlock,
   onNavigateToMobileRewards,
   onNavigateToOpsMilestoneClaims,
-  onNavigateToJourneyNavigator
+  onNavigateToJourneyNavigator,
+  onNavigateToReferralHistory
 }) => {
   // Journey Selector Tab: 'growth-partner' | 'salon-owner' | 'admin-risk'
   const [activeJourney, setActiveJourney] = useState<'growth-partner' | 'salon-owner' | 'admin-risk'>('growth-partner');
@@ -188,6 +190,13 @@ export const PrototypeHubOrchestratorScreen: React.FC<PrototypeHubOrchestratorSc
       target: 'Desktop / Tablet',
       hash: '5b91ca32e18d6e77...',
       action: onNavigateToSalonIntelligence
+    },
+    {
+      uri: '/partner/referral-history',
+      archetype: 'Detailed CRM Ledger',
+      target: 'Desktop / Mobile',
+      hash: 'cf7c7d413b51909e...',
+      action: onNavigateToReferralHistory
     },
     {
       uri: '/partner/status-timeline',

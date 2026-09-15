@@ -4,3 +4,7 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.su
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.placeholder_key';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+export function useSupabase() {
+  return supabase;
+}
