@@ -34,20 +34,20 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
   const [activeSettingsTab, setActiveSettingsTab] = useState<'contact' | 'payout' | 'preferences' | 'security'>('contact');
 
   // Contact & Personal Info State
-  const [fullName, setFullName] = useState<string>('Marcus Vance');
-  const [agencyName, setAgencyName] = useState<string>('Vance Commercial Growth Desk');
-  const [email, setEmail] = useState<string>('marcus.vance@nexorapartner.com');
+  const [fullName, setFullName] = useState<string>('Growth Partner [DEV SAMPLE]');
+  const [agencyName, setAgencyName] = useState<string>('Growth Partner Desk');
+  const [email, setEmail] = useState<string>('partner@nexorapartner.com');
   const [phone, setPhone] = useState<string>('+91 98400 12390');
   const [whatsappPhone, setWhatsappPhone] = useState<string>('+91 98400 12390');
   const [isWhatsappSame, setIsWhatsappSame] = useState<boolean>(true);
   const [city, setCity] = useState<string>('Bengaluru');
   const [stateVal, setStateVal] = useState<string>('Karnataka');
   const [partnerBio, setPartnerBio] = useState<string>(
-    'Tier-1 Senior Growth Partner specializing in salon commercial SaaS adoption, POS gateway setups, and automated booking rollouts across Indiranagar & Koramangala hubs.'
+    'Growth Partner specializing in salon commercial SaaS adoption, POS gateway setups, and automated booking rollouts.'
   );
 
   // Bank & Payout State
-  const [accountHolderName, setAccountHolderName] = useState<string>('Marcus Vance Enterprises');
+  const [accountHolderName, setAccountHolderName] = useState<string>('Growth Partner [DEV SAMPLE]');
   const [bankName, setBankName] = useState<string>('HDFC Bank Ltd.');
   const [accountNumber, setAccountNumber] = useState<string>('50200049182390');
   const [confirmAccountNumber, setConfirmAccountNumber] = useState<string>('50200049182390');
@@ -99,12 +99,12 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
     setTimeout(() => {
       setIsPennyDropTesting(false);
       setPennyDropSuccess(true);
-      showToast('₹1.00 Penny-Drop verification successful! Account name verified as "Marcus Vance Enterprises".');
+      showToast('₹1.00 Penny-Drop verification successful! Account name verified as "Growth Partner".');
     }, 1200);
   };
 
   const copyReferralLink = () => {
-    navigator.clipboard.writeText('https://nexora.network/join?ref=NEX-88219');
+    navigator.clipboard.writeText('https://nexora.network/join?ref=REF-5A45019655');
     showToast('Partner referral link copied to clipboard!');
   };
 
@@ -139,7 +139,7 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
                 </span>
               </div>
               <span className="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#ffd8e5] text-[#3c0223] text-[11px] font-extrabold uppercase tracking-wider border border-[#fda4c9]/60">
-                Gold Partner #NEX-88219
+                Growth Partner #REF-5A45019655
               </span>
             </div>
           </div>
@@ -147,7 +147,7 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2 bg-[#f6f3ee] px-3 py-1.5 rounded-full border border-[#e5e2dd] text-xs">
               <span className="text-[#594047]">Referral Code:</span>
-              <span className="font-mono font-black text-[#1c1c19]">NEX-88219</span>
+              <span className="font-mono font-black text-[#1c1c19]">REF-5A45019655</span>
               <button
                 onClick={copyReferralLink}
                 className="text-[#b1005e] hover:text-[#d91b77] cursor-pointer"

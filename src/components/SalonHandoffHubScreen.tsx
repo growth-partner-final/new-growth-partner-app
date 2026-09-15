@@ -114,7 +114,7 @@ export const SalonHandoffHubScreen: React.FC<SalonHandoffHubScreenProps> = ({
             <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffd9e2]/60 text-[#8e004a] text-xs font-bold shadow-2xs border border-[#fda4c9]/50">
               <span className="material-symbols-outlined text-[16px]">verified</span>
               <span>
-                Referral Applied: <strong className="tracking-wide">NEXORA-MARCUS88</strong>
+                Referral Applied: <strong className="tracking-wide">REF-5A45019655</strong>
               </span>
             </div>
 
@@ -394,7 +394,7 @@ export const SalonHandoffHubScreen: React.FC<SalonHandoffHubScreenProps> = ({
                           </div>
                           <div className="flex items-center justify-between pb-2 border-b border-[#e5e2dd]">
                             <span className="text-[#594047]">Partner Attribution</span>
-                            <span className="font-mono text-[#1c1c19] font-bold">NEXORA-MARCUS88</span>
+                            <span className="font-mono text-[#1c1c19] font-bold">REF-5A45019655</span>
                           </div>
                           <div className="flex items-center justify-between pb-2 border-b border-[#e5e2dd]">
                             <span className="text-[#594047]">Escrow Credit</span>
@@ -563,7 +563,7 @@ export const SalonHandoffHubScreen: React.FC<SalonHandoffHubScreenProps> = ({
                           </div>
                           <h3 className="text-base font-black text-[#1c1c19]">₹500.00 Applied</h3>
                           <p className="text-xs text-[#594047] mt-1 leading-relaxed">
-                            Kickstart ledger balance credited via Growth Partner <strong>Marcus Vance</strong> (Code: NEXORA-MARCUS88).
+                            Kickstart ledger balance credited via Growth Partner <strong>REF-5A45019655</strong>.
                           </p>
                         </div>
                         <div className="flex items-center justify-between pt-2 border-t border-[#fda4c9]/40">
@@ -636,7 +636,7 @@ export const SalonHandoffHubScreen: React.FC<SalonHandoffHubScreenProps> = ({
                       </div>
                       <div className="flex items-center justify-between text-[#594047]">
                         <span>Designated Partner</span>
-                        <span className="font-bold text-[#b1005e]">Marcus Vance (Partner #88)</span>
+                        <span className="font-bold text-[#b1005e]">Growth Partner (REF-5A45019655)</span>
                       </div>
                     </div>
 
@@ -796,7 +796,7 @@ export const SalonHandoffHubScreen: React.FC<SalonHandoffHubScreenProps> = ({
                           rel="noreferrer"
                         >
                           <span className="material-symbols-outlined text-[16px] text-[#735c00]">chat</span>
-                          <span>WhatsApp Marcus Vance</span>
+                          <span>WhatsApp Growth Support</span>
                         </a>
                         <button
                           className="px-6 py-2.5 rounded-full bg-[#d91b77] hover:bg-[#b1005e] text-white text-xs font-black shadow-md flex items-center gap-2 transition-all cursor-pointer"

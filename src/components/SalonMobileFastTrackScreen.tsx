@@ -130,7 +130,7 @@ export const SalonMobileFastTrackScreen: React.FC<SalonMobileFastTrackScreenProp
                   lock
                 </span>
                 <span className="text-xs font-bold text-[#8e4767] truncate max-w-[200px] sm:max-w-none">
-                  Partner: Marcus Vance (NEX-88219)
+                  Partner: Growth Partner (REF-5A45019655)
                 </span>
               </div>
               <button

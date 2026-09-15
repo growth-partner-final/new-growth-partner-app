@@ -185,7 +185,7 @@ export const MobileJourneyNavigatorScreen: React.FC<MobileJourneyNavigatorScreen
 
             <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffd9e2]/60 text-[#8e004a] text-xs font-bold border border-[#ffd9e2]">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Referral: <strong className="tracking-wide">NEXORA-MARCUS88</strong></span>
+              <span>Referral: <strong className="tracking-wide">REF-5A45019655</strong></span>
             </div>
 
             <nav className="flex items-center gap-1">
@@ -439,7 +439,7 @@ export const MobileJourneyNavigatorScreen: React.FC<MobileJourneyNavigatorScreen
                   <div className="flex flex-col">
                     <span className="text-base font-bold text-[#1c1c19]">No Referred Salons Yet</span>
                     <span className="text-xs text-[#594047] px-4 mt-1 leading-relaxed">
-                      Your code <strong className="text-[#b1005e] font-bold">NEXORA-MARCUS88</strong> is primed and ready to earn 10% take-rate recurring commission.
+                      Your code <strong className="text-[#b1005e] font-bold">REF-5A45019655</strong> is primed and ready to earn 10% settled commission.
                     </span>
                   </div>
                   <button
@@ -915,7 +915,7 @@ export const MobileJourneyNavigatorScreen: React.FC<MobileJourneyNavigatorScreen
                   </div>
                 </div>
                 <span className="text-xs font-mono mt-3 text-[#b1005e] font-extrabold tracking-wider">
-                  NEXORA-MARCUS88
+                  REF-5A45019655
                 </span>
               </div>
 

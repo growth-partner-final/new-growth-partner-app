@@ -316,8 +316,8 @@ export const PrototypeHubOrchestratorScreen: React.FC<PrototypeHubOrchestratorSc
                   <ShieldCheck className="w-3.5 h-3.5" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs font-bold text-[#1c1c19] leading-none">Marcus Vance</span>
-                  <span className="text-[10px] text-[#594047] font-mono leading-none mt-1">NEX-88219</span>
+                  <span className="text-xs font-bold text-[#1c1c19] leading-none">Growth Partner [DEV SAMPLE]</span>
+                  <span className="text-[10px] text-[#594047] font-mono leading-none mt-1">REF-5A45019655</span>
                 </div>
               </div>
               <span className="px-2 py-0.5 rounded-full bg-[#cca730]/20 text-[#4f3d00] text-[10px] font-extrabold uppercase tracking-wide">
@@ -449,7 +449,7 @@ export const PrototypeHubOrchestratorScreen: React.FC<PrototypeHubOrchestratorSc
 
           <div className="flex items-center gap-4">
             <button
-              onClick={() => triggerToast('Direct Referral Invite Link Copied (#NEX-88219)')}
+              onClick={() => triggerToast('Direct Referral Invite Link Copied (#REF-5A45019655)')}
               className="h-9 px-4 rounded-full bg-[#d91b77] text-white font-bold text-xs flex items-center gap-1.5 shadow-[0_4px_16px_rgba(217,27,119,0.28)] hover:bg-[#b1005e] transition-all cursor-pointer"
               type="button"
             >
@@ -569,7 +569,7 @@ export const PrototypeHubOrchestratorScreen: React.FC<PrototypeHubOrchestratorSc
                   <div>
                     <h4 className="text-sm font-bold text-[#1c1c19] mb-1">Growth Partner Portal</h4>
                     <p className="text-xs text-[#594047] leading-relaxed">
-                      From high-yield onboarding, referral engine, and dynamic salon status to real-time hardware claims.
+                      From partner onboarding, referral engine, and dynamic salon status to real-time hardware claims.
                     </p>
                   </div>
                   <div className="mt-4 pt-1 flex items-center gap-1 text-[#b1005e] text-xs font-bold uppercase tracking-wider">
@@ -1007,7 +1007,7 @@ export const PrototypeHubOrchestratorScreen: React.FC<PrototypeHubOrchestratorSc
                     </p>
                     <div className="flex items-center gap-3">
                       <button
-                        onClick={() => triggerToast('Copied Partner Campaign Link: https://nexora.network/join?ref=NEX-88219')}
+                        onClick={() => triggerToast('Copied Partner Campaign Link: https://nexora.network/join?ref=REF-5A45019655')}
                         className="h-9 px-4 rounded-full bg-[#b1005e] text-white text-xs font-bold flex items-center gap-1.5 hover:bg-[#d91b77] transition-all cursor-pointer shadow-xs"
                         type="button"
                       >

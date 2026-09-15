@@ -167,7 +167,7 @@ export const SalonStepAuditWorkspaceScreen: React.FC<SalonStepAuditWorkspaceScre
             </div>
             <div className="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffd8e5] text-[#3c0223] text-xs font-bold border border-[#fda4c9]/60">
               <span className="material-symbols-outlined text-[16px] text-[#b1005e]">lock</span>
-              <span>Referral: NEXORA-MARCUS88 (Locked)</span>
+              <span>Referral: REF-5A45019655 (Locked)</span>
             </div>
           </div>
 
@@ -222,14 +222,14 @@ export const SalonStepAuditWorkspaceScreen: React.FC<SalonStepAuditWorkspaceScre
                       Partner Referral Applied:
                     </span>
                     <span className="text-sm sm:text-base font-black text-[#1c1c19] font-mono">
-                      NEXORA-MARCUS88
+                      REF-5A45019655
                     </span>
                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#fda4c9]/40 text-[#3c0223] text-[11px] font-bold">
                       <span className="material-symbols-outlined text-[12px]">lock</span> Verified Attribution
                     </span>
                   </div>
                   <span className="text-xs text-[#594047] mt-0.5">
-                    Attributed to <strong className="text-[#1c1c19]">Marcus Vance</strong> (Tier-1 Growth Advisor • Bangalore Commercial Desk)
+                    Attributed to <strong className="text-[#1c1c19]">Growth Partner [DEV SAMPLE]</strong> (Partner Referral Network)
                   </span>
                 </div>
               </div>
@@ -959,7 +959,7 @@ export const SalonStepAuditWorkspaceScreen: React.FC<SalonStepAuditWorkspaceScre
                         type="checkbox"
                       />
                       <span className="text-xs text-[#1c1c19] leading-relaxed">
-                        <strong>Growth Partner Commission Attribution:</strong> I acknowledge that <strong>Marcus Vance</strong> (Code NEXORA-MARCUS88) is assigned as my dedicated growth account executive.
+                        <strong>Growth Partner Commission Attribution:</strong> I acknowledge that <strong>Growth Partner [DEV SAMPLE]</strong> (Code REF-5A45019655) is assigned as my growth partner.
                       </span>
                     </label>
                   </div>
@@ -1162,13 +1162,13 @@ export const SalonStepAuditWorkspaceScreen: React.FC<SalonStepAuditWorkspaceScre
                   </div>
                   <div className="flex flex-col">
                     <div className="flex items-center gap-1">
-                      <span className="text-base font-black text-[#1c1c19]">Marcus Vance</span>
+                      <span className="text-base font-black text-[#1c1c19]">Growth Partner [DEV SAMPLE]</span>
                       <span className="material-symbols-outlined text-[#b1005e] text-[18px]">
                         verified
                       </span>
                     </div>
-                    <span className="text-xs text-[#594047]">Tier-1 Senior Growth Partner</span>
-                    <span className="font-mono text-xs text-[#8e4767] font-bold">ID: NEX-88219</span>
+                    <span className="text-xs text-[#594047]">Licensed Growth Partner</span>
+                    <span className="font-mono text-xs text-[#8e4767] font-bold">ID: REF-5A45019655</span>
                   </div>
                 </div>
                 <p className="text-xs text-[#594047] leading-relaxed italic bg-[#f6f3ee] p-3 rounded-2xl border border-[#e5e2dd]">
@@ -1223,7 +1223,7 @@ export const SalonStepAuditWorkspaceScreen: React.FC<SalonStepAuditWorkspaceScre
                     <div className="flex flex-col">
                       <span className="text-xs font-bold text-[#1c1c19]">Free 4G Smart Soundbox</span>
                       <span className="text-[11px] text-[#594047]">
-                        No hardware rental deposit (₹1,999 waived under NEXORA-MARCUS88).
+                        No hardware rental deposit (waived under REF-5A45019655).
                       </span>
                     </div>
                   </div>
@@ -1272,7 +1272,7 @@ export const SalonStepAuditWorkspaceScreen: React.FC<SalonStepAuditWorkspaceScre
             <div className="bg-[#f6f3ee] p-4 rounded-2xl space-y-2 border border-[#e5e2dd]">
               <div className="flex justify-between text-xs">
                 <span className="text-[#594047]">Attributed Growth Partner:</span>
-                <span className="font-bold text-[#1c1c19]">Marcus Vance (#NEX-88219)</span>
+                <span className="font-bold text-[#1c1c19]">Growth Partner (#REF-5A45019655)</span>
               </div>
               <div className="flex justify-between text-xs">
                 <span className="text-[#594047]">Soundbox Shipping Destination:</span>

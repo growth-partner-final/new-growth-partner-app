@@ -52,7 +52,7 @@ export const PartnerExtraRewardStructureScreen: React.FC<PartnerExtraRewardStruc
   };
 
   const handleCopyLink = () => {
-    navigator.clipboard?.writeText('https://nexora.network/join?ref=NEX-88219');
+    navigator.clipboard?.writeText('https://nexora.network/join?ref=REF-5A45019655');
     showToast('Partner referral link copied to clipboard!');
   };
 
@@ -116,8 +116,8 @@ export const PartnerExtraRewardStructureScreen: React.FC<PartnerExtraRewardStruc
                   <span className="material-symbols-outlined text-[14px]">verified</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs font-black text-[#1c1c19] leading-tight">Marcus Vance</span>
-                  <span className="text-[10px] text-[#594047] font-mono leading-none mt-0.5">NEX-88219</span>
+                  <span className="text-xs font-black text-[#1c1c19] leading-tight">Growth Partner [DEV SAMPLE]</span>
+                  <span className="text-[10px] text-[#594047] font-mono leading-none mt-0.5">REF-5A45019655</span>
                 </div>
               </div>
               <span className="px-2 py-0.5 rounded-full bg-[#cca730]/20 text-[#4f3d00] text-[10px] font-black uppercase tracking-wide border border-[#cca730]/40">

@@ -129,7 +129,7 @@ export const PartnerMilestoneUnlockCelebrationScreen: React.FC<PartnerMilestoneU
   const [dispatchReceiptOpen, setDispatchReceiptOpen] = useState(false);
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText('https://nexora.network/join?ref=NEX-88219');
+    navigator.clipboard.writeText('https://nexora.network/join?ref=REF-5A45019655');
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2500);
   };
@@ -175,8 +175,8 @@ export const PartnerMilestoneUnlockCelebrationScreen: React.FC<PartnerMilestoneU
                   <ShieldCheck className="w-4 h-4" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs font-bold text-[#1c1c19]">Tier 2 Partner</span>
-                  <span className="text-[10px] text-[#594047] font-mono">NEX-88219</span>
+                  <span className="text-xs font-bold text-[#1c1c19]">Growth Partner</span>
+                  <span className="text-[10px] text-[#594047] font-mono">REF-5A45019655</span>
                 </div>
               </div>
               <span className="px-2 py-0.5 rounded-full bg-[#fda4c9]/40 text-[#7a3656] text-[10px] font-bold">
@@ -252,7 +252,7 @@ export const PartnerMilestoneUnlockCelebrationScreen: React.FC<PartnerMilestoneU
             <span className="text-[11px] text-[#594047] uppercase font-bold tracking-wider">Compliance ID</span>
             <Lock className="w-3.5 h-3.5 text-[#8d6f77]" />
           </div>
-          <span className="text-xs font-mono font-bold text-[#1c1c19]">SEC-REG-99120-UK</span>
+          <span className="text-xs font-mono font-bold text-[#1c1c19]">COMPLIANCE-POLICY-AUDITED</span>
           <span className="text-[11px] text-[#594047]">Strict payout audit schedule enabled.</span>
         </div>
       </aside>
@@ -268,7 +268,7 @@ export const PartnerMilestoneUnlockCelebrationScreen: React.FC<PartnerMilestoneU
             </div>
             <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ffd9e2] text-[#3e001d] font-bold text-xs">
               <ShieldCheck className="w-3.5 h-3.5 text-[#b1005e]" />
-              <span>Marcus Vance (NEX-88219)</span>
+              <span>Growth Partner (REF-5A45019655)</span>
             </div>
           </div>
 
@@ -565,7 +565,7 @@ export const PartnerMilestoneUnlockCelebrationScreen: React.FC<PartnerMilestoneU
                         Milestone 3 Unlocked! 100 Qualified Salons Achieved
                       </h1>
                       <p className="text-sm text-white/90 mt-1 max-w-2xl leading-relaxed">
-                        Congratulations Marcus Vance. Your referral portfolio has cleared all commercial activation audits. Proceed with statutory confirmation to dispatch your enterprise asset.
+                        Congratulations Growth Partner. Your referral portfolio has cleared all commercial activation audits. Proceed with statutory confirmation to dispatch your enterprise asset.
                       </p>
                     </div>
                   </div>
@@ -726,7 +726,7 @@ export const PartnerMilestoneUnlockCelebrationScreen: React.FC<PartnerMilestoneU
                       <div className="flex flex-col gap-1">
                         <label className="text-xs text-[#594047] font-semibold">Full Consignee Name</label>
                         <div className="p-3 bg-[#f6f3ee] rounded-lg flex items-center justify-between border border-[#e5e2dd]">
-                          <span className="text-sm font-bold text-[#1c1c19]">Marcus Vance</span>
+                          <span className="text-sm font-bold text-[#1c1c19]">Growth Partner [DEV SAMPLE]</span>
                           <CheckCircle2 className="w-4 h-4 text-[#8e4767]" />
                         </div>
                       </div>
@@ -983,7 +983,7 @@ export const PartnerMilestoneUnlockCelebrationScreen: React.FC<PartnerMilestoneU
                 <div className="grid grid-cols-2 gap-2">
                   <div className="p-2.5 rounded-lg bg-[#f6f3ee] border border-[#e5e2dd]">
                     <span className="text-[10px] text-[#594047]">Consignee</span>
-                    <p className="font-bold text-[#1c1c19]">Marcus Vance</p>
+                    <p className="font-bold text-[#1c1c19]">Growth Partner [DEV SAMPLE]</p>
                   </div>
                   <div className="p-2.5 rounded-lg bg-[#f6f3ee] border border-[#e5e2dd]">
                     <span className="text-[10px] text-[#594047]">Carrier</span>

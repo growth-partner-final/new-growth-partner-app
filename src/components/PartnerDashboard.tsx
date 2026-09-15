@@ -18,7 +18,7 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
   const [activeSidebarNav, setActiveSidebarNav] = useState<string>('dashboard');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const referralUrl = 'nexora.io/p/NEX-88219';
+  const referralUrl = 'nexora.io/p/REF-5A45019655';
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(`https://${referralUrl}`);
@@ -35,7 +35,7 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
   };
 
   const downloadQRMock = () => {
-    alert('Generating vector SVG for Partner QR (Code: NEX-88219)... Ready for digital display or print.');
+    alert('Generating vector SVG for Partner QR (Code: REF-5A45019655)... Ready for digital display or print.');
   };
 
   return (
@@ -211,11 +211,11 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
 
             <div className="flex items-center gap-2 pl-1">
               <div className="hidden md:flex flex-col text-right">
-                <span className="text-xs font-bold text-[#1c1c19]">Marcus Vance</span>
+                <span className="text-xs font-bold text-[#1c1c19]">Growth Partner [DEV SAMPLE]</span>
                 <span className="text-[10px] text-[#594047]">Growth Lead</span>
               </div>
               <div className="w-8 h-8 rounded-full bg-[#b1005e] text-white flex items-center justify-center font-bold text-xs shadow-xs">
-                MV
+                GP
               </div>
             </div>
           </div>
@@ -291,7 +291,7 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                     <div className="relative w-16 h-16 rounded-2xl overflow-hidden shadow-md shrink-0 bg-[#ffd8e5]">
                       <img
                         className="w-full h-full object-cover"
-                        alt="High-resolution professional executive portrait of Marcus Vance, growth partner"
+                        alt="Growth partner profile avatar"
                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5nFKwiNJHVG6WXK8xCxUCFyLPE85vQy9YLBrF5W_hs5i4e1JqGTa5AWS5rrKx7rhZlfAP4jQ4XL4znPjpLgXbSxRWNioOWHGpTTFNT1iKxtBmssf5bvNIFRFS6z4NbV2YW_Ek71PMYUTp9ILSGvmZSDmxjeYhWzu9EwVaq5EF5mXWOhGEE70pj7JrrQew8kXiTBeqAXeF4oWXipghdPjy2_YI4xyPNUnKU6GRZjyc2pe7Gq9MOTPi"
                       />
                       <span
@@ -303,7 +303,7 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                     <div className="flex flex-col">
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="text-xl sm:text-2xl font-bold text-[#1c1c19]">
-                          Marcus Vance
+                          Growth Partner [DEV SAMPLE]
                         </span>
                         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#ffd9e2] text-[#3e001d] text-[11px] font-bold">
                           <span className="material-symbols-outlined text-[14px]">verified</span>
@@ -317,7 +317,7 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
 
                       <div className="flex items-center gap-3 mt-1 text-[#594047] text-xs flex-wrap">
                         <span className="font-mono tracking-wider font-bold text-[#8e4767]">
-                          NEX-88219
+                          REF-5A45019655
                         </span>
                         <span className="w-1 h-1 rounded-full bg-[#e1bdc6]"></span>
                         <span>Growth Partner Program</span>
@@ -540,7 +540,7 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                     <div className="mt-5 pt-4 border-t border-[#e5e2dd]">
                       <a
                         className="w-full py-2.5 px-4 rounded-full bg-[#f6f3ee] text-[#1c1c19] text-xs font-bold flex items-center justify-center gap-2 hover:bg-[#d91b77] hover:text-white transition-colors"
-                        href="https://api.whatsapp.com/send?text=Join%20Nexora%20Wealth%20via%20my%20growth%20partner%20link:%20https://nexora.io/p/NEX-88219"
+                        href="https://api.whatsapp.com/send?text=Join%20Nexora%20Merchant%20Network%20via%20my%20growth%20partner%20link:%20https://nexora.io/p/REF-5A45019655"
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -600,7 +600,7 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                     <div className="flex flex-col">
                       <h3 className="text-base font-bold text-[#1c1c19]">Real-Time Referral Ingestion Log</h3>
-                      <span className="text-xs text-[#594047]">Live telemetry from partner gateway NEX-88219</span>
+                      <span className="text-xs text-[#594047]">Live telemetry from partner gateway REF-5A45019655</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f6f3ee] text-[#1c1c19] text-[11px] font-semibold border border-[#e5e2dd]">
@@ -738,7 +738,7 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                         onClick={handleCopyLink}
                       >
                         <span className="material-symbols-outlined text-[18px]">content_copy</span>
-                        <span>Copy Link (NEX-88219)</span>
+                        <span>Copy Link (REF-5A45019655)</span>
                       </button>
                       <button
                         className="px-6 py-3 rounded-full bg-[#f0ede9] text-[#1c1c19] font-bold text-xs hover:bg-[#e5e2dd] transition-colors flex items-center gap-2 cursor-pointer border border-[#e5e2dd]"

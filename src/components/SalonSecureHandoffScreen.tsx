@@ -625,14 +625,14 @@ export const SalonSecureHandoffScreen: React.FC<SalonSecureHandoffScreenProps> =
                   <img
                     className="w-full h-full object-cover"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkIZAm1DTlWBF2SRFArZ-5qgbKngU2U4TOV7_y_r-vwdzXpKeLIcqSUSJpygcOZ4EQJhhazYeoNhMBvhgwkxKBZyfTj-YTvd_wo8beqfmR62C-oXc5Uz7as5afX_WumXbA4mjuSB5E52QdrhphUerYE-Gjw6cPc5d6Ph2Rs4AWOpYY2QTuyW4Emn0gmmStok_YWpdW329thJ6yTgVH-6enEHmPYs4wUsABeURt_2mAbATRd131fQHA"
-                    alt="Marcus Vance portrait"
+                    alt="Growth Partner portrait"
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-xs font-bold text-[#1c1c19] truncate">Marcus Vance</span>
+                    <span className="text-xs font-bold text-[#1c1c19] truncate">Growth Partner [DEV SAMPLE]</span>
                     <span className="text-[11px] text-[#b1005e] font-semibold">• Online</span>
                   </div>
                   <p className="text-[11px] text-[#594047] truncate">Dedicated Growth Partner Lead</p>

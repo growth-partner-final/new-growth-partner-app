@@ -20,9 +20,9 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
   onNavigateToDashboard,
   onNavigateToAuth
 }) => {
-  const codeVal = 'NEXORA-MARCUS88';
-  const shortLink = 'https://nexora.link/m/marcus88';
-  const longLink = 'https://portal.nexora.finance/growth/partner/register?ref=NEXORA-MARCUS88';
+  const codeVal = 'REF-5A45019655';
+  const shortLink = 'https://nexora.link/ref/5A45019655';
+  const longLink = 'https://portal.nexora.finance/growth/partner/register?ref=REF-5A45019655';
 
   const [isShortUrl, setIsShortUrl] = useState<boolean>(true);
   const [isScriptOpen, setIsScriptOpen] = useState<boolean>(false);
@@ -63,7 +63,7 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
 
   const handleWhatsAppShare = () => {
     const waPitch = encodeURIComponent(
-      'Namaste! Aapke salon ke daily billing and appointments ko grow karne ke liye Nexora check kijiye. VIP Partner Code use karein: NEXORA-MARCUS88 (Free 30-Day Pro Access): ' +
+      'Namaste! Aapke salon ke daily billing and appointments ko grow karne ke liye Nexora check kijiye. Partner Code use karein: REF-5A45019655 (Free Setup): ' +
         shortLink
     );
     window.open(`https://api.whatsapp.com/send?text=${waPitch}`, '_blank');
@@ -72,7 +72,7 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
   const handleEmailInvite = () => {
     const subject = encodeURIComponent('Nexora Fintech Growth Partner Invitation');
     const body = encodeURIComponent(
-      `Hi there,\n\nI invite you to explore the Nexora Salon Operating Suite. Register with my exclusive partner code NEXORA-MARCUS88 to receive a complimentary setup and zero onboarding fees.\n\nLink: ${shortLink}`
+      `Hi there,\n\nI invite you to explore the Nexora Salon Operating Suite. Register with my partner code REF-5A45019655 to receive complimentary setup.\n\nLink: ${shortLink}`
     );
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
@@ -82,7 +82,7 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
       try {
         await navigator.share({
           title: 'Nexora Partner Invite',
-          text: 'Join Nexora Salon Operating Suite with VIP Code NEXORA-MARCUS88',
+          text: 'Join Nexora Salon Operating Suite with Partner Code REF-5A45019655',
           url: shortLink
         });
       } catch {
@@ -94,7 +94,7 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
   };
 
   const pitchScriptText =
-    'Namaste! Aapke salon ke daily appointments aur automated billing ko streamline karne ke liye Nexora Partner App check kijiye. Sign up karte waqt mera VIP Partner code lagayein: NEXORA-MARCUS88 aur payein 30 days premium free trial + zero onboarding fees. Demo link: https://nexora.link/m/marcus88';
+    'Namaste! Aapke salon ke daily appointments aur automated billing ko streamline karne ke liye Nexora Partner App check kijiye. Sign up karte waqt mera Partner code lagayein: REF-5A45019655 aur payein premium onboarding. Demo link: https://nexora.link/ref/5A45019655';
 
   const handleCopyScript = () => {
     navigator.clipboard.writeText(pitchScriptText).then(() => {
@@ -127,7 +127,7 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
                 </span>
               </div>
               <span className="text-[11px] text-[#594047] tracking-wider font-semibold">
-                Marcus Vance • NEX-88219
+                Growth Partner [DEV SAMPLE] • REF-5A45019655
               </span>
             </div>
           </div>
@@ -432,7 +432,7 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
                 <p className="text-xs sm:text-sm text-[#1c1c19] leading-relaxed select-all">
                   &ldquo;Namaste! Aapke salon ke daily appointments aur automated billing ko streamline
                   karne ke liye Nexora Partner App check kijiye. Sign up karte waqt mera VIP Partner code
-                  lagayein: <strong className="text-[#b1005e] font-bold">NEXORA-MARCUS88</strong> aur
+                  lagayein: <strong className="text-[#b1005e] font-bold">REF-5A45019655</strong> aur
                   payein 30 days premium free trial + zero onboarding fees. Demo link: {shortLink}&rdquo;
                 </p>
               </div>

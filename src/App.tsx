@@ -47,9 +47,9 @@ export default function App() {
     partnerId: string;
     referralLink: string;
   } | null>({
-    name: 'Marcus Vance',
-    partnerId: 'NEX-88219',
-    referralLink: 'https://nexora.network/join?ref=NEX-88219'
+    name: 'Growth Partner [DEV SAMPLE]',
+    partnerId: 'REF-5A45019655',
+    referralLink: 'https://nexora.network/join?ref=REF-5A45019655'
   });
 
   const scrollToSection = (id: string) => {

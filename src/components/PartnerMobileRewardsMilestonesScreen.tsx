@@ -120,7 +120,7 @@ export const PartnerMobileRewardsMilestonesScreen: React.FC<PartnerMobileRewards
   const [complianceOpen, setComplianceOpen] = useState(false);
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText('https://nexora.network/join?ref=NEX-88219');
+    navigator.clipboard.writeText('https://nexora.network/join?ref=REF-5A45019655');
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2000);
   };
@@ -150,7 +150,7 @@ export const PartnerMobileRewardsMilestonesScreen: React.FC<PartnerMobileRewards
               <span className="font-extrabold text-xl text-[#b1005e] tracking-tight">Nexora</span>
             </div>
             <span className="bg-[#ffe088] text-[#241a00] text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow-xs">
-              NEX-88219
+              REF-5A45019655
             </span>
           </div>
 
@@ -172,7 +172,7 @@ export const PartnerMobileRewardsMilestonesScreen: React.FC<PartnerMobileRewards
               <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#b1005e]"></span>
             </button>
             <div className="w-8 h-8 rounded-full bg-[#b1005e] flex items-center justify-center shrink-0 shadow-xs text-white text-xs font-bold">
-              MV
+              GP
             </div>
           </div>
         </div>
@@ -185,10 +185,10 @@ export const PartnerMobileRewardsMilestonesScreen: React.FC<PartnerMobileRewards
           <div className="flex items-start justify-between">
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <h2 className="text-lg font-bold text-[#1c1c19]">Marcus Vance</h2>
+                <h2 className="text-lg font-bold text-[#1c1c19]">Growth Partner [DEV SAMPLE]</h2>
                 <ShieldCheck className="w-4 h-4 text-[#cca730]" />
               </div>
-              <p className="text-xs font-semibold text-[#594047]">NEX-88219 • District Partner</p>
+              <p className="text-xs font-semibold text-[#594047]">REF-5A45019655 • Licensed Partner</p>
             </div>
             <span className="bg-[#ffe088] text-[#241a00] text-[11px] font-extrabold px-3 py-1 rounded-full flex items-center gap-1 shadow-xs">
               <Award className="w-3.5 h-3.5" />
@@ -753,7 +753,7 @@ export const PartnerMobileRewardsMilestonesScreen: React.FC<PartnerMobileRewards
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#594047]">Recipient Name</span>
-                    <span className="font-bold text-[#1c1c19]">Marcus Vance</span>
+                    <span className="font-bold text-[#1c1c19]">Growth Partner [DEV SAMPLE]</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#594047]">Delivered Date</span>
@@ -922,11 +922,11 @@ export const PartnerMobileRewardsMilestonesScreen: React.FC<PartnerMobileRewards
               {/* QR Container */}
               <div className="p-4 bg-[#ffffff] rounded-2xl border-2 border-dashed border-[#b1005e] shadow-sm flex flex-col items-center">
                 <img
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://nexora.network/join?ref=NEX-88219"
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://nexora.network/join?ref=REF-5A45019655"
                   alt="Referral QR Code"
                   className="w-36 h-36 rounded-lg"
                 />
-                <span className="text-xs font-mono font-bold text-[#b1005e] mt-2">NEX-88219</span>
+                <span className="text-xs font-mono font-bold text-[#b1005e] mt-2">REF-5A45019655</span>
               </div>
 
               <div className="flex gap-2 w-full">

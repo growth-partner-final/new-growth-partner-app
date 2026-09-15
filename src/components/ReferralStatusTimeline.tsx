@@ -46,7 +46,7 @@ export const ReferralStatusTimeline: React.FC<ReferralStatusTimelineProps> = ({
     return `${hrs}:${mins}:${secs}`;
   };
 
-  const referralUrl = 'https://nexora.network/join?ref=NEX-88219';
+  const referralUrl = 'https://nexora.network/join?ref=REF-5A45019655';
 
   const handleQuickInvite = () => {
     navigator.clipboard.writeText(referralUrl);
@@ -243,7 +243,7 @@ export const ReferralStatusTimeline: React.FC<ReferralStatusTimelineProps> = ({
             />
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffe088] text-[#241a00] text-[11px] font-bold shadow-[0_2px_8px_rgba(115,92,0,0.1)]">
               <span className="material-symbols-outlined text-[16px] text-[#735c00]">workspace_premium</span>
-              <span>Gold Partner • NEX-88219</span>
+              <span>Growth Partner • REF-5A45019655</span>
             </div>
           </div>
 
@@ -265,11 +265,11 @@ export const ReferralStatusTimeline: React.FC<ReferralStatusTimelineProps> = ({
 
             <div className="flex items-center gap-2.5 pl-1">
               <div className="hidden sm:flex flex-col text-right">
-                <span className="text-xs text-[#1c1c19] leading-tight font-bold">Marcus Vance</span>
+                <span className="text-xs text-[#1c1c19] leading-tight font-bold">Growth Partner [DEV SAMPLE]</span>
                 <span className="text-[11px] text-[#8e4767] leading-tight font-medium">Growth Lead</span>
               </div>
               <div className="w-8 h-8 rounded-full bg-[#b1005e] text-white flex items-center justify-center font-bold text-xs shadow-xs">
-                MV
+                GP
               </div>
             </div>
           </div>

@@ -64,7 +64,7 @@ export const SalonLockedOnboardingScreen: React.FC<SalonLockedOnboardingScreenPr
   };
 
   const handleManualCodeEntry = () => {
-    const code = prompt('Enter replacement Partner Code (e.g. NEXORA-VIP99):', 'NEXORA-MARCUS88');
+    const code = prompt('Enter replacement Partner Code (e.g. REF-DEV99):', 'REF-5A45019655');
     if (code && code.trim()) {
       setAuditState('valid');
       showToast(`Partner Code ${code.toUpperCase()} successfully validated and locked!`);
@@ -78,7 +78,7 @@ export const SalonLockedOnboardingScreen: React.FC<SalonLockedOnboardingScreenPr
 
   const handleLoginSubmit = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    showToast('Signed in successfully with Marcus Vance referral attribution retained.');
+    showToast('Signed in successfully with partner referral attribution retained.');
   };
 
   const triggerOtpFastTrack = () => {
@@ -207,7 +207,7 @@ export const SalonLockedOnboardingScreen: React.FC<SalonLockedOnboardingScreenPr
                     <span className="w-1.5 h-1.5 rounded-full bg-[#b1005e] animate-ping" />
                   </div>
                   <div className="flex items-center gap-1.5 mt-0.5">
-                    <span className="text-sm font-black text-[#1c1c19] font-mono">NEXORA-MARCUS88</span>
+                    <span className="text-sm font-black text-[#1c1c19] font-mono">REF-5A45019655</span>
                     <span className="text-[10px] bg-[#cca730]/20 text-[#4f3d00] px-2 py-0.5 rounded-full font-bold flex items-center gap-0.5">
                       <span className="material-symbols-outlined text-[12px]">verified</span> Gold Partner
                     </span>
@@ -268,7 +268,7 @@ export const SalonLockedOnboardingScreen: React.FC<SalonLockedOnboardingScreenPr
               </div>
             </div>
             <p className="text-xs leading-relaxed opacity-95">
-              The link parameter <code className="bg-white/80 px-1.5 py-0.5 rounded text-[#1c1c19] font-bold">NEXORA-MARCUS88-ERR</code> does not match an active licensed partner registry. Choose recovery path:
+              The link parameter <code className="bg-white/80 px-1.5 py-0.5 rounded text-[#1c1c19] font-bold">REF-INVALID</code> does not match an active licensed partner registry. Choose recovery path:
             </p>
             <div className="flex flex-col gap-2 pt-1">
               <button
@@ -314,7 +314,7 @@ export const SalonLockedOnboardingScreen: React.FC<SalonLockedOnboardingScreenPr
               </div>
             </div>
             <p className="text-xs text-[#594047] leading-relaxed">
-              Marcus Vance’s invite token timed out yesterday. Growth Partner vouchers must be refreshed by the sponsor to activate your ₹500 bank transfer credit.
+              The partner invite token timed out yesterday. Growth Partner vouchers must be refreshed by the sponsor to activate your onboarding reward credit.
             </p>
             <a
               href="https://wa.me/?text=Hi%20Marcus,%20please%20refresh%20my%20Nexora%20salon%20onboarding%20link."
@@ -392,10 +392,10 @@ export const SalonLockedOnboardingScreen: React.FC<SalonLockedOnboardingScreenPr
                   <span className="material-symbols-outlined text-[20px] text-[#594047] shrink-0">lock</span>
                   <div className="flex flex-col truncate">
                     <span className="text-xs font-black text-[#1c1c19] truncate font-mono">
-                      NEXORA-MARCUS88
+                      REF-5A45019655
                     </span>
                     <span className="text-[11px] text-[#594047] truncate">
-                      Marcus Vance • Executive Gold Partner
+                      Growth Partner [DEV SAMPLE] • Licensed Partner
                     </span>
                   </div>
                 </div>
@@ -613,7 +613,7 @@ export const SalonLockedOnboardingScreen: React.FC<SalonLockedOnboardingScreenPr
                   required
                 />
                 <span className="text-xs text-[#594047] leading-tight">
-                  I agree to the <strong className="text-[#b1005e]">Nexora Merchant Terms</strong> and authorize verification under Marcus Vance’s partner network.
+                  I agree to the <strong className="text-[#b1005e]">Nexora Merchant Terms</strong> and authorize verification under the partner network.
                 </span>
               </label>
 
@@ -657,7 +657,7 @@ export const SalonLockedOnboardingScreen: React.FC<SalonLockedOnboardingScreenPr
                   <span className="text-[10px] text-[#594047] font-semibold uppercase">
                     Onboarding Sponsor Active
                   </span>
-                  <span className="text-xs font-bold text-[#1c1c19]">Marcus Vance (Gold Partner)</span>
+                  <span className="text-xs font-bold text-[#1c1c19]">Growth Partner (REF-5A45019655)</span>
                 </div>
               </div>
               <span className="text-[10px] bg-[#ffd9e2] text-[#b1005e] px-2.5 py-1 rounded-full font-extrabold">
@@ -798,7 +798,7 @@ export const SalonLockedOnboardingScreen: React.FC<SalonLockedOnboardingScreenPr
             <div className="flex flex-col gap-1">
               <span className="text-xl font-black text-[#1c1c19]">🎉 Partner Verified!</span>
               <p className="text-xs sm:text-sm text-[#594047] leading-relaxed">
-                Referral locked to <strong className="text-[#1c1c19]">Marcus Vance</strong>. ₹500 welcome reward voucher linked to Salon: <strong className="text-[#1c1c19]">{salonName || 'Elegance Hair & Beauty Studio'}</strong>.
+                Referral locked to <strong className="text-[#1c1c19]">REF-5A45019655</strong>. Onboarding reward voucher linked to Salon: <strong className="text-[#1c1c19]">{salonName || 'Salon Merchant [DEV SAMPLE]'}</strong>.
               </p>
             </div>
             <div className="bg-[#f6f3ee] rounded-2xl p-3.5 flex items-center gap-3 border border-[#e5e2dd]/60">
@@ -860,7 +860,7 @@ export const SalonLockedOnboardingScreen: React.FC<SalonLockedOnboardingScreenPr
             <div className="flex flex-col gap-2 text-xs text-[#594047]">
               <div className="p-3 rounded-xl bg-[#f6f3ee] flex justify-between items-center border border-[#e5e2dd]/60">
                 <span className="font-semibold">Query String Param:</span>
-                <span className="font-mono text-[#b1005e] font-bold">?ref=NEXORA-MARCUS88</span>
+                <span className="font-mono text-[#b1005e] font-bold">?ref=REF-5A45019655</span>
               </div>
               <div className="p-3 rounded-xl bg-[#f6f3ee] flex justify-between items-center border border-[#e5e2dd]/60">
                 <span className="font-semibold">Partner Tier:</span>

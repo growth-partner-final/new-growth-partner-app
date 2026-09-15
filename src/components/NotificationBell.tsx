@@ -75,7 +75,7 @@ const INITIAL_NOTIFICATIONS: PartnerNotification[] = [
     actionLabel: 'View Ledger',
     metadata: {
       accountMasked: 'HDFC •••• 4019',
-      txnId: 'TXN-NEX-88219-HW25'
+      txnId: 'TXN-REF-5A450-HW25'
     }
   },
   {
@@ -129,7 +129,7 @@ const INITIAL_NOTIFICATIONS: PartnerNotification[] = [
     id: 'notif-7',
     type: 'salon_status',
     title: 'New Referral Registered via Partner Link',
-    message: 'Glamour Point Unisex Salon (Koramangala, Bengaluru) submitted application via your referral link NEX-88219. Initial document triage in progress.',
+    message: 'Glamour Point Unisex Salon (Koramangala, Bengaluru) submitted application via your referral link REF-5A45019655. Initial document triage in progress.',
     timestamp: '2 days ago',
     isRead: true,
     priority: 'normal',
@@ -296,7 +296,7 @@ export const NotificationBell: React.FC<NotificationBellProps> = ({
     );
 
     if (notif.actionType === 'whatsapp') {
-      const msg = `Hi Sunita, this is Marcus from Nexora Partner Network. We noticed a slight address discrepancy in your electricity bill for Velvet Touch Lounge. Please upload an updated utility bill here: https://nexora.network/kyc-reupload?ref=NEX-88219&salon=VelvetTouch`;
+      const msg = `Hi Sunita, this is Growth Support from Nexora Partner Network. We noticed a slight address discrepancy in your electricity bill for Velvet Touch Lounge. Please upload an updated utility bill here: https://nexora.network/kyc-reupload?ref=REF-5A45019655&salon=VelvetTouch`;
       navigator.clipboard.writeText(msg);
       showToast(
         'WhatsApp Invite Link Copied!',
@@ -345,7 +345,7 @@ export const NotificationBell: React.FC<NotificationBellProps> = ({
         )
       });
     } else if (notif.actionType === 'view_receipt') {
-      const txn = notif.metadata?.txnId || 'TXN-NEX-88219-HDFC';
+      const txn = notif.metadata?.txnId || 'TXN-REF-5A450-HDFC';
       const acct = notif.metadata?.accountMasked || 'HDFC Bank •••• 4019';
       setModalDetails({
         title: `Payment Receipt: ${notif.amount || 'Commission'}`,
@@ -372,7 +372,7 @@ export const NotificationBell: React.FC<NotificationBellProps> = ({
             <div className="p-3.5 rounded-xl bg-[#f6f3ee] border border-[#e5e2dd] grid grid-cols-2 gap-3 text-xs">
               <div>
                 <span className="text-[10px] text-[#594047] block">Beneficiary Partner</span>
-                <strong className="text-[#1c1c19]">Marcus Vance (NEX-88219)</strong>
+                <strong className="text-[#1c1c19]">Growth Partner [DEV SAMPLE] (REF-5A45019655)</strong>
               </div>
               <div>
                 <span className="text-[10px] text-[#594047] block">Credited Account</span>

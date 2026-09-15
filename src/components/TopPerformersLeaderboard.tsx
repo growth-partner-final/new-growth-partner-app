@@ -424,7 +424,7 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const referralUrl = 'https://nexora.network/join?ref=NEX-88219';
+  const referralUrl = 'https://nexora.network/join?ref=REF-5A45019655';
 
   const handleQuickInvite = () => {
     navigator.clipboard.writeText(referralUrl);
@@ -674,8 +674,8 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
       q2Rank: 10
     },
     {
-      id: 'NEX-88219',
-      name: 'Marcus Vance (You)',
+      id: 'REF-5A45019655',
+      name: 'Growth Partner [YOU, DEV SAMPLE]',
       avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
       location: 'Indiranagar, Bengaluru',
       tier: 'Gold Partner',
@@ -789,7 +789,7 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
   });
 
   const topThree = rankedPerformers.slice(0, 3);
-  const userPerformer = rankedPerformers.find((p) => p.id === 'NEX-88219')!;
+  const userPerformer = rankedPerformers.find((p) => p.id === 'REF-5A45019655')!;
   const selectedPerformer = selectedPerformerId
     ? rankedPerformers.find((p) => p.id === selectedPerformerId) || null
     : null;
@@ -1213,7 +1213,7 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
             />
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffe088] text-[#241a00] text-[11px] font-bold shadow-[0_2px_8px_rgba(115,92,0,0.1)]">
               <span className="material-symbols-outlined text-[16px] text-[#735c00]">workspace_premium</span>
-              <span>Gold Partner • NEX-88219</span>
+              <span>Growth Partner • REF-5A45019655</span>
             </div>
           </div>
 
@@ -1235,11 +1235,11 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
 
             <div className="flex items-center gap-2.5 pl-1">
               <div className="hidden sm:flex flex-col text-right">
-                <span className="text-xs text-[#1c1c19] leading-tight font-bold">Marcus Vance</span>
-                <span className="text-[11px] text-[#8e4767] leading-tight font-medium">Rank #12 • Gold</span>
+                <span className="text-xs text-[#1c1c19] leading-tight font-bold">Growth Partner [DEV SAMPLE]</span>
+                <span className="text-[11px] text-[#8e4767] leading-tight font-medium">Rank #12 • Licensed</span>
               </div>
               <div className="w-8 h-8 rounded-full bg-[#b1005e] text-white flex items-center justify-center font-bold text-xs shadow-xs">
-                MV
+                GP
               </div>
             </div>
           </div>
@@ -1381,7 +1381,7 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
               </div>
             </div>
 
-            {/* Current User Standings Sticky Banner (Marcus Vance) */}
+            {/* Current User Standings Sticky Banner (Growth Partner) */}
             <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#ffd9e2]/40 via-white to-[#ffe088]/30 border border-[#fda4c9] flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs">
               <div className="flex items-center gap-3.5">
                 <div className="relative shrink-0">
@@ -1397,10 +1397,10 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-xs sm:text-sm font-bold text-[#1c1c19]">
-                      Your Standing: <strong className="text-[#b1005e]">Marcus Vance</strong>
+                      Your Standing: <strong className="text-[#b1005e]">Growth Partner [DEV SAMPLE]</strong>
                     </span>
                     <span className="px-2 py-0.5 rounded-full bg-[#ffe088] text-[#241a00] text-[10px] font-bold">
-                      Gold Partner (NEX-88219)
+                      Growth Partner (REF-5A45019655)
                     </span>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#f6f3ee] text-[#594047] font-semibold flex items-center gap-1.5">
                       <span>Rank #{userPerformer.periodRank} in {currentConfig.shortLabel}</span>
@@ -1668,7 +1668,7 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
                   {[
                     { name: 'Aarav Singhania', label: 'Aarav' },
                     { name: 'Priya Sharma', label: 'Priya' },
-                    { name: 'Marcus Vance', label: 'Marcus (You)' },
+                    { name: 'Growth Partner [YOU, DEV SAMPLE]', label: 'Growth Partner (You)' },
                     { name: 'Tanvi Kapoor', label: 'Tanvi' },
                     { name: 'Vikramaditya Roy', label: 'Vikramaditya' },
                     { name: 'Harsh Vardhan', label: 'Harsh' }
@@ -1898,7 +1898,7 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {filteredPerformers.map((p) => {
-                    const isCurrentUser = p.id === 'NEX-88219';
+                    const isCurrentUser = p.id === 'REF-5A45019655';
 
                     return (
                       <div

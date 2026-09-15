@@ -22,7 +22,7 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
 }) => {
   // Referral State
   const [referralState, setReferralState] = useState<'valid' | 'invalid' | 'suspended' | 'expired' | 'standard'>('valid');
-  const [customRefCode, setCustomRefCode] = useState<string>('NEXORA-MARCUS88');
+  const [customRefCode, setCustomRefCode] = useState<string>('REF-5A45019655');
 
   // Form Fields
   const [salonName, setSalonName] = useState<string>('');
@@ -337,7 +337,7 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
                       <p className="text-xs sm:text-sm text-[#594047] leading-relaxed">
                         Growth Partner referral applied —{' '}
                         <strong className="text-[#1c1c19] font-bold">
-                          Marcus Vance (NEX-88219)
+                          Growth Partner [DEV SAMPLE] (REF-5A45019655)
                         </strong>
                         . Authorized Tier-1 Onboarding Associate.
                       </p>
@@ -509,11 +509,11 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
                     </div>
                   </div>
                   <button
-                    onClick={() => alert('Fresh link generation request sent to Marcus Vance via push notification.')}
+                    onClick={() => alert('Fresh link generation request sent to partner via push notification.')}
                     className="px-4 py-2.5 rounded-full bg-[#b1005e] text-white font-bold text-xs shadow-xs hover:bg-[#d91b77] cursor-pointer"
                     type="button"
                   >
-                    Request Fresh Link from Marcus Vance
+                    Request Fresh Link from Partner
                   </button>
                 </div>
               </div>
@@ -912,7 +912,7 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
                       />
                       <span className="text-xs text-[#594047] leading-relaxed">
                         I agree to the <strong className="text-[#b1005e]">Nexora Merchant Master Terms</strong>, RBI Merchant Guidelines, and verify that the partner referral attribution (
-                        <strong className="text-[#b1005e]">Marcus Vance #NEX-88219</strong>) displayed above is accurate and authorized for my onboarding allocation.
+                        <strong className="text-[#b1005e]">Growth Partner #REF-5A45019655</strong>) displayed above is accurate and authorized for my onboarding allocation.
                       </span>
                     </label>
                   </div>
@@ -949,12 +949,12 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
                     <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-[#b1005e]">
                       <img
                         className="w-full h-full object-cover"
-                        alt="Marcus Vance Senior Growth Advisor"
+                        alt="Growth Partner Advisor"
                         src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
                       />
                     </div>
                     <div>
-                      <h3 className="text-base font-extrabold text-[#1c1c19]">Marcus Vance</h3>
+                      <h3 className="text-base font-extrabold text-[#1c1c19]">Growth Partner [DEV SAMPLE]</h3>
                       <p className="text-[11px] text-[#594047]">
                         Nexora Senior Growth Advisor • Bengaluru Metro
                       </p>
@@ -1085,7 +1085,7 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
                 <div className="p-3 bg-[#f6f3ee] rounded-2xl border border-[#e5e2dd] flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#b1005e] animate-ping" />
-                    <span className="font-bold text-[#1c1c19]">Marcus Vance Onboarding Corridor</span>
+                    <span className="font-bold text-[#1c1c19]">Partner Onboarding Corridor</span>
                   </div>
                   <span className="text-[10px] text-[#594047] font-semibold">Live Territory</span>
                 </div>
@@ -1102,7 +1102,7 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
             <div className="w-16 h-16 rounded-full border-4 border-[#ffd9e2] border-t-[#b1005e] animate-spin mb-4" />
             <h4 className="text-lg font-black text-[#1c1c19] mb-1">Verifying Credentials</h4>
             <p className="text-xs sm:text-sm text-[#594047] mb-4">
-              Locking attribution to <strong className="text-[#b1005e]">Marcus Vance (NEX-88219)</strong> and generating 256-bit salon cryptographic token...
+              Locking attribution to <strong className="text-[#b1005e]">Growth Partner (REF-5A45019655)</strong> and generating 256-bit salon cryptographic token...
             </p>
             <div className="w-full bg-[#f0ede9] rounded-full h-2 overflow-hidden mb-2">
               <div className="bg-[#b1005e] h-full w-2/3 animate-pulse" />
@@ -1133,7 +1133,7 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
             <div className="bg-[#f6f3ee] rounded-2xl p-4 space-y-2 mb-4 border border-[#e5e2dd] text-xs">
               <div className="flex items-center justify-between">
                 <span className="text-[#594047]">Attributed Partner</span>
-                <span className="font-bold text-[#1c1c19]">Marcus Vance (#NEX-88219)</span>
+                <span className="font-bold text-[#1c1c19]">Growth Partner (#REF-5A45019655)</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-[#594047]">Welcome Bonus Allocated</span>

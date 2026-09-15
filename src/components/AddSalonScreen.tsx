@@ -233,7 +233,7 @@ export const AddSalonScreen: React.FC<AddSalonScreenProps> = ({
 
   // Quick WhatsApp link generator
   const getGeneratedInviteUrl = (salon = '') => {
-    const base = 'https://nexora.network/join?ref=NEX-88219';
+    const base = 'https://nexora.network/join?ref=REF-5A45019655';
     return salon ? `${base}&salon=${encodeURIComponent(salon.trim())}` : base;
   };
 
@@ -241,7 +241,7 @@ export const AddSalonScreen: React.FC<AddSalonScreenProps> = ({
     const sName = salonName.trim() || 'your salon';
     const oName = ownerName.trim() ? `Hi ${ownerName.trim()}, ` : 'Hi, ';
     const url = getGeneratedInviteUrl(salonName);
-    return `${oName}I am inviting ${sName} to partner with Nexora Merchant Network! 🌟\n\n✅ 0% MDR on UPI payments\n✅ Free 4G Multilingual Voice Soundbox\n✅ Same-day instant bank settlements (T+0)\n✅ Zero upfront setup cost\n\nActivate your salon QR in 3 minutes here: ${url}\n\nReferred by Marcus Vance (Partner ID: NEX-88219)`;
+    return `${oName}I am inviting ${sName} to partner with Nexora Merchant Network! 🌟\n\n✅ 0% MDR on UPI payments\n✅ Free 4G Multilingual Voice Soundbox\n✅ Same-day instant bank settlements (T+0)\n✅ Zero upfront setup cost\n\nActivate your salon QR in 3 minutes here: ${url}\n\nReferred by Growth Partner (Partner ID: REF-5A45019655)`;
   };
 
   const handleCopyQuickLink = () => {
@@ -300,7 +300,7 @@ export const AddSalonScreen: React.FC<AddSalonScreenProps> = ({
             <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#f6f3ee] border border-[#e5e2dd]">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className="text-xs font-semibold text-[#594047]">
-                Referring as <strong className="text-[#1c1c19]">Marcus Vance</strong> (NEX-88219)
+                Referring as <strong className="text-[#1c1c19]">Growth Partner [DEV SAMPLE]</strong> (REF-5A45019655)
               </span>
             </div>
             <NotificationBell onNavigateToReferrals={onNavigateToReferralTimeline} />
@@ -901,7 +901,7 @@ export const AddSalonScreen: React.FC<AddSalonScreenProps> = ({
                         <p className="leading-relaxed">
                           1. An automated DigiLocker KYC verification link will be dispatched to {formData.ownerName || 'the owner'} via WhatsApp.<br />
                           2. Hardware kit will be queued for 24h dispatch to {formData.locality}, {formData.city}.<br />
-                          3. Your partner account (NEX-88219) will be locked in as the referral beneficiary for all ongoing QR transactions.
+                          3. Your partner account (REF-5A45019655) will be locked in as the referral beneficiary for all ongoing QR transactions.
                         </p>
                       </div>
                     </div>
@@ -1235,14 +1235,14 @@ export const AddSalonScreen: React.FC<AddSalonScreenProps> = ({
                     Scan with any phone camera
                   </span>
                   <span className="text-[10px] text-[#594047]">
-                    Opens merchant signup with Marcus Vance pre-filled
+                    Opens merchant signup with Growth Partner pre-filled
                   </span>
                 </div>
 
                 <div className="w-full text-center">
                   <span className="text-xs text-[#594047]">Partner Referral ID</span>
                   <div className="text-sm font-extrabold text-[#b1005e] tracking-wider font-mono mt-0.5">
-                    NEX-88219
+                    REF-5A45019655
                   </div>
                 </div>
               </div>

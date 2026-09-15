@@ -114,7 +114,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
     estimatedDelivery: string;
   }>({
     asset: 'HP ProBook Laptop (Intel Core i5)',
-    awb: 'NX-AIR-99201',
+    awb: 'REF-AIR-5A450',
     carrier: 'BlueDart Express Air Cargo',
     estimatedDelivery: 'Nov 18, 2024 (In 48 Hours)'
   });
@@ -131,8 +131,8 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
     asset: 'Partner Welcome Merch Kit (Tier 1)',
     deliveredDate: 'Oct 14, 2024',
     carrierAwb: 'BlueDart #88391023',
-    signedBy: 'Marcus Vance (NEX-88219)',
-    serial: 'NX-KIT-2024-88219'
+    signedBy: 'Growth Partner [DEV SAMPLE]',
+    serial: 'REF-KIT-2025-SAMPLE'
   });
 
   // Criteria & Guidelines Modal
@@ -157,7 +157,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
   const [copiedLink, setCopiedLink] = useState(false);
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText('https://nexora.network/join?ref=NEX-88219');
+    navigator.clipboard.writeText('https://nexora.network/join?ref=REF-5A45019655');
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2500);
   };
@@ -219,8 +219,8 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
       carrier: 'BlueDart #88391023',
       date: 'Oct 14, 2024',
       actionType: 'pod',
-      serial: 'NX-KIT-2024-88219',
-      recipient: 'Marcus Vance'
+      serial: 'REF-KIT-2025-SAMPLE',
+      recipient: 'Growth Partner [DEV SAMPLE]'
     },
     {
       id: 2,
@@ -239,7 +239,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
       date: 'Nov 02, 2024',
       actionType: 'pod',
       serial: 'IMEI: 35829104-99120-01',
-      recipient: 'Marcus Vance (1-Yr Samsung Care)'
+      recipient: 'Growth Partner [DEV SAMPLE]'
     },
     {
       id: 3,
@@ -254,11 +254,11 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
       percentage: 100,
       statusLabel: 'In-Transit',
       statusColor: 'in-transit',
-      carrier: 'BlueDart Express Air #NX-AIR-99201',
+      carrier: 'BlueDart Express Air #REF-AIR-5A450',
       date: 'Est: Nov 18, 2024',
       actionType: 'tracking',
-      serial: 'HP-PB450-G10-99201',
-      recipient: 'Marcus Vance'
+      serial: 'HP-PB450-G10-SAMPLE',
+      recipient: 'Growth Partner [DEV SAMPLE]'
     },
     {
       id: 4,
@@ -345,7 +345,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs font-bold text-[#1c1c19]">Tier 2 Partner</span>
-                  <span className="text-[10px] text-[#594047] font-mono">NEX-88219</span>
+                  <span className="text-[10px] text-[#594047] font-mono">REF-5A45019655</span>
                 </div>
               </div>
               <span className="px-2 py-0.5 rounded-full bg-[#fda4c9]/40 text-[#7a3656] text-[10px] font-bold">
@@ -447,7 +447,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
             <span className="text-[11px] text-[#594047] uppercase font-bold tracking-wider">Compliance ID</span>
             <Lock className="w-3.5 h-3.5 text-[#8d6f77]" />
           </div>
-          <span className="text-xs font-mono font-bold text-[#1c1c19]">SEC-REG-99120-UK</span>
+          <span className="text-xs font-mono font-bold text-[#1c1c19]">COMPLIANCE-POLICY-AUDITED</span>
           <span className="text-[11px] text-[#594047]">Strict Section 194R statutory physical asset policy.</span>
         </div>
       </aside>
@@ -463,7 +463,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
             </div>
             <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ffd9e2] text-[#3e001d] font-bold text-xs">
               <ShieldCheck className="w-3.5 h-3.5 text-[#b1005e]" />
-              <span>Marcus Vance (NEX-88219)</span>
+              <span>Growth Partner [DEV SAMPLE]</span>
             </div>
           </div>
 
@@ -1079,7 +1079,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
                             milestone.title,
                             milestone.date || 'Oct 2024',
                             milestone.carrier || 'Direct Depot',
-                            milestone.recipient || 'Marcus Vance',
+                            milestone.recipient || 'Growth Partner [DEV SAMPLE]',
                             milestone.serial || 'NX-SLA-001'
                           )
                         }
@@ -1199,7 +1199,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
                     District Partner Mahindra XUV700 / Tata Harrier SUV
                   </h3>
                   <p className="text-xs text-[#594047] max-w-2xl mt-1">
-                    Top-spec luxury executive SUV awarded upon securing 1,000 verified, active merchant nodes across designated commercial districts. Includes zero-liability maintenance pack and official partner livery option.
+                    Top-spec luxury executive SUV awarded upon securing 1,000 verified, active merchant nodes across designated commercial districts. Includes comprehensive partner maintenance pack and official partner livery option.
                   </p>
                   <div className="mt-4 flex items-center gap-6">
                     <div className="flex items-baseline gap-2">
@@ -1343,7 +1343,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
                   <span className="text-[11px] text-[#594047] uppercase font-bold">Claiming Asset:</span>
                   <h4 className="text-lg font-bold text-[#b1005e]">{selectedAssetForClaim}</h4>
                   <p className="text-xs text-[#594047] mt-1">
-                    Recipient: <strong>Marcus Vance (NEX-88219)</strong> • Delivery Address: Flat 402, Prestige Heights, Indiranagar, Bangalore, KA 560038.
+                    Recipient: <strong>Growth Partner [DEV SAMPLE] (REF-5A45019655)</strong> • Delivery Address: Flat 402, Prestige Heights, Indiranagar, Bangalore, KA 560038.
                   </p>
                 </div>
 
@@ -1749,7 +1749,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
                   <CheckCircle2 className="w-8 h-8 text-[#b1005e] mx-auto" />
                   <h4 className="font-bold text-sm text-[#3e001d]">Request Registered!</h4>
                   <p className="text-xs text-[#3e001d]">
-                    A Senior Growth Director will contact Marcus Vance (+91 •••• 9104) within 4 business hours with territory mapping tools.
+                    A Senior Growth Director will contact the Growth Partner (+91 •••• 9104) within 4 business hours with territory mapping tools.
                   </p>
                 </div>
               ) : (

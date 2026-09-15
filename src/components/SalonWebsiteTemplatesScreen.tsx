@@ -420,7 +420,7 @@ export const SalonWebsiteTemplatesScreen: React.FC<SalonWebsiteTemplatesScreenPr
             <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffd9e2]/60 text-[#8e004a] text-xs font-bold shadow-2xs border border-[#fda4c9]/50">
               <span className="material-symbols-outlined text-[16px]">verified</span>
               <span>
-                Referral Applied: <strong className="tracking-wide">NEXORA-MARCUS88</strong>
+                Referral Applied: <strong className="tracking-wide">REF-5A45019655</strong>
               </span>
             </div>
 
@@ -1123,7 +1123,7 @@ export const SalonWebsiteTemplatesScreen: React.FC<SalonWebsiteTemplatesScreenPr
                 {launchSuccessModal.title} Confirmed!
               </h3>
               <p className="text-xs sm:text-sm text-[#594047] mt-1 leading-relaxed">
-                Obfuscated Session Token <strong className="text-[#1c1c19] font-mono">NX-9984-OBF</strong> attached. Your partner discount of 2.2% payment MDR waiver has been locked under sponsor Marcus Vance.
+                Session Token attached. Your partner referral benefits have been locked under partner REF-5A45019655.
               </p>
             </div>
 
