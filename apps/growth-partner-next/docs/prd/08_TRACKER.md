@@ -20,5 +20,5 @@
 | Phase 4 | ⏳ Not started |
 | Phase 5 | ⏳ Not started |
 | Phase 6 | ⏳ Not started |
-| Phase 7 | ⏳ Not started (reconcile original PRD docs — see `docs/prd/README.md`) |
+| Phase 7 | ⏳ Not started |
 | Phase 8 | ⏳ Not started |

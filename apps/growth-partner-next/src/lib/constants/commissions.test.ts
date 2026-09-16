@@ -41,6 +41,14 @@ describe('commission rule contract', () => {
     expect(formatINR(activationReward)).toBe('₹150.00');
   });
 
+  it('reproduces the ₹50,000 → ₹5,000 → ₹500 onboarding example', () => {
+    const companyCommission = computeCompanyCommissionPaise(50_000 * 100);
+    const onboardingReward = computeActivationRewardPaise(companyCommission);
+
+    expect(companyCommission).toBe(500_000); // ₹5,000
+    expect(onboardingReward).toBe(50_000); // ₹500
+  });
+
   it('a day qualifies only at >= ₹1,000 of GENUINE business', () => {
     expect(dayQualifies(100_000, true)).toBe(true);
     expect(dayQualifies(99_999, true)).toBe(false);

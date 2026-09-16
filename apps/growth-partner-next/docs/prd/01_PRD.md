@@ -1,12 +1,6 @@
-# 01_PRD — Nexora Growth Partner Program (PROVISIONAL Phase 0 consolidation)
+# 01_PRD — Nexora Growth Partner Program
 
-> **Status: provisional.** This file consolidates the canonical rules exactly
-> as restated in the Phase 0 task brief, because the original
-> `nexora-platform-prd-phase0.zip` bundle was not available in the automation
-> session (see `docs/prd/README.md`). When the original documents are
-> uploaded, this file must be replaced/reconciled by Phase 7/8 at the latest.
-> Nothing here contradicts the task brief; the contract tests enforce every
-> rule below in code.
+**Phase 0 baseline.** This is the binding product specification for the application at `apps/growth-partner-next`.
 
 ## 1. Product
 

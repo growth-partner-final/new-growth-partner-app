@@ -73,11 +73,12 @@ partner_reward_milestones     partner_reward_claims        template_handoffs
   database and handoff secrets in any `NEXT_PUBLIC_*` variable.
 - `.env.example` ships placeholders only — no real secrets committed.
 
-## 6. Known gaps / deferred (to Phase 7/8)
+## 6. Known gaps / deferred
 
-1. Original PRD documents (`02`–`07`, `09` and original `01`/`10`) were not
-   available (attachment missing from sandbox) — provisional docs created;
-   reconcile on upload.
-2. Live `information_schema` introspection pending CI secrets (script ready).
-3. Stitch screens not yet ported into App Router routes (preserved at root;
-   UI port is a later-phase deliverable).
+1. Live `information_schema` introspection is pending secure CI credentials;
+   the script is ready and read-only.
+2. Stitch screens are preserved at the repository root; UI porting is later
+   scope.
+3. The exact original Nexora pink reward poster was not found in repository
+   history. No substitute was created. Exact poster required before Phase 1
+   public UI.

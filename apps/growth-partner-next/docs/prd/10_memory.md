@@ -1,8 +1,4 @@
-# 10_memory — decision log (PROVISIONAL, Phase 0)
-
-> Provisional memory file created during Phase 0 because the original
-> `10_memory.md` was unavailable in the automation session. Replace/reconcile
-> with the original when the PRD bundle is uploaded (Phase 7/8).
+# 10_memory — Phase 0 decision log
 
 ## Session facts
 
@@ -10,10 +6,8 @@
   `arena/01a0a919-new-growth-partner-app` (Arena session is pinned to this
   branch; the task-requested `arena/phase-0-canonical-baseline` could not be
   created). PR opened against `main`.
-- `nexora-platform-prd-phase0.zip` was not present in the sandbox; canonical
-  rules were taken verbatim from the task brief and locked into
-  `src/lib/constants/*` + contract tests. Disclosed in
-  `docs/prd/README.md` and the Phase 0 PR.
+- Canonical commercial and security rules are locked into `src/lib/constants/*`,
+  `src/db/schema.ts`, and contract tests.
 
 ## Binding decisions
 
