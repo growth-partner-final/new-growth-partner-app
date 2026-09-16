@@ -308,8 +308,10 @@ export const commissionPlanVersions = pgTable(
 );
 
 /**
- * commission_events — every money movement owed to/earned by a partner:
- *   company_commission · activation_reward · recurring_share (by month_index)
+ * commission_events — every money movement owed to/earned by a partner.
+ * Ledger types (see COMMISSION_EVENT_TYPES): company_commission ·
+ * onboarding_reward · recurring_growth_share (one row per month_index).
+ * One-time rewards and recurring shares are ALWAYS separate rows.
  * Append-only ledger rows; settlement rows live in payments.
  */
 export const commissionEvents = pgTable(

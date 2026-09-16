@@ -1,6 +1,8 @@
-# Phase 0 — live audit report
+# Phase 0 — live audit report (detailed)
 
-**Date:** 2026-09-16 · **Branch:** `arena/01a0a919-new-growth-partner-app` · **Supabase project:** `qwaehqsmodekbgvnaavz`
+**Date:** 2026-09-16 · **Branch:** `arena/01a0a919-new-growth-partner-app` · **PR:** #1 → `main`
+**Approved Supabase project:** `qwaehqsmodekbgvnaavz` (`https://qwaehqsmodekbgvnaavz.supabase.co`)
+**Synchronized summary:** `docs/PHASE_0_LIVE_AUDIT.md`
 
 ---
 
@@ -8,16 +10,15 @@
 
 | Item | Finding | Disposition |
 | ---- | ------- | ----------- |
-| App at repo root | Vite + React 19 "Stitch" prototype (`index.html`, `src/` with 58 source files — partner, salon, ops, milestone screens; `index.html` title "Nexora Growth Partner") | **Preserved untouched.** Not renamed, deleted or overwritten. |
-| Root `package.json` | `react-example` Vite scripts, `@supabase/supabase-js` present | Unchanged. No version edits. |
+| App at repo root | Vite + React 19 Stitch prototype (`index.html`, `src/` — 58 source files incl. partner, salon, ops, milestone screens; title "Nexora Growth Partner") | **Preserved untouched.** Not renamed, deleted or overwritten; never production-wired. |
+| Root `package.json` | `react-example` Vite scripts, `@supabase/supabase-js` present | Unchanged. |
 | Root `.env.example` | Vite-style `VITE_SUPABASE_URL` placeholders | Unchanged. |
-| Existing type layer | `src/types/database.ts` (prototype entities, dev/demo fields) | Unchanged; the canonical contract now lives in `apps/growth-partner-next/src/db/`. |
-| Docs / PRD | No `docs/` or PRD files existed (attachment `nexora-platform-prd-phase0.zip` not present in sandbox) | Scaffolded under `apps/growth-partner-next/docs/` with disclosure. |
+| PRD set | `docs/prd/01…10` + README | Complete binding set authored in-repo (no stubs, no placeholders). |
 
 ## 2. Canonical schema inventory (task 0.1 → PASS)
 
-The existing live schema consists of these **17 snake_case tables**, now the
-binding contract (`src/db/canonical.ts`):
+The approved project's live schema contract is these **17 snake_case tables**
+(`src/db/canonical.ts`):
 
 ```
 profiles                      growth_partners              partner_referrals
@@ -28,57 +29,58 @@ partner_shop_daily_qualification                 partner_shop_onboarding_rewards
 partner_reward_milestones     partner_reward_claims        template_handoffs
 ```
 
-- **Audit mode:** `STATIC` + `LIVE(opt-in)`. Static mode diffs the Drizzle
-  mappings against the canonical list (see §4). Live mode is shipped as
-  `npm run audit:schema` with `SUPABASE_DB_URL` set — it performs **read-only**
-  `information_schema` introspection and diffs live tables vs the canonical
-  list. It was not executed live in this sandbox because no database
-  credentials exist here (and would be a secret-handling violation to
-  fabricate). Run it in CI with secrets to (re)generate a live report.
+- **Audit mode:** `STATIC` + `LIVE(opt-in)`. Static diffs Drizzle mappings vs
+  the canonical list. Live mode (`SUPABASE_DB_URL` set) performs read-only
+  `information_schema` introspection; it was not executed here because no
+  database credentials exist in this environment (and minting any would be a
+  secret-handling violation).
 - **Duplicates check:** no `GrowthPartner`, `Salon`, `ShopPayments`,
-  `PartnerEarnings` (or other legacy/camelCase) models are introduced —
-  enforced by `schema.contract.test.ts`.
+  `PartnerEarnings` (or other legacy/camelCase) models — enforced by
+  `schema.contract.test.ts`.
 
 ## 3. Drizzle canonical mappings (task 0.2 → PASS)
 
 - `src/db/schema.ts` maps **exactly** the 17 canonical tables (set-equality
   test), all snake_case, every table with a primary key.
-- Canonical rules embedded as defaults in `commission_plan_versions`:
-  min ₹1,000/day (100_000 paise) · 15 consecutive days · 10% company
-  commission · 10% activation reward · recurring 10% (m1–6) / 5% (m7–12) /
-  2% (>12) — asserted by contract test.
+- Locked defaults embedded in `commission_plan_versions`: min ₹1,000/day
+  (100_000 paise) · 15 consecutive days · 10% company commission · 10%
+  onboarding reward · recurring 10% (m1–6) / 5% (m7–12) / 2% (>12).
 - Money columns are integer paise (`*_paise`); rates are basis points.
-- **No migration tooling/output exists** (no drizzle-kit folder); mappings
-  are a contract/read-write layer only.
+- **No migration tooling/output exists**; mappings are a contract layer only.
 
 ## 4. Verification results
 
-| Check | Result |
-| ----- | ------ |
-| `npm install` | ✅ clean |
-| TypeScript (`tsc --noEmit`) | ✅ pass, 0 errors |
-| Contract/unit tests (`vitest run`) | ✅ pass |
-| Production build (`next build`) | ✅ pass |
-| Static schema audit (`npm run audit:schema`) | ✅ mappings == canonical list |
-| Duplicate DB model introduced | ❌ none (forbidden-name tests green) |
-| DB migration applied | ❌ none — no migration files exist |
-| Production data mutated | ❌ none — Phase 0 performs no writes |
+| Gate | Result |
+| ---- | ------ |
+| `npm ci` | ✅ clean |
+| `npm run typecheck` | ✅ 0 errors |
+| `npm test` | ✅ all suites pass (env · schema contract · rewards · commissions · PRD contract) |
+| `npm run build` | ✅ production build, type-checked |
+| `npm run audit:schema` (static) | ✅ 17/17 |
+| Duplicate DB model introduced | ✅ none (forbidden-name tests green) |
+| DB migration applied | ✅ none — no migration files exist |
+| Production data mutated | ✅ none — Phase 0 performs no writes |
+| Committed artifacts | ✅ no `.env`, secrets, `node_modules`, `.next`, `*.tsbuildinfo`, or generated poster |
 
 ## 5. Security posture
 
-- `NEXT_PUBLIC_SUPABASE_URL` hard-locked to
-  `https://qwaehqsmodekbgvnaavz.supabase.co` (`src/env.ts`, tested).
-- Only `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` are
-  browser-visible; `assertNoSecretsInPublicEnv()` + tests block service-role,
-  database and handoff secrets in any `NEXT_PUBLIC_*` variable.
-- `.env.example` ships placeholders only — no real secrets committed.
+- `NEXT_PUBLIC_SUPABASE_URL` hard-locked to the approved project; foreign
+  URLs rejected by validation and tests (`env.test.ts`, `prd.contract.test.ts`).
+- Only public URL + anon key are browser-visible;
+  `assertNoSecretsInPublicEnv()` + tests block service-role, database and
+  handoff secrets in any `NEXT_PUBLIC_*` variable.
+- `.env.example` ships placeholders only.
 
-## 6. Known gaps / deferred
+## 6. Poster asset status
 
-1. Live `information_schema` introspection is pending secure CI credentials;
-   the script is ready and read-only.
-2. Stitch screens are preserved at the repository root; UI porting is later
-   scope.
-3. The exact original Nexora pink reward poster was not found in repository
-   history. No substitute was created. Exact poster required before Phase 1
-   public UI.
+No Nexora reward poster exists in the repository or reachable git history;
+no image assets are tracked anywhere. No substitute was generated or
+committed. **Exact original poster required before Phase 1 public UI.**
+
+## 7. Known gaps / deferred
+
+1. Live `information_schema` introspection pending CI secrets (script ready,
+   read-only).
+2. Public landing UI (Phase 1), Auth (2), onboarding/handoff (3), payments &
+   qualification (4), milestones (5), payouts (6), copy reconciliation (7),
+   hardening (8) — per `09_Phases.md`.

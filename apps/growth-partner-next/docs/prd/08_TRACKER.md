@@ -7,14 +7,20 @@
 
 | #   | Task                        | Status        | Evidence |
 | --- | --------------------------- | ------------- | -------- |
-| 0.1 | Existing schema inventory   | ✅ **PASS**   | Canonical inventory of all 17 live tables encoded in `src/db/canonical.ts` (+ `scripts/audit-schema.ts` static/live diff). See `docs/audits/PHASE_0_LIVE_AUDIT.md`. |
-| 0.2 | Drizzle canonical mappings  | ✅ **PASS**   | `src/db/schema.ts` maps exactly the 17 canonical tables; `src/db/schema.contract.test.ts` enforces set-equality, snake_case names, forbidden duplicates and PRD defaults. Vitest suite green. |
+| 0.1 | Existing schema inventory   | ✅ **PASS**   | Canonical inventory of all 17 live tables encoded in `src/db/canonical.ts` (+ `scripts/audit-schema.ts` static/live diff). See `docs/PHASE_0_LIVE_AUDIT.md` and `docs/audits/PHASE_0_LIVE_AUDIT.md`. |
+| 0.2 | Drizzle canonical mappings  | ✅ **PASS**   | `src/db/schema.ts` maps exactly the 17 canonical tables; `src/db/schema.contract.test.ts` enforces set-equality, snake_case names, forbidden duplicates and PRD defaults. Vitest suites green. |
+
+## Phase 1 prerequisites (recorded, not complete)
+
+- **Exact original poster required before Phase 1 public UI** — the official
+  Nexora reward poster (seven final rewards) was not found in the repository
+  or reachable git history. No substitute was generated and none may be used.
 
 ## Later phases — explicitly NOT complete
 
 | Phase | Status |
 | ----- | ------ |
-| Phase 1 | ⏳ Not started |
+| Phase 1 | ⏳ Not started (poster's prerequisite open) |
 | Phase 2 | ⏳ Not started |
 | Phase 3 | ⏳ Not started |
 | Phase 4 | ⏳ Not started |
