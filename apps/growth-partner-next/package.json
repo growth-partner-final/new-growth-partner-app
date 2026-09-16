@@ -1,0 +1,33 @@
+{
+  "name": "growth-partner-next",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Nexora Growth Partner platform — Next.js App Router + TypeScript + Drizzle ORM on the canonical Supabase project (qwaehqsmodekbgvnaavz). Phase 0 baseline.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "audit:schema": "tsx scripts/audit-schema.ts",
+    "verify": "npm run typecheck && npm run test && npm run build && npm run audit:schema"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.58.0",
+    "drizzle-orm": "^0.44.5",
+    "next": "~15.5.4",
+    "postgres": "^3.4.5",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "tsx": "^4.20.5",
+    "typescript": "~5.8.3",
+    "vitest": "^3.2.4"
+  }
+}
