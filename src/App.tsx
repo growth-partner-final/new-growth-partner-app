@@ -69,317 +69,11 @@ function MainApp() {
 
   return (
     <div className="min-h-screen bg-[#fcf9f4] text-[#1c1c19] flex flex-col font-sans relative selection:bg-[#fda4c9]">
-      {/* Top Floating View Switcher Bar */}
-      <div className="sticky top-0 z-50 w-full bg-[#31302d] text-white py-1.5 px-4 text-xs flex items-center justify-between shadow-md">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span className="font-bold tracking-tight">Nexora Growth Ecosystem</span>
-        </div>
-        <div className="flex items-center gap-1.5 flex-wrap">
-          <button
-            onClick={() => setCurrentScreen('prototype-orchestrator')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'prototype-orchestrator'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>🧭</span>
-            <span>Prototype Hub &amp; Orchestrator</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('journey-navigator')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'journey-navigator'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>📲</span>
-            <span>Mobile Journey Navigator</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('ops-milestone-claims')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'ops-milestone-claims'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>🛡️</span>
-            <span>Ops Console Claims</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('mobile-rewards')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'mobile-rewards'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>📱</span>
-            <span>Mobile Rewards</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('partner-levels')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'partner-levels'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>🏆</span>
-            <span>Partner Levels</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('mobile-marketing')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'mobile-marketing'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>📢</span>
-            <span>Mobile Marketing</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('marketing-material')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'marketing-material'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>🖼️</span>
-            <span>Marketing Materials</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('milestone-unlock')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'milestone-unlock'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>🎉</span>
-            <span>Milestone 3 Unlock</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('milestone-claims')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'milestone-claims'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>🏆</span>
-            <span>Rewards &amp; Milestones</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('extra-onboarding-reward')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'extra-onboarding-reward'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>🎁</span>
-            <span>Extra Reward Structure</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('earnings-ledger')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'earnings-ledger'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>💰</span>
-            <span>Earnings &amp; Ledger</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('handoff-hub')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'handoff-hub'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>🛡️</span>
-            <span>Handoff Hub</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('secure-handoff')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'secure-handoff'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>🔐</span>
-            <span>Secure Handoff</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('profile-settings')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'profile-settings'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>👤</span>
-            <span>Partner Settings</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('website-templates')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'website-templates'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>🎨</span>
-            <span>Website Templates</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('mobile-fast-track')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'mobile-fast-track'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>📍</span>
-            <span>Mobile Step 3 (Fast-Track)</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('step-audit-workspace')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'step-audit-workspace'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>📋</span>
-            <span>5-Step Audit Workspace</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('locked-onboarding')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'locked-onboarding'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>🔒</span>
-            <span>Locked Referral Onboarding</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('merchant-register')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'merchant-register'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>📝</span>
-            <span>Merchant Register Portal</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('share-earn')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'share-earn'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#ffd9e2] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>📲</span>
-            <span>Share &amp; Earn (QR)</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('add-salon')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-              currentScreen === 'add-salon'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-[#fda4c9] hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <span>➕</span>
-            <span>Refer New Salon</span>
-          </button>
-          <button
-            onClick={() => setCurrentScreen('salon-intelligence')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-              currentScreen === 'salon-intelligence'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-zinc-300 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            💈 Salon Intelligence
-          </button>
-          <button
-            onClick={() => setCurrentScreen('leaderboard')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-              currentScreen === 'leaderboard'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-zinc-300 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            🏆 Top Performers
-          </button>
-          <button
-            onClick={() => setCurrentScreen('referral-timeline')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-              currentScreen === 'referral-timeline'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-zinc-300 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            ⏱️ Referral Timeline
-          </button>
-          <button
-            onClick={() => setCurrentScreen('referral-history')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-              currentScreen === 'referral-history'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-zinc-300 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            📋 Referral History
-          </button>
-          <button
-            onClick={() => setCurrentScreen('dashboard')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-              currentScreen === 'dashboard'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-zinc-300 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            📊 Partner Telemetry
-          </button>
-          <button
-            onClick={() => setCurrentScreen('auth')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-              currentScreen === 'auth'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-zinc-300 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            🔐 Auth &amp; Enrollment
-          </button>
-          <button
-            onClick={() => setCurrentScreen('hub')}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-              currentScreen === 'hub'
-                ? 'bg-[#d91b77] text-white shadow-xs'
-                : 'text-zinc-300 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            🚀 Program Hub &amp; Ladder
-          </button>
-        </div>
-      </div>
-
+      <Header
+        onOpenApply={() => setIsApplyOpen(true)}
+        onOpenSupport={() => setIsSupportOpen(true)}
+        registeredPartner={registeredPartner}
+      />
       {currentScreen === 'prototype-orchestrator' ? (
         /* SCREEN: Prototype Hub & Journey Orchestrator (Live Diagnostic Sandbox & 18-Route Register) */
         <PrototypeHubOrchestratorScreen
@@ -411,6 +105,14 @@ function MainApp() {
           onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
           onNavigateToPartnerLevels={() => setCurrentScreen('partner-levels')}
           onNavigateToNotifications={() => setCurrentScreen('partner-notifications')}
+        />
+      ) : currentScreen === 'partner-notifications' ? (
+        /* SCREEN: Partner Notifications Hub */
+        <PartnerNotificationsScreen
+          onNavigateToHub={() => setCurrentScreen('hub')}
+          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+          onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
+          onNavigateToWithdrawals={() => setCurrentScreen('withdrawals')}
         />
       ) : currentScreen === 'journey-navigator' ? (
         /* SCREEN: Mobile Journey Navigator (Canary Sandbox & Mobile UX Sandbox) */
@@ -855,6 +557,9 @@ function MainApp() {
           onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
           onNavigateToWithdrawals={() => setCurrentScreen('withdrawals')}
           onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
+          onNavigateToPartnerLevels={() => setCurrentScreen('partner-levels')}
+          onNavigateToNotifications={() => setCurrentScreen('partner-notifications')}
+          onNavigateToSupport={() => setIsSupportOpen(true)}
         />
       ) : currentScreen === 'auth' ? (
         /* SCREEN 3: Partner Auth Master Portal */

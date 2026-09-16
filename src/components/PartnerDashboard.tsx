@@ -7,6 +7,9 @@ interface PartnerDashboardProps {
   onNavigateToEarningsLedger?: () => void;
   onNavigateToWithdrawals?: () => void;
   onNavigateToMarketingMaterial?: () => void;
+  onNavigateToPartnerLevels?: () => void;
+  onNavigateToNotifications?: () => void;
+  onNavigateToSupport?: () => void;
 }
 
 export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
@@ -15,7 +18,10 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
   onNavigateToLeaderboard,
   onNavigateToEarningsLedger,
   onNavigateToWithdrawals,
-  onNavigateToMarketingMaterial
+  onNavigateToMarketingMaterial,
+  onNavigateToPartnerLevels,
+  onNavigateToNotifications,
+  onNavigateToSupport
 }) => {
   const [activeState, setActiveState] = useState<'active' | 'empty' | 'restricted' | 'skeleton' | 'error'>('active');
   const [copied, setCopied] = useState<boolean>(false);
@@ -129,9 +135,9 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
               { label: 'Earnings', icon: 'account_balance_wallet', action: onNavigateToEarningsLedger },
               { label: 'Withdrawals', icon: 'payments', action: onNavigateToWithdrawals },
               { label: 'Marketing Material', icon: 'campaign', action: onNavigateToMarketingMaterial },
-              { label: 'Partner Levels', icon: 'stars', action: undefined },
-              { label: 'Notifications', icon: 'notifications', action: undefined },
-              { label: 'Support', icon: 'headset_mic', action: undefined }
+              { label: 'Partner Levels', icon: 'stars', action: onNavigateToPartnerLevels },
+              { label: 'Notifications', icon: 'notifications', action: onNavigateToNotifications },
+              { label: 'Support', icon: 'headset_mic', action: onNavigateToSupport }
             ].map((item) => {
               if (item.action) {
                 return (

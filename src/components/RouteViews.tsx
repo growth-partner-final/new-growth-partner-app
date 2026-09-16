@@ -246,7 +246,7 @@ export const PartnerApplicationStatusView: React.FC<{ onNavigate: (path: string)
           <span className="font-bold text-[#1c1c19]">Application ID:</span>
           <span className="font-mono text-[#b1005e] font-bold">APP-DEV-2025</span>
         </div>
-        <div class="flex items-center justify-between text-xs">
+        <div className="flex items-center justify-between text-xs">
           <span className="font-bold text-[#1c1c19]">Assigned Referral Code:</span>
           <span className="font-mono text-[#b1005e] font-bold">{STANDARD_REFERRAL_CODE}</span>
         </div>

@@ -799,7 +799,7 @@ export function PartnerMarketingMaterialScreen({
 
                       <div className="space-y-1">
                         <h2 className="font-headline-sm text-headline-sm text-on-surface font-bold">7-Stage Milestone &amp; Income Ladder</h2>
-                        <p class="font-body-sm text-body-sm text-on-surface-variant">
+                        <p className="font-body-sm text-body-sm text-on-surface-variant">
                           High-resolution vertical poster showcasing the ₹5,00,000 cumulative bonus trajectory from Rising Star to Global Ambassador.
                         </p>
                       </div>
@@ -1409,11 +1409,11 @@ export function PartnerMarketingMaterialScreen({
                         </div>
                       </div>
                       <div className="space-y-2 py-4 relative z-10">
-                        <div className="flex items-center gap-2 pl-12"><div class="w-5 h-5 rounded-full bg-amber-400 text-black flex items-center justify-center text-[10px] font-bold">7</div><span class="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 7: Global Ambassador (₹5,00,000)</span></div>
-                        <div className="flex items-center gap-2 pl-9"><div class="w-5 h-5 rounded-full bg-amber-300 text-black flex items-center justify-center text-[10px] font-bold">6</div><span class="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 6: President (₹3,00,000)</span></div>
-                        <div className="flex items-center gap-2 pl-6"><div class="w-5 h-5 rounded-full bg-pink-300 text-black flex items-center justify-center text-[10px] font-bold">5</div><span class="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 5: Vice President (₹1,50,000)</span></div>
-                        <div className="flex items-center gap-2 pl-3"><div class="w-5 h-5 rounded-full bg-pink-400 text-white flex items-center justify-center text-[10px] font-bold">4</div><span class="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 4: Director (₹75,000)</span></div>
-                        <div className="flex items-center gap-2 pl-0"><div class="w-5 h-5 rounded-full bg-pink-500 text-white flex items-center justify-center text-[10px] font-bold">1</div><span class="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 1: Rising Star (₹5,000)</span></div>
+                        <div className="flex items-center gap-2 pl-12"><div className="w-5 h-5 rounded-full bg-amber-400 text-black flex items-center justify-center text-[10px] font-bold">7</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 7: Global Ambassador (₹5,00,000)</span></div>
+                        <div className="flex items-center gap-2 pl-9"><div className="w-5 h-5 rounded-full bg-amber-300 text-black flex items-center justify-center text-[10px] font-bold">6</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 6: President (₹3,00,000)</span></div>
+                        <div className="flex items-center gap-2 pl-6"><div className="w-5 h-5 rounded-full bg-pink-300 text-black flex items-center justify-center text-[10px] font-bold">5</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 5: Vice President (₹1,50,000)</span></div>
+                        <div className="flex items-center gap-2 pl-3"><div className="w-5 h-5 rounded-full bg-pink-400 text-white flex items-center justify-center text-[10px] font-bold">4</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 4: Director (₹75,000)</span></div>
+                        <div className="flex items-center gap-2 pl-0"><div className="w-5 h-5 rounded-full bg-pink-500 text-white flex items-center justify-center text-[10px] font-bold">1</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 1: Rising Star (₹5,000)</span></div>
                       </div>
                       <div className="text-[10px] text-pink-200 text-center relative z-10">Unlock Your Financial Future • Nexora Luxury Fintech 2024</div>
                     </div>
