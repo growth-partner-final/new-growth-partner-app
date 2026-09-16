@@ -4,10 +4,11 @@ import { ASSETS } from '../data/partnerData';
 interface HeaderProps {
   onOpenApply: () => void;
   onOpenSupport: () => void;
+  onNavigateToHome: () => void;
   registeredPartner: { name: string; partnerId: string } | null;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenApply, onOpenSupport, registeredPartner }) => {
+export const Header: React.FC<HeaderProps> = ({ onOpenApply, onOpenSupport, onNavigateToHome, registeredPartner }) => {
   return (
     <header className="fixed top-0 w-full z-40 pt-safe bg-[#fcf9f4]/85 backdrop-blur-xl border-b border-[#e5e2dd]/60 shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
       <div className="max-w-4xl mx-auto h-16 px-4 flex items-center justify-between gap-2">
@@ -16,7 +17,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenApply, onOpenSupport, regi
           <img
             src={ASSETS.logo}
             alt="Nexora Growth Partner Logo"
-            className="h-8 w-auto object-contain shrink-0 rounded"
+            className="h-8 w-auto object-contain shrink-0 rounded cursor-pointer"
+            onClick={onNavigateToHome}
             onError={(e) => {
               // Fallback logo placeholder if network image fails
               (e.currentTarget as HTMLElement).style.display = 'none';
@@ -24,7 +26,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenApply, onOpenSupport, regi
           />
           <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-1.5 flex-wrap">
-              <span className="font-bold text-lg tracking-tight text-[#1c1c19] truncate">
+              <span 
+                className="font-bold text-lg tracking-tight text-[#1c1c19] truncate cursor-pointer"
+                onClick={onNavigateToHome}
+              >
                 Nexora
               </span>
               <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-[#fda4c9]/40 text-[#7a3656] text-[11px] font-bold shrink-0">
@@ -39,6 +44,13 @@ export const Header: React.FC<HeaderProps> = ({ onOpenApply, onOpenSupport, regi
 
         {/* Right CTA / User Status */}
         <div className="flex items-center gap-2 shrink-0">
+          <button
+            onClick={onNavigateToHome}
+            className="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold text-[#594047] hover:text-[#b1005e] transition-colors cursor-pointer"
+          >
+            <span className="material-symbols-outlined text-sm">home</span>
+            Home
+          </button>
           {registeredPartner ? (
             <div 
               onClick={onOpenApply}

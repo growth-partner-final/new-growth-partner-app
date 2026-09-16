@@ -12,6 +12,7 @@ import { FraudNotice } from './components/FraudNotice';
 import { FAQSection } from './components/FAQSection';
 import { FinalCTA } from './components/FinalCTA';
 import { BottomNav } from './components/BottomNav';
+import { BackButton } from './components/BackButton';
 import { ApplicationModal } from './components/ApplicationModal';
 import { SupportModal } from './components/SupportModal';
 import { AuthScreen } from './components/AuthScreen';
@@ -72,6 +73,7 @@ function MainApp() {
       <Header
         onOpenApply={() => setIsApplyOpen(true)}
         onOpenSupport={() => setIsSupportOpen(true)}
+        onNavigateToHome={() => setCurrentScreen('hub')}
         registeredPartner={registeredPartner}
       />
       {currentScreen === 'prototype-orchestrator' ? (
@@ -500,13 +502,16 @@ function MainApp() {
         />
       ) : currentScreen === 'add-salon' ? (
         /* SCREEN: Refer / Add New Salon */
-        <AddSalonScreen
-          onNavigateBack={() => setCurrentScreen('salon-intelligence')}
-          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
-          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
-          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
-          onNavigateToHub={() => setCurrentScreen('hub')}
-        />
+        <div className="pt-20 px-4">
+          <BackButton onClick={() => setCurrentScreen('hub')} />
+          <AddSalonScreen
+            onNavigateBack={() => setCurrentScreen('salon-intelligence')}
+            onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+            onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+            onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+            onNavigateToHub={() => setCurrentScreen('hub')}
+          />
+        </div>
       ) : currentScreen === 'leaderboard' ? (
         /* SCREEN 1: Top Performers Leaderboard */
         <TopPerformersLeaderboard
@@ -529,38 +534,47 @@ function MainApp() {
         />
       ) : currentScreen === 'referral-history' ? (
         /* SCREEN: Referral History & Stage Portfolio Ledger */
-        <ReferralHistoryScreen
-          onNavigateToDashboard={() => setCurrentScreen('dashboard')}
-          onNavigateToHub={() => setCurrentScreen('hub')}
-          onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
-          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
-          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
-          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
-        />
+        <div className="pt-20 px-4">
+          <BackButton onClick={() => setCurrentScreen('hub')} />
+          <ReferralHistoryScreen
+            onNavigateToDashboard={() => setCurrentScreen('dashboard')}
+            onNavigateToHub={() => setCurrentScreen('hub')}
+            onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
+            onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+            onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+            onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          />
+        </div>
       ) : currentScreen === 'salon-intelligence' ? (
         /* SCREEN 3: Growth Partner Intelligence (Salon Distribution Network) */
-        <SalonIntelligenceDashboard
-          onNavigateToAuth={() => setCurrentScreen('auth')}
-          onNavigateToHub={() => setCurrentScreen('hub')}
-          onNavigateToWorkspace={() => setCurrentScreen('dashboard')}
-          onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
-          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
-          onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
-          onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
-        />
+        <div className="pt-20 px-4">
+          <BackButton onClick={() => setCurrentScreen('hub')} />
+          <SalonIntelligenceDashboard
+            onNavigateToAuth={() => setCurrentScreen('auth')}
+            onNavigateToHub={() => setCurrentScreen('hub')}
+            onNavigateToWorkspace={() => setCurrentScreen('dashboard')}
+            onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
+            onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+            onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
+            onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
+          />
+        </div>
       ) : currentScreen === 'dashboard' ? (
         /* SCREEN 4: Partner Workspace Telemetry Dashboard */
-        <PartnerDashboard
-          onNavigateToAuth={() => setCurrentScreen('auth')}
-          onNavigateToHub={() => setCurrentScreen('hub')}
-          onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
-          onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
-          onNavigateToWithdrawals={() => setCurrentScreen('withdrawals')}
-          onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
-          onNavigateToPartnerLevels={() => setCurrentScreen('partner-levels')}
-          onNavigateToNotifications={() => setCurrentScreen('partner-notifications')}
-          onNavigateToSupport={() => setIsSupportOpen(true)}
-        />
+        <div className="pt-20 px-4">
+          <BackButton onClick={() => setCurrentScreen('hub')} />
+          <PartnerDashboard
+            onNavigateToAuth={() => setCurrentScreen('auth')}
+            onNavigateToHub={() => setCurrentScreen('hub')}
+            onNavigateToLeaderboard={() => setCurrentScreen('leaderboard')}
+            onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
+            onNavigateToWithdrawals={() => setCurrentScreen('withdrawals')}
+            onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
+            onNavigateToPartnerLevels={() => setCurrentScreen('partner-levels')}
+            onNavigateToNotifications={() => setCurrentScreen('partner-notifications')}
+            onNavigateToSupport={() => setIsSupportOpen(true)}
+          />
+        </div>
       ) : currentScreen === 'auth' ? (
         /* SCREEN 3: Partner Auth Master Portal */
         <main className="flex-1 flex items-center justify-center p-4 sm:p-6">
@@ -630,6 +644,7 @@ function MainApp() {
             setActiveTab={setActiveTab}
             onOpenSupport={() => setIsSupportOpen(true)}
             onScrollTo={scrollToSection}
+            onNavigateToHome={() => setCurrentScreen('hub')}
           />
         </>
       )}

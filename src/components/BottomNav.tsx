@@ -5,13 +5,15 @@ interface BottomNavProps {
   setActiveTab: (tab: string) => void;
   onOpenSupport: () => void;
   onScrollTo: (id: string) => void;
+  onNavigateToHome: () => void;
 }
 
 export const BottomNav: React.FC<BottomNavProps> = ({
   activeTab,
   setActiveTab,
   onOpenSupport,
-  onScrollTo
+  onScrollTo,
+  onNavigateToHome
 }) => {
   return (
     <nav className="fixed bottom-0 left-0 w-full z-40 pb-safe bg-[#fcf9f4]/90 backdrop-blur-xl border-t border-[#e5e2dd] shadow-[0_-4px_20px_rgba(74,14,46,0.06)]">
@@ -20,6 +22,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
         <button
           onClick={() => {
             setActiveTab('home');
+            onNavigateToHome();
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           className={`flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-0.5 transition-colors cursor-pointer ${
