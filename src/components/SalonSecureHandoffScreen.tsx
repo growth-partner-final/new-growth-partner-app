@@ -88,18 +88,34 @@ export const SalonSecureHandoffScreen: React.FC<SalonSecureHandoffScreenProps> =
             >
               <span className="material-symbols-outlined text-[20px]">arrow_back</span>
             </button>
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#b1005e] to-[#d91b77] text-white flex items-center justify-center font-black text-sm shadow-xs">
-              N
-            </div>
-            <div className="flex flex-col ml-1">
-              <span className="text-[11px] uppercase tracking-wider text-[#b1005e] font-black">Nexora</span>
-              <span className="text-sm font-black text-[#1c1c19] truncate max-w-[150px] sm:max-w-none">
-                Secure Handoff Overview
-              </span>
-            </div>
+            <button
+              type="button"
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-2 bg-transparent border-0 p-0 text-left cursor-pointer hover:opacity-90 ml-1"
+              title="Return to Main Home Landing Page"
+            >
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#b1005e] to-[#d91b77] text-white flex items-center justify-center font-black text-sm shadow-xs">
+                N
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[11px] uppercase tracking-wider text-[#b1005e] font-black">Nexora</span>
+                <span className="text-sm font-black text-[#1c1c19] truncate max-w-[150px] sm:max-w-none">
+                  Secure Handoff Overview
+                </span>
+              </div>
+            </button>
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold text-[#594047] bg-white hover:bg-[#ebe8e3] hover:text-[#b1005e] border border-[#e5e2dd] transition-all cursor-pointer shadow-xs active:scale-95"
+              title="Return to Main Home Landing Page"
+            >
+              <span className="material-symbols-outlined text-[16px] text-[#b1005e]">home</span>
+              <span>Home</span>
+            </button>
             <div className="flex items-center gap-1 bg-[#f0ede9] px-2 py-1 rounded-full text-[#594047] border border-[#e5e2dd]">
               <span className="material-symbols-outlined text-[14px] text-[#735c00]">lock</span>
               <span className="text-[11px] font-extrabold hidden sm:inline">SECURE</span>

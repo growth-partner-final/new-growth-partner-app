@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { NotificationBell } from './NotificationBell';
+import { useAuth } from '../context/AuthContext';
 
 interface ShareAndEarnScreenProps {
   onNavigateToSalonIntelligence?: () => void;
@@ -20,9 +21,20 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
   onNavigateToDashboard,
   onNavigateToAuth
 }) => {
-  const codeVal = 'REF-5A45019655';
-  const shortLink = 'https://nexora.link/ref/5A45019655';
-  const longLink = 'https://portal.nexora.finance/growth/partner/register?ref=REF-5A45019655';
+  const { user, registeredPartner, partnerLoading, partnerError, refetchPartnerProfile } = useAuth();
+
+  const codeVal = registeredPartner?.isPending
+    ? 'PENDING'
+    : (registeredPartner?.referralCode || registeredPartner?.partnerId || 'PENDING');
+
+  const partnerName = registeredPartner?.isPending
+    ? 'Partner Profile Pending'
+    : (registeredPartner?.name || user?.email?.split('@')[0] || 'Growth Partner');
+
+  const appOrigin = typeof window !== 'undefined' && window.location ? window.location.origin : 'https://nexora.network';
+  const realReferralLink = `${appOrigin}/signup?ref=${codeVal}`;
+  const shortLink = registeredPartner?.referralLink || realReferralLink;
+  const longLink = `${appOrigin}/signup?ref=${codeVal}`;
 
   const [isShortUrl, setIsShortUrl] = useState<boolean>(true);
   const [isScriptOpen, setIsScriptOpen] = useState<boolean>(false);
@@ -63,8 +75,7 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
 
   const handleWhatsAppShare = () => {
     const waPitch = encodeURIComponent(
-      'Namaste! Aapke salon ke daily billing and appointments ko grow karne ke liye Nexora check kijiye. Partner Code use karein: REF-5A45019655 (Free Setup): ' +
-        shortLink
+      `Namaste! Aapke salon ke daily billing and appointments ko grow karne ke liye Nexora check kijiye. Partner Code use karein: ${codeVal} (Free Setup): ${shortLink}`
     );
     window.open(`https://api.whatsapp.com/send?text=${waPitch}`, '_blank');
   };
@@ -72,7 +83,7 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
   const handleEmailInvite = () => {
     const subject = encodeURIComponent('Nexora Fintech Growth Partner Invitation');
     const body = encodeURIComponent(
-      `Hi there,\n\nI invite you to explore the Nexora Salon Operating Suite. Register with my partner code REF-5A45019655 to receive complimentary setup.\n\nLink: ${shortLink}`
+      `Hi there,\n\nI invite you to explore the Nexora Salon Operating Suite. Register with my partner code ${codeVal} to receive complimentary setup.\n\nLink: ${shortLink}`
     );
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
@@ -82,7 +93,7 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
       try {
         await navigator.share({
           title: 'Nexora Partner Invite',
-          text: 'Join Nexora Salon Operating Suite with Partner Code REF-5A45019655',
+          text: `Join Nexora Salon Operating Suite with Partner Code ${codeVal}`,
           url: shortLink
         });
       } catch {
@@ -94,7 +105,7 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
   };
 
   const pitchScriptText =
-    'Namaste! Aapke salon ke daily appointments aur automated billing ko streamline karne ke liye Nexora Partner App check kijiye. Sign up karte waqt mera Partner code lagayein: REF-5A45019655 aur payein premium onboarding. Demo link: https://nexora.link/ref/5A45019655';
+    `Namaste! Aapke salon ke daily appointments aur automated billing ko streamline karne ke liye Nexora Partner App check kijiye. Sign up karte waqt mera Partner code lagayein: ${codeVal} aur payein premium onboarding. Demo link: ${shortLink}`;
 
   const handleCopyScript = () => {
     navigator.clipboard.writeText(pitchScriptText).then(() => {
@@ -127,7 +138,7 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
                 </span>
               </div>
               <span className="text-[11px] text-[#594047] tracking-wider font-semibold">
-                Growth Partner [DEV SAMPLE] • REF-5A45019655
+                {partnerName} • {codeVal}
               </span>
             </div>
           </div>
@@ -172,6 +183,34 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
               check_circle
             </span>
             <span className="text-xs font-bold tracking-wide">{toastMessage}</span>
+          </div>
+        )}
+
+        {/* Missing Profile / Pending State Banner */}
+        {registeredPartner?.isPending && (
+          <div className="p-4 rounded-xl bg-[#fff8e6] border border-[#f5d082] text-[#5c4000] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-[20px] text-[#b8860b]">
+                hourglass_empty
+              </span>
+              <div className="flex flex-col">
+                <span className="text-xs font-bold text-[#1c1c19]">Partner Profile Pending</span>
+                <span className="text-[11px] text-[#5c4000]">
+                  Your partner profile is being initialized in the database.
+                </span>
+              </div>
+            </div>
+            <button
+              onClick={() => refetchPartnerProfile()}
+              disabled={partnerLoading}
+              className="px-3 py-1.5 rounded-lg bg-[#b8860b] text-white text-xs font-bold hover:bg-[#8b6508] transition-colors flex items-center gap-1 shrink-0 cursor-pointer"
+              type="button"
+            >
+              <span className={`material-symbols-outlined text-[14px] ${partnerLoading ? 'animate-spin' : ''}`}>
+                refresh
+              </span>
+              <span>{partnerLoading ? 'Syncing...' : 'Retry Profile Load'}</span>
+            </button>
           </div>
         )}
 
@@ -432,7 +471,7 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
                 <p className="text-xs sm:text-sm text-[#1c1c19] leading-relaxed select-all">
                   &ldquo;Namaste! Aapke salon ke daily appointments aur automated billing ko streamline
                   karne ke liye Nexora Partner App check kijiye. Sign up karte waqt mera VIP Partner code
-                  lagayein: <strong className="text-[#b1005e] font-bold">REF-5A45019655</strong> aur
+                  lagayein: <strong className="text-[#b1005e] font-bold">{codeVal}</strong> aur
                   payein 30 days premium free trial + zero onboarding fees. Demo link: {shortLink}&rdquo;
                 </p>
               </div>

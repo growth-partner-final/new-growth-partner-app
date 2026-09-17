@@ -222,6 +222,15 @@ export const PartnerLevelsScreen: React.FC<PartnerLevelsScreenProps> = ({
           </button>
 
           <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold text-[#b1005e] bg-[#ffd9e2]/60 hover:bg-[#ffd9e2] border border-[#fda4c9]/60 cursor-pointer transition-all active:scale-95"
+              title="Return to Main Home Landing Page"
+            >
+              <span className="material-symbols-outlined text-[16px]">home</span>
+              <span>Home</span>
+            </button>
             <span className="text-xs px-2.5 py-1 rounded-full bg-[#f6f3ee] text-[#b1005e] font-extrabold border border-[#ffd9e2]">
               Canary Live
             </span>

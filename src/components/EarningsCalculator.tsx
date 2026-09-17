@@ -17,7 +17,6 @@ export const EarningsCalculator: React.FC = () => {
     .reverse()
     .find((m) => activeClients >= m.clientsRequired) || null;
 
-  const milestoneBonus = reachedMilestone ? reachedMilestone.cashBonusNum : 0;
   const totalMonthlyIncome = directActivationIncome + recurringBrokerageIncome;
 
   // Format currency in Indian format
@@ -30,208 +29,165 @@ export const EarningsCalculator: React.FC = () => {
   };
 
   return (
-    <section className="px-4 py-6 flex flex-col gap-4 bg-[#ebe8e3]/60 border-y border-[#e5e2dd]" id="calculator">
-      <div className="flex flex-col gap-1">
+    <section className="w-full py-8 px-4 sm:px-6 lg:px-8 rounded-3xl bg-[#f6f3ee] border border-[#e5e2dd]" id="calculator">
+      <div className="flex flex-col gap-1.5 text-left mb-6">
         <div className="flex items-center gap-2 text-[#d91b77]">
-          <span className="material-symbols-outlined text-[18px]">functions</span>
-          <span className="text-xs font-bold tracking-wider uppercase">Income Algorithm</span>
+          <span className="material-symbols-outlined text-[20px]">functions</span>
+          <span className="text-xs font-bold tracking-wider uppercase">Interactive Income Simulator</span>
         </div>
-        <h2 className="text-xl font-bold text-[#1c1c19]">
-          अर्निंग फॉर्मूला कैसे कैलकुलेट होता है?
+        <h2 className="text-2xl sm:text-3xl font-black text-[#1c1c19]">
+          Earnings Calculator &amp; Monthly Projection
         </h2>
-        <p className="text-xs sm:text-sm text-[#594047]">
-          पारदर्शी और स्वचालित पेआउट कैलकुलेशन हर महीने सीधे आपके खाते में।
+        <p className="text-sm text-[#594047]">
+          पारदर्शी और स्वचालित पेआउट कैलकुलेशन — अपनी मासिक अर्निंग का लाइव अनुमान लगाएं।
         </p>
       </div>
 
-      {/* Formula Card */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white shadow-md border border-[#e5e2dd] flex flex-col gap-4">
-        {/* The Mathematical Formula Display */}
-        <div className="p-3.5 rounded-xl bg-[#f6f3ee] text-[#1c1c19] flex flex-col gap-2 border border-[#e5e2dd]/80">
-          <span className="text-xs text-[#d91b77] font-bold uppercase tracking-wider">
-            मासिक आय सूत्र (Monthly Income Formula)
-          </span>
-          <p className="text-base sm:text-lg font-bold text-[#1c1c19] leading-snug">
-            Total Monthly Income =
-          </p>
-          <div className="flex flex-col gap-1.5 text-xs text-[#594047] pt-1">
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#d91b77] shrink-0"></span>
-              <strong>[Active Client Activations × ₹2,500]</strong>
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#8e4767] shrink-0"></span>
-              <strong>+ [Team Turnover × 3.5% Recurring Share]</strong>
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#cca730] shrink-0"></span>
-              <strong>+ [Milestone Rank Bonus up to ₹5,00,000]</strong>
-            </span>
-          </div>
-        </div>
+      {/* 2-Column Responsive Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left Column: Interactive Sliders & Inputs */}
+        <div className="lg:col-span-7 p-5 sm:p-6 rounded-3xl bg-white shadow-xs border border-[#e5e2dd] flex flex-col gap-5">
+          <h3 className="text-base font-bold text-[#1c1c19] flex items-center gap-2">
+            <span className="material-symbols-outlined text-[#d91b77] text-[20px]">tune</span>
+            <span>Adjust Your Monthly Target</span>
+          </h3>
 
-        {/* Interactive Controls */}
-        <div className="flex flex-col gap-4 pt-1">
-          {/* Quick Preset Buttons */}
-          <div className="flex flex-col gap-1.5">
-            <span className="text-xs font-semibold text-[#594047]">त्वरित प्रीसेट चुनें:</span>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {[
-                { label: 'शुरुआती (5)', count: 5, to: 1.5 },
-                { label: 'सक्रिय (10)', count: 10, to: 3.8 },
-                { label: 'सुपर (25)', count: 25, to: 12.0 },
-                { label: 'लीडर (50)', count: 50, to: 30.0 }
-              ].map((preset) => (
-                <button
-                  key={preset.label}
-                  type="button"
-                  onClick={() => {
-                    setActiveClients(preset.count);
-                    setTurnoverLakhs(preset.to);
-                  }}
-                  className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                    activeClients === preset.count
-                      ? 'bg-[#d91b77] text-white shadow-xs'
-                      : 'bg-[#f0ede9] text-[#594047] hover:bg-[#e5e2dd]'
-                  }`}
-                >
-                  {preset.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Slider 1: Active Clients */}
-          <div className="flex flex-col gap-1.5">
-            <div className="flex items-center justify-between text-xs">
-              <label htmlFor={clientsInputId} className="font-bold text-[#1c1c19] flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-[16px] text-[#d91b77]">person_add</span>
-                मासिक एक्टिव क्लाइंट्स (Active Clients):
+          {/* Slider 1: Active Salons Onboarded */}
+          <div className="flex flex-col gap-2">
+            <div className="flex justify-between items-center text-sm font-semibold">
+              <label htmlFor={clientsInputId} className="text-[#1c1c19]">
+                Active Salons Onboarded this Month:
               </label>
-              <span className="text-sm font-extrabold text-[#d91b77] bg-[#ffd9e2] px-2.5 py-0.5 rounded-full">
-                {activeClients} Clients
+              <span className="text-base font-bold text-[#d91b77] bg-[#ffd9e2]/50 px-2.5 py-0.5 rounded-lg">
+                {activeClients} Salons
               </span>
             </div>
             <input
               id={clientsInputId}
               type="range"
-              min={1}
-              max={60}
-              step={1}
+              min="1"
+              max="50"
               value={activeClients}
               onChange={(e) => setActiveClients(Number(e.target.value))}
-              className="w-full accent-[#d91b77] cursor-pointer h-2 bg-[#f0ede9] rounded-lg"
+              className="w-full accent-[#d91b77] cursor-pointer h-2 bg-[#e5e2dd] rounded-lg"
             />
-            <div className="flex justify-between text-[10px] text-[#594047]">
-              <span>1 Client</span>
-              <span>15 Associate</span>
-              <span>35 Manager</span>
-              <span>60+ Director</span>
+            <div className="flex justify-between text-[11px] text-[#594047]">
+              <span>1 Salon</span>
+              <span>25 Salons</span>
+              <span>50+ Salons</span>
             </div>
           </div>
 
-          {/* Average Payout Per Client Selector */}
-          <div className="flex flex-col gap-1.5">
-            <span className="text-xs font-bold text-[#1c1c19]">औसत एक्टिवेशन पेआउट (Average Payout Tier):</span>
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                { label: 'Standard', val: 1500, tag: '₹1.5K' },
-                { label: 'Average Mix', val: 2500, tag: '₹2.5K' },
-                { label: 'Pro / VIP', val: 3500, tag: '₹3.5K' }
-              ].map((tier) => (
-                <button
-                  key={tier.label}
-                  type="button"
-                  onClick={() => setAvgPayout(tier.val)}
-                  className={`p-2 rounded-xl text-center flex flex-col items-center justify-center border transition-all cursor-pointer ${
-                    avgPayout === tier.val
-                      ? 'border-[#d91b77] bg-[#ffd9e2]/30 text-[#b1005e]'
-                      : 'border-[#e5e2dd] bg-[#f6f3ee] text-[#594047]'
-                  }`}
-                >
-                  <span className="text-[11px] font-medium">{tier.label}</span>
-                  <span className="text-xs font-bold">{tier.tag}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Slider 2: Estimated Turnover */}
-          <div className="flex flex-col gap-1.5">
-            <div className="flex items-center justify-between text-xs">
-              <label htmlFor={turnoverInputId} className="font-bold text-[#1c1c19] flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-[16px] text-[#8e4767]">trending_up</span>
-                क्लाइंट्स मासिक टर्नओवर (Monthly Turnover):
+          {/* Slider 2: Salon Monthly Billing Turnover */}
+          <div className="flex flex-col gap-2 pt-2 border-t border-[#e5e2dd]/60">
+            <div className="flex justify-between items-center text-sm font-semibold">
+              <label htmlFor={turnoverInputId} className="text-[#1c1c19]">
+                Estimated Total Salon Billing Volume:
               </label>
-              <span className="text-xs font-extrabold text-[#8e4767] bg-[#ffd8e5] px-2.5 py-0.5 rounded-full">
+              <span className="text-base font-bold text-[#735c00] bg-[#ffe088]/50 px-2.5 py-0.5 rounded-lg">
                 ₹{turnoverLakhs} Lakhs
               </span>
             </div>
             <input
               id={turnoverInputId}
               type="range"
-              min={0.5}
-              max={50}
-              step={0.5}
+              min="0.5"
+              max="20"
+              step="0.1"
               value={turnoverLakhs}
               onChange={(e) => setTurnoverLakhs(Number(e.target.value))}
-              className="w-full accent-[#8e4767] cursor-pointer h-2 bg-[#f0ede9] rounded-lg"
+              className="w-full accent-[#cca730] cursor-pointer h-2 bg-[#e5e2dd] rounded-lg"
             />
-            <div className="flex justify-between text-[10px] text-[#594047]">
+            <div className="flex justify-between text-[11px] text-[#594047]">
               <span>₹50,000</span>
               <span>₹10 Lakhs</span>
-              <span>₹25 Lakhs</span>
-              <span>₹50 Lakhs+</span>
+              <span>₹20+ Lakhs</span>
+            </div>
+          </div>
+
+          {/* Tier Selection Radio Buttons */}
+          <div className="flex flex-col gap-2 pt-2 border-t border-[#e5e2dd]/60">
+            <span className="text-xs font-bold text-[#594047]">Average Activation Tier:</span>
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                onClick={() => setAvgPayout(1500)}
+                className={`py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                  avgPayout === 1500
+                    ? 'bg-[#d91b77] text-white border-[#d91b77] shadow-xs'
+                    : 'bg-[#f6f3ee] text-[#1c1c19] border-[#e5e2dd] hover:border-[#fda4c9]'
+                }`}
+              >
+                Standard (₹1.5k)
+              </button>
+              <button
+                type="button"
+                onClick={() => setAvgPayout(2500)}
+                className={`py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                  avgPayout === 2500
+                    ? 'bg-[#d91b77] text-white border-[#d91b77] shadow-xs'
+                    : 'bg-[#f6f3ee] text-[#1c1c19] border-[#e5e2dd] hover:border-[#fda4c9]'
+                }`}
+              >
+                Pro Salon (₹2.5k)
+              </button>
+              <button
+                type="button"
+                onClick={() => setAvgPayout(3500)}
+                className={`py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                  avgPayout === 3500
+                    ? 'bg-[#d91b77] text-white border-[#d91b77] shadow-xs'
+                    : 'bg-[#f6f3ee] text-[#1c1c19] border-[#e5e2dd] hover:border-[#fda4c9]'
+                }`}
+              >
+                Luxury Chain (₹3.5k)
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Live Calculation Results Breakdown */}
-        <div className="p-4 rounded-xl bg-[#fda4c9]/20 border border-[#fda4c9]/50 flex flex-col gap-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#3c0223]">
-              {activeClients} एक्टिव क्लाइंट्स + रिकरिंग शेयर:
-            </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-[#d91b77] text-white text-[11px] font-bold shadow-xs">
-              अनुमानित कुल मासिक आय
-            </span>
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-            <div className="flex flex-col text-xs text-[#594047]">
-              <span>
-                ({activeClients} × {formatINR(avgPayout)}) एक्टिवेशन + 3.5% टर्नओवर शेयर
+        {/* Right Column: Dynamic Calculation Summary Card */}
+        <div className="lg:col-span-5 p-6 rounded-3xl bg-gradient-to-br from-[#3c0223] via-[#b1005e] to-[#d91b77] text-white shadow-xl flex flex-col justify-between gap-6">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#fda4c9]">
+                Estimated Monthly Earnings
               </span>
+              <span className="px-2.5 py-0.5 rounded-full bg-white/20 text-[11px] font-bold">
+                Auto-Disbursed
+              </span>
+            </div>
+
+            <div className="flex flex-col">
+              <span className="text-4xl sm:text-5xl font-black text-white tracking-tight">
+                {formatINR(totalMonthlyIncome)}
+              </span>
+              <span className="text-xs text-white/80 mt-1 font-medium">
+                Recurring + Direct Instant Payouts combined
+              </span>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-black/20 border border-white/10 flex flex-col gap-2.5 text-xs text-white/90">
+              <div className="flex justify-between items-center">
+                <span>Direct Activation Income:</span>
+                <span className="font-bold text-white">{formatINR(directActivationIncome)}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Monthly Recurring Share:</span>
+                <span className="font-bold text-[#ffe088]">{formatINR(recurringBrokerageIncome)}</span>
+              </div>
               {reachedMilestone && (
-                <span className="text-[#b1005e] font-bold flex items-center gap-1 mt-0.5">
-                  <span className="material-symbols-outlined text-[14px]">military_tech</span>
-                  {reachedMilestone.name} रीच! (+{reachedMilestone.cashBonus} वन-टाइम)
-                </span>
+                <div className="flex justify-between items-center pt-2 border-t border-white/10 text-amber-300 font-bold">
+                  <span>🎁 Physical Milestone Reward Unlocked:</span>
+                  <span className="bg-white/20 px-2 py-0.5 rounded-lg text-white text-[11px]">{reachedMilestone.rewardGift}</span>
+                </div>
               )}
             </div>
-            <span className="text-2xl sm:text-3xl font-extrabold text-[#d91b77]">
-              {formatINR(totalMonthlyIncome)}
-              <span className="text-xs font-normal text-[#594047]"> /माह</span>
-            </span>
           </div>
 
-          {/* Visual Progress Bar */}
-          <div className="flex flex-col gap-1 mt-1">
-            <div className="w-full bg-[#e5e2dd] h-2.5 rounded-full overflow-hidden">
-              <div
-                className="bg-gradient-to-r from-[#d91b77] to-[#b1005e] h-full rounded-full transition-all duration-300"
-                style={{
-                  width: `${Math.min(100, Math.max(15, (activeClients / 30) * 100))}%`
-                }}
-              ></div>
-            </div>
-            <div className="flex items-center justify-between text-[11px] text-[#594047]">
-              <span>स्टार्टर टियर</span>
-              <span className="font-semibold text-[#1c1c19]">
-                {activeClients >= 10 ? '68% पार्टनर्स दूसरे महीने ही यह लक्ष्य छू लेते हैं' : 'शुरुआत के लिए आसान लक्ष्य'}
-              </span>
-              <span>टॉप 5% अर्नर</span>
-            </div>
+          <div className="flex items-center gap-2 text-xs text-white/80 pt-2 border-t border-white/20">
+            <span className="material-symbols-outlined text-[18px] text-emerald-400">verified</span>
+            <span>Weekly payouts automatically credited every Monday to bank/UPI.</span>
           </div>
         </div>
       </div>

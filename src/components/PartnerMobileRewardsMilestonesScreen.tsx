@@ -23,6 +23,7 @@ import {
   Smartphone,
   Bike,
   Car,
+  Home,
   Store,
   Users,
   QrCode,
@@ -142,7 +143,12 @@ export const PartnerMobileRewardsMilestonesScreen: React.FC<PartnerMobileRewards
       {/* MOBILE STICKY TOP APP BAR */}
       <header className="fixed top-0 max-w-md w-full z-50 pt-safe bg-[#fcf9f4]/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-b border-[#f0ede9]">
         <div className="h-16 px-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => onNavigateToHub && onNavigateToHub()}
+            className="flex items-center gap-2 bg-transparent border-0 p-0 text-left cursor-pointer hover:opacity-90"
+            title="Return to Main Home Landing Page"
+          >
             <div className="flex items-center gap-1">
               <span className="w-7 h-7 rounded-lg bg-[#b1005e] text-white font-black text-sm flex items-center justify-center shadow-xs">
                 N
@@ -152,7 +158,7 @@ export const PartnerMobileRewardsMilestonesScreen: React.FC<PartnerMobileRewards
             <span className="bg-[#ffe088] text-[#241a00] text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow-xs">
               REF-5A45019655
             </span>
-          </div>
+          </button>
 
           <div className="flex items-center gap-1.5">
             <button
@@ -672,11 +678,12 @@ export const PartnerMobileRewardsMilestonesScreen: React.FC<PartnerMobileRewards
         <div className="flex justify-around items-center h-16 px-2">
           <button
             onClick={() => onNavigateToHub && onNavigateToHub()}
-            className="flex flex-col items-center justify-center w-14 h-12 text-[#594047] hover:text-[#b1005e] transition-colors cursor-pointer"
+            className="flex flex-col items-center justify-center w-14 h-12 text-[#b1005e] hover:text-[#d91b77] transition-colors cursor-pointer"
             type="button"
+            title="Return to Main Home Landing Page"
           >
-            <Store className="w-5 h-5" />
-            <span className="text-[10px] font-bold mt-0.5">Overview</span>
+            <Home className="w-5 h-5 text-[#b1005e]" />
+            <span className="text-[10px] font-bold mt-0.5 text-[#b1005e]">Home</span>
           </button>
 
           <button

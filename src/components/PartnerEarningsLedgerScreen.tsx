@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { NotificationBell } from './NotificationBell';
 import { InteractiveCommissionSplitSimulator } from './InteractiveCommissionSplitSimulator';
+import { Sidebar, SidebarItemKey } from './Sidebar';
 
 interface PartnerEarningsLedgerScreenProps {
   onNavigateToHub?: () => void;
@@ -22,6 +23,8 @@ interface PartnerEarningsLedgerScreenProps {
   onNavigateToRewardsMilestones?: () => void;
   onNavigateToWithdrawals?: () => void;
   onNavigateToMarketingMaterial?: () => void;
+  onNavigateToPartnerLevels?: () => void;
+  onNavigateToReferralHistory?: () => void;
 }
 
 interface LedgerTransaction {
@@ -168,7 +171,9 @@ export const PartnerEarningsLedgerScreen: React.FC<PartnerEarningsLedgerScreenPr
   onNavigateToExtraOnboardingReward,
   onNavigateToRewardsMilestones,
   onNavigateToWithdrawals,
-  onNavigateToMarketingMaterial
+  onNavigateToMarketingMaterial,
+  onNavigateToPartnerLevels,
+  onNavigateToReferralHistory
 }) => {
   const [activeLedgerTab, setActiveLedgerTab] = useState<'all' | 'paid' | 'pending' | 'disputed'>('all');
   const [cycleFilter, setCycleFilter] = useState<string>('current');
@@ -199,163 +204,69 @@ export const PartnerEarningsLedgerScreen: React.FC<PartnerEarningsLedgerScreenPr
       )}
 
       {/* LEFT SIDEBAR NAVIGATION */}
-      <aside className="fixed left-0 top-8 sm:top-7 bottom-0 w-72 bg-[#f6f3ee]/90 backdrop-blur-xl z-40 hidden lg:flex flex-col justify-between shadow-[0_1px_8px_rgba(74,14,46,0.04)] border-r border-[#e5e2dd]">
-        <div className="flex flex-col flex-1 overflow-y-auto">
-          {/* Brand header */}
-          <div className="px-6 pt-6 pb-4 flex flex-col gap-2">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-[#b1005e] flex items-center justify-center text-white shadow-[0_4px_16px_rgba(217,27,119,0.28)]">
-                <span className="material-symbols-outlined text-[20px]">token</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-lg font-black text-[#1c1c19] tracking-tight leading-none">Nexora</span>
-                <span className="text-[11px] text-[#8e4767] tracking-wider uppercase font-bold mt-0.5">
-                  Growth Partner
-                </span>
-              </div>
-            </div>
-
-            {/* Partner quick chip */}
-            <div className="mt-2 p-3 rounded-2xl bg-white shadow-2xs flex items-center justify-between border border-[#e5e2dd]">
-              <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-full bg-[#ffe088] flex items-center justify-center text-[#241a00] font-bold">
-                  <span className="material-symbols-outlined text-[14px]">verified</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-xs font-black text-[#1c1c19] leading-tight">Growth Partner [DEV SAMPLE]</span>
-                  <span className="text-[10px] text-[#594047] font-mono leading-none mt-0.5">REF-5A45019655</span>
-                </div>
-              </div>
-              <span className="px-2 py-0.5 rounded-full bg-[#cca730]/20 text-[#4f3d00] text-[10px] font-black uppercase tracking-wide border border-[#cca730]/40">
-                Gold
-              </span>
-            </div>
-          </div>
-
-          {/* Navigation links */}
-          <nav className="flex-1 px-4 py-2 flex flex-col gap-1 text-xs">
-            <span className="px-3 text-[10px] font-black text-[#8d6f77] uppercase tracking-wider mb-1">
-              Performance
-            </span>
-            <button
-              onClick={() => onNavigateToDashboard && onNavigateToDashboard()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">grid_view</span>
-              <span>Overview</span>
-            </button>
-            <button
-              onClick={() => onNavigateToShareEarn && onNavigateToShareEarn()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">qr_code_2</span>
-              <span>My Referral Code</span>
-            </button>
-            <button
-              onClick={() => onNavigateToSalonIntelligence && onNavigateToSalonIntelligence()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">storefront</span>
-              <span>Referred Salons</span>
-            </button>
-            <button
-              onClick={() => onNavigateToReferralTimeline && onNavigateToReferralTimeline()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">pending_actions</span>
-              <span>Referral Status Timeline</span>
-            </button>
-
-            <span className="px-3 text-[10px] font-black text-[#8d6f77] uppercase tracking-wider mt-4 mb-1">
-              Finance &amp; Rewards
-            </span>
-            <button
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#d91b77] text-white font-black text-left shadow-[0_4px_16px_rgba(217,27,119,0.2)] cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">account_balance_wallet</span>
-              <span>Earnings &amp; Ledger</span>
-            </button>
-            <button
-              onClick={() => onNavigateToWithdrawals && onNavigateToWithdrawals()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">payments</span>
-              <span>Withdrawals</span>
-            </button>
-            <button
-              onClick={() => {
-                if (onNavigateToExtraOnboardingReward) {
-                  onNavigateToExtraOnboardingReward();
-                } else if (onNavigateToHub) {
-                  onNavigateToHub();
-                }
-              }}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">workspace_premium</span>
-              <span>Extra Onboarding Reward</span>
-            </button>
-            <button
-              onClick={() => {
-                if (onNavigateToRewardsMilestones) {
-                  onNavigateToRewardsMilestones();
-                } else if (onNavigateToLeaderboard) {
-                  onNavigateToLeaderboard();
-                }
-              }}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">military_tech</span>
-              <span>Rewards &amp; Milestones</span>
-            </button>
-            <button
-              onClick={() => onNavigateToMarketingMaterial && onNavigateToMarketingMaterial()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">campaign</span>
-              <span>Marketing Material</span>
-            </button>
-
-            <span className="px-3 text-[10px] font-black text-[#8d6f77] uppercase tracking-wider mt-4 mb-1">
-              System
-            </span>
-            <button
-              onClick={() => onNavigateToProfileSettings && onNavigateToProfileSettings()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">tune</span>
-              <span>Profile &amp; Settings</span>
-            </button>
-          </nav>
-        </div>
-
-        {/* Partner Tier card */}
-        <div className="p-4 m-4 rounded-2xl bg-white shadow-[0_8px_32px_0_rgba(74,14,46,0.04)] flex items-center justify-between border border-[#e5e2dd]">
-          <div className="flex flex-col">
-            <span className="text-[10px] font-bold text-[#8e4767] uppercase tracking-wider">Partner Tier</span>
-            <span className="text-xs font-black text-[#1c1c19]">Gold Accelerator</span>
-          </div>
-          <div className="w-8 h-8 rounded-full bg-[#ffd8e5] flex items-center justify-center text-[#3c0223] font-bold">
-            <span className="material-symbols-outlined text-[18px]">stars</span>
-          </div>
-        </div>
-      </aside>
+      <Sidebar
+        activeItem="earnings"
+        onNavigateItem={(key) => {
+          switch (key) {
+            case 'dashboard':
+              if (onNavigateToDashboard) onNavigateToDashboard();
+              break;
+            case 'my-referral-code':
+              if (onNavigateToShareEarn) onNavigateToShareEarn();
+              break;
+            case 'referred-users':
+              if (onNavigateToReferralHistory) onNavigateToReferralHistory();
+              else if (onNavigateToSalonIntelligence) onNavigateToSalonIntelligence();
+              break;
+            case 'referral-status':
+              if (onNavigateToReferralTimeline) onNavigateToReferralTimeline();
+              break;
+            case 'rewards':
+              if (onNavigateToRewardsMilestones) onNavigateToRewardsMilestones();
+              break;
+            case 'extra-onboarding-reward':
+              if (onNavigateToExtraOnboardingReward) onNavigateToExtraOnboardingReward();
+              break;
+            case 'profile':
+              if (onNavigateToProfileSettings) onNavigateToProfileSettings();
+              break;
+            case 'top-performers':
+              if (onNavigateToLeaderboard) onNavigateToLeaderboard();
+              break;
+            case 'earnings':
+              // already here
+              break;
+            case 'withdrawals':
+              if (onNavigateToWithdrawals) onNavigateToWithdrawals();
+              break;
+            case 'marketing-material':
+              if (onNavigateToMarketingMaterial) onNavigateToMarketingMaterial();
+              break;
+            case 'partner-levels':
+              if (onNavigateToPartnerLevels) onNavigateToPartnerLevels();
+              break;
+          }
+        }}
+        onNavigateToHub={onNavigateToHub}
+        partnerName="Growth Partner [DEV SAMPLE]"
+        partnerId="REF-5A45019655"
+        partnerTier="Gold Partner"
+      />
 
       {/* MAIN BODY CONTENT AREA */}
       <div className="flex-1 lg:pl-72 flex flex-col min-w-0">
         {/* Top Header */}
         <header className="fixed top-8 sm:top-7 left-0 lg:left-72 right-0 h-16 bg-[#fcf9f4]/85 backdrop-blur-xl z-40 flex items-center justify-between px-4 sm:px-6 shadow-[0_1px_8px_rgba(74,14,46,0.04)] border-b border-[#e5e2dd]">
           <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#594047] bg-white hover:bg-[#ebe8e3] hover:text-[#b1005e] border border-[#e5e2dd] transition-all cursor-pointer shadow-xs active:scale-95"
+              title="Return to Main Home Landing Page"
+            >
+              <span className="material-symbols-outlined text-[16px] text-[#b1005e]">home</span>
+              <span>Home</span>
+            </button>
             <div className="px-3 py-1 rounded-full bg-[#ffd9e2]/60 text-[#8e004a] text-xs font-bold flex items-center gap-2 border border-[#fda4c9]/50">
               <span className="w-2 h-2 rounded-full bg-[#b1005e] animate-pulse" />
               <span>Live Production Sync</span>

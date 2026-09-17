@@ -379,7 +379,12 @@ export const SalonWebsiteTemplatesScreen: React.FC<SalonWebsiteTemplatesScreenPr
       <header className="fixed top-8 sm:top-7 inset-x-0 z-40 bg-[#fcf9f4]/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(74,14,46,0.04)] border-b border-[#e5e2dd]">
         <div className="h-20 w-full px-4 sm:px-6 max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-2.5 bg-transparent border-0 p-0 text-left cursor-pointer hover:opacity-90"
+              title="Return to Main Home Landing Page"
+            >
               <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#b1005e] to-[#d91b77] text-white flex items-center justify-center font-black text-lg shadow-sm">
                 N
               </div>
@@ -389,7 +394,7 @@ export const SalonWebsiteTemplatesScreen: React.FC<SalonWebsiteTemplatesScreenPr
               <span className="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#ffd8e5] text-[#3c0223] text-[11px] font-extrabold uppercase tracking-wider border border-[#fda4c9]/60">
                 Growth Partner
               </span>
-            </div>
+            </button>
 
             <div className="hidden lg:flex items-center gap-1.5 text-[#594047] text-xs font-semibold">
               <button
@@ -411,6 +416,15 @@ export const SalonWebsiteTemplatesScreen: React.FC<SalonWebsiteTemplatesScreenPr
           </div>
 
           <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#594047] bg-white hover:bg-[#ebe8e3] hover:text-[#b1005e] border border-[#e5e2dd] transition-all cursor-pointer shadow-xs active:scale-95"
+              title="Return to Main Home Landing Page"
+            >
+              <span className="material-symbols-outlined text-[16px] text-[#b1005e]">home</span>
+              <span>Home</span>
+            </button>
             <div className="hidden xl:flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f6f3ee] text-[#594047] text-xs font-semibold border border-[#e5e2dd]">
               <span className="material-symbols-outlined text-[#b1005e] text-[14px]">lock</span>
               <span className="font-mono">nexora.growth/portal/launchpad/templates</span>

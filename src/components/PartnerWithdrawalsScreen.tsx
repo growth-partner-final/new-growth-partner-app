@@ -358,6 +358,15 @@ export function PartnerWithdrawalsScreen({
 
           {/* Navigation links */}
           <nav className="flex-1 px-4 py-2 flex flex-col gap-1 text-xs">
+            <button
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#b1005e] bg-[#ffd9e2]/50 hover:bg-[#ffd9e2] font-bold border border-[#fda4c9]/60 transition-colors text-left cursor-pointer mb-1 shadow-2xs"
+              type="button"
+              title="Return to Main Landing Hub"
+            >
+              <span className="material-symbols-outlined text-[20px]">home</span>
+              <span>Home (Landing Page)</span>
+            </button>
             <span className="px-3 text-[10px] font-black text-[#8d6f77] uppercase tracking-wider mb-1">
               Performance
             </span>
@@ -608,8 +617,18 @@ export function PartnerWithdrawalsScreen({
               onClick={() => onNavigateToDashboard && onNavigateToDashboard()}
               className="lg:hidden p-2 rounded-xl bg-white border border-[#e5e2dd] flex items-center justify-center text-[#594047]"
               type="button"
+              title="Back"
             >
               <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#594047] bg-white hover:bg-[#ebe8e3] hover:text-[#b1005e] border border-[#e5e2dd] transition-all cursor-pointer shadow-2xs active:scale-95"
+              title="Return to Main Home Landing Page"
+            >
+              <span className="material-symbols-outlined text-[16px] text-[#b1005e]">home</span>
+              <span>Home</span>
             </button>
             <div className="px-3 py-1 rounded-full bg-[#ffd9e2]/60 text-[#8e004a] text-xs font-bold flex items-center gap-2 border border-[#fda4c9]/50">
               <span className="w-2 h-2 rounded-full bg-[#b1005e] animate-pulse" />

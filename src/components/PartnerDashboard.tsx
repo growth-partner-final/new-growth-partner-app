@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
+import { WeeklyGoalTracker } from './WeeklyGoalTracker';
+import { BreadcrumbNavigation } from './BreadcrumbNavigation';
+import { Sidebar, SidebarItemKey } from './Sidebar';
+import { useAuth } from '../context/AuthContext';
 
 interface PartnerDashboardProps {
   onNavigateToAuth?: () => void;
   onNavigateToHub?: () => void;
+  onNavigateToDashboard?: () => void;
+  onNavigateToShareEarn?: () => void;
+  onNavigateToReferralHistory?: () => void;
+  onNavigateToReferralTimeline?: () => void;
+  onNavigateToRewardsMilestones?: () => void;
+  onNavigateToExtraOnboardingReward?: () => void;
+  onNavigateToProfileSettings?: () => void;
   onNavigateToLeaderboard?: () => void;
   onNavigateToEarningsLedger?: () => void;
   onNavigateToWithdrawals?: () => void;
@@ -10,182 +21,139 @@ interface PartnerDashboardProps {
   onNavigateToPartnerLevels?: () => void;
   onNavigateToNotifications?: () => void;
   onNavigateToSupport?: () => void;
+  onNavigateToAddSalon?: () => void;
+  onNavigateToSalonIntelligence?: () => void;
+  onNavigateToScreen?: (screen: string) => void;
+  activeSidebarItem?: string;
 }
 
 export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
   onNavigateToAuth,
   onNavigateToHub,
+  onNavigateToDashboard,
+  onNavigateToShareEarn,
+  onNavigateToReferralHistory,
+  onNavigateToReferralTimeline,
+  onNavigateToRewardsMilestones,
+  onNavigateToExtraOnboardingReward,
+  onNavigateToProfileSettings,
   onNavigateToLeaderboard,
   onNavigateToEarningsLedger,
   onNavigateToWithdrawals,
   onNavigateToMarketingMaterial,
   onNavigateToPartnerLevels,
   onNavigateToNotifications,
-  onNavigateToSupport
+  onNavigateToSupport,
+  onNavigateToAddSalon,
+  onNavigateToSalonIntelligence,
+  onNavigateToScreen,
+  activeSidebarItem = 'dashboard'
 }) => {
+  const { user, registeredPartner, partnerLoading, partnerError, refetchPartnerProfile, signOut } = useAuth();
   const [activeState, setActiveState] = useState<'active' | 'empty' | 'restricted' | 'skeleton' | 'error'>('active');
   const [copied, setCopied] = useState<boolean>(false);
   const [isRetrying, setIsRetrying] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-  const [activeSidebarNav, setActiveSidebarNav] = useState<string>('dashboard');
+  const [activeSidebarNav, setActiveSidebarNav] = useState<string>(activeSidebarItem);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const referralUrl = 'nexora.io/p/REF-5A45019655';
+  const displayPartnerName = registeredPartner?.isPending
+    ? 'Partner profile pending'
+    : (registeredPartner?.name || user?.email?.split('@')[0] || 'Growth Partner');
+
+  const displayReferralCode = registeredPartner?.isPending
+    ? 'PENDING'
+    : (registeredPartner?.referralCode || registeredPartner?.partnerId || 'PENDING');
+
+  const appOrigin = typeof window !== 'undefined' && window.location ? window.location.origin : 'https://nexora.network';
+  const referralUrl = registeredPartner?.referralLink || `${appOrigin}/signup?ref=${displayReferralCode}`;
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(`https://${referralUrl}`);
+    navigator.clipboard.writeText(referralUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2200);
   };
 
   const handleRetrySync = () => {
     setIsRetrying(true);
-    setTimeout(() => {
+    refetchPartnerProfile().finally(() => {
       setIsRetrying(false);
       setActiveState('active');
-    }, 1200);
+    });
   };
 
   const downloadQRMock = () => {
-    alert('Generating vector SVG for Partner QR (Code: REF-5A45019655)... Ready for digital display or print.');
+    alert(`Generating vector SVG for Partner QR (Code: ${displayReferralCode})... Ready for digital display or print.`);
+  };
+
+  const handleSidebarNavigate = (key: SidebarItemKey) => {
+    setActiveSidebarNav(key);
+    switch (key) {
+      case 'dashboard':
+        if (onNavigateToDashboard) onNavigateToDashboard();
+        else if (onNavigateToScreen) onNavigateToScreen('dashboard');
+        break;
+      case 'my-referral-code':
+        if (onNavigateToShareEarn) onNavigateToShareEarn();
+        else if (onNavigateToScreen) onNavigateToScreen('share-earn');
+        break;
+      case 'referred-users':
+        if (onNavigateToReferralHistory) onNavigateToReferralHistory();
+        else if (onNavigateToSalonIntelligence) onNavigateToSalonIntelligence();
+        else if (onNavigateToScreen) onNavigateToScreen('referral-history');
+        break;
+      case 'referral-status':
+        if (onNavigateToReferralTimeline) onNavigateToReferralTimeline();
+        else if (onNavigateToScreen) onNavigateToScreen('referral-timeline');
+        break;
+      case 'rewards':
+        if (onNavigateToRewardsMilestones) onNavigateToRewardsMilestones();
+        else if (onNavigateToScreen) onNavigateToScreen('milestone-claims');
+        break;
+      case 'extra-onboarding-reward':
+        if (onNavigateToExtraOnboardingReward) onNavigateToExtraOnboardingReward();
+        else if (onNavigateToScreen) onNavigateToScreen('extra-onboarding-reward');
+        break;
+      case 'profile':
+        if (onNavigateToProfileSettings) onNavigateToProfileSettings();
+        else if (onNavigateToScreen) onNavigateToScreen('profile-settings');
+        break;
+      case 'top-performers':
+        if (onNavigateToLeaderboard) onNavigateToLeaderboard();
+        else if (onNavigateToScreen) onNavigateToScreen('leaderboard');
+        break;
+      case 'earnings':
+        if (onNavigateToEarningsLedger) onNavigateToEarningsLedger();
+        else if (onNavigateToScreen) onNavigateToScreen('earnings-ledger');
+        break;
+      case 'withdrawals':
+        if (onNavigateToWithdrawals) onNavigateToWithdrawals();
+        else if (onNavigateToScreen) onNavigateToScreen('withdrawals');
+        break;
+      case 'marketing-material':
+        if (onNavigateToMarketingMaterial) onNavigateToMarketingMaterial();
+        else if (onNavigateToScreen) onNavigateToScreen('marketing-material');
+        break;
+      case 'partner-levels':
+        if (onNavigateToPartnerLevels) onNavigateToPartnerLevels();
+        else if (onNavigateToScreen) onNavigateToScreen('partner-levels');
+        break;
+    }
   };
 
   return (
     <div className="w-full min-h-screen bg-[#fcf9f4] text-[#1c1c19] flex">
-      {/* Desktop Sidebar (aside) */}
-      <aside className="hidden lg:flex fixed left-0 top-0 h-full w-72 bg-white/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex-col justify-between overflow-y-auto border-r border-[#e5e2dd]">
-        <div className="flex flex-col">
-          {/* Sidebar Brand Header */}
-          <div className="h-16 px-6 flex items-center justify-between border-b border-[#e5e2dd]/60">
-            <div className="flex items-center gap-2">
-              <img
-                alt="Brand logo"
-                className="h-8 w-auto object-contain"
-                src="https://lh3.googleusercontent.com/aida/AEtjO1XZxTb-KtdsPjo0U0odHwDY485hRuwmfDBk7sy7hvncIa4xg3AdjCaLVTut6pSuuRiQJj_3YtSdqJ3TLo2klHSJMNebL6mVq0uWtOhluaULb7Cy_34No2AloAlRtDCW1-HCFGFyKGQkrv2OMGEMkXFJpEFLcxUma8v2Z1hXG0pFOlEix77UvOTw-NfNuX20oyBgVrPL--0n2ZNjrI0vKNBImBop03G0p3fTT3hR_Chdf05d_h_ZbzfoKQ"
-              />
-              <span className="font-bold text-lg text-[#1c1c19] tracking-tight">Nexora</span>
-            </div>
-            <div className="px-2 py-0.5 rounded-full bg-[#ffd8e5] text-[#3c0223] font-bold text-[11px]">
-              PARTNER
-            </div>
-          </div>
-
-          {/* Core Management Category */}
-          <div className="px-6 pt-4 pb-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#594047]">
-              Core Management
-            </span>
-          </div>
-
-          <nav className="flex flex-col gap-1 px-4">
-            {[
-              { id: 'dashboard', label: 'Dashboard', icon: 'grid_view' },
-              { id: 'my-referral-code', label: 'My Referral Code', icon: 'qr_code_2' },
-              { id: 'referred-users', label: 'Referred Users', icon: 'group' },
-              { id: 'referral-status', label: 'Referral Status', icon: 'query_stats' },
-              { id: 'rewards', label: 'Rewards', icon: 'military_tech' },
-              { id: 'extra-onboarding-reward', label: 'Extra Onboarding Reward', icon: 'redeem' },
-              { id: 'profile', label: 'Profile', icon: 'person' }
-            ].map((item) => {
-              const isActive = activeSidebarNav === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveSidebarNav(item.id)}
-                  className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 text-left text-xs font-semibold cursor-pointer ${
-                    isActive
-                      ? 'bg-[#d91b77] text-white shadow-[0_4px_16px_rgba(217,27,119,0.2)]'
-                      : 'text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19]'
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
-                  <span>{item.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-
-          {/* Future Expansion Category */}
-          <div className="px-6 pt-6 pb-2 flex items-center justify-between">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#594047]">
-              Future Expansion
-            </span>
-            <span className="px-2 py-0.5 rounded-full bg-[#ebe8e3] text-[#594047] text-[10px] font-bold">
-              Upcoming
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-1 px-4 pb-6">
-            <button
-              onClick={() => {
-                if (onNavigateToLeaderboard) onNavigateToLeaderboard();
-              }}
-              className="flex items-center justify-between px-4 py-2 rounded-lg text-xs font-bold text-[#1c1c19] hover:bg-[#ebe8e3] transition-all cursor-pointer text-left"
-            >
-              <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-[20px] text-[#cca730]">leaderboard</span>
-                <span>Top Performers</span>
-              </div>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#ffe088] text-[#241a00] font-bold">
-                Live
-              </span>
-            </button>
-
-            {[
-              { label: 'Earnings', icon: 'account_balance_wallet', action: onNavigateToEarningsLedger },
-              { label: 'Withdrawals', icon: 'payments', action: onNavigateToWithdrawals },
-              { label: 'Marketing Material', icon: 'campaign', action: onNavigateToMarketingMaterial },
-              { label: 'Partner Levels', icon: 'stars', action: onNavigateToPartnerLevels },
-              { label: 'Notifications', icon: 'notifications', action: onNavigateToNotifications },
-              { label: 'Support', icon: 'headset_mic', action: onNavigateToSupport }
-            ].map((item) => {
-              if (item.action) {
-                return (
-                  <button
-                    key={item.label}
-                    onClick={item.action}
-                    className="flex items-center justify-between px-4 py-2 rounded-lg text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] text-xs font-bold transition-all cursor-pointer text-left w-full"
-                    type="button"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
-                      <span>{item.label}</span>
-                    </div>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">
-                      Active
-                    </span>
-                  </button>
-                );
-              }
-              return (
-                <div
-                  key={item.label}
-                  className="flex items-center justify-between px-4 py-2 rounded-lg text-[#594047] opacity-75 text-xs font-medium"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
-                    <span>{item.label}</span>
-                  </div>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#e5e2dd] text-[#594047]">
-                    Soon
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Current Tier Footer in Sidebar */}
-        <div className="p-4 mx-4 mb-4 rounded-xl bg-[#f6f3ee] flex items-center justify-between border border-[#e5e2dd]">
-          <div className="flex flex-col">
-            <span className="text-[11px] text-[#594047] font-semibold">Current Tier</span>
-            <span className="font-bold text-sm text-[#b1005e]">Gold Partner</span>
-          </div>
-          <div className="w-8 h-8 rounded-full bg-[#ffe088] flex items-center justify-center">
-            <span className="material-symbols-outlined text-[#241a00] text-[18px]">verified</span>
-          </div>
-        </div>
-      </aside>
+      {/* Reusable Unified Desktop Sidebar */}
+      <Sidebar
+        activeItem={activeSidebarNav}
+        onNavigateItem={handleSidebarNavigate}
+        onNavigateToHub={onNavigateToHub}
+        onNavigateToSupport={onNavigateToSupport}
+        onLogout={onNavigateToAuth}
+        partnerName={displayPartnerName}
+        partnerId={displayReferralCode}
+        partnerTier={registeredPartner?.kycStatus === 'verified' ? 'Verified Partner' : 'Certified Partner'}
+      />
 
       {/* Main Workspace Area (with offset on lg screens) */}
       <div className="lg:pl-72 flex flex-col min-h-screen flex-1 w-full">
@@ -201,23 +169,42 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
               >
                 <span className="material-symbols-outlined text-[24px]">menu</span>
               </button>
-              <img
-                alt="Brand logo"
-                className="h-7 w-auto object-contain"
-                src="https://lh3.googleusercontent.com/aida/AEtjO1XZxTb-KtdsPjo0U0odHwDY485hRuwmfDBk7sy7hvncIa4xg3AdjCaLVTut6pSuuRiQJj_3YtSdqJ3TLo2klHSJMNebL6mVq0uWtOhluaULb7Cy_34No2AloAlRtDCW1-HCFGFyKGQkrv2OMGEMkXFJpEFLcxUma8v2Z1hXG0pFOlEix77UvOTw-NfNuX20oyBgVrPL--0n2ZNjrI0vKNBImBop03G0p3fTT3hR_Chdf05d_h_ZbzfoKQ"
-              />
-              <span className="font-bold text-base text-[#1c1c19]">Nexora</span>
+              <button
+                type="button"
+                onClick={onNavigateToHub}
+                className="flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 text-left"
+                title="Return to Main Landing Hub"
+              >
+                <img
+                  alt="Brand logo"
+                  className="h-7 w-auto object-contain"
+                  src="https://lh3.googleusercontent.com/aida/AEtjO1XZxTb-KtdsPjo0U0odHwDY485hRuwmfDBk7sy7hvncIa4xg3AdjCaLVTut6pSuuRiQJj_3YtSdqJ3TLo2klHSJMNebL6mVq0uWtOhluaULb7Cy_34No2AloAlRtDCW1-HCFGFyKGQkrv2OMGEMkXFJpEFLcxUma8v2Z1hXG0pFOlEix77UvOTw-NfNuX20oyBgVrPL--0n2ZNjrI0vKNBImBop03G0p3fTT3hR_Chdf05d_h_ZbzfoKQ"
+                />
+                <span className="font-bold text-base text-[#1c1c19]">Nexora</span>
+              </button>
             </div>
 
             {/* Tier Pill Badge */}
             <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#cca730]/20 border border-[#cca730]/30">
               <span className="material-symbols-outlined text-[#735c00] text-[18px]">workspace_premium</span>
-              <span className="text-xs font-bold text-[#1c1c19]">Tier: Gold Partner</span>
+              <span className="text-xs font-bold text-[#1c1c19]">
+                Code: {displayReferralCode}
+              </span>
             </div>
           </div>
 
           {/* Search, Notifications & User Avatar */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Dedicated Home Return Button */}
+            <button
+              type="button"
+              onClick={onNavigateToHub}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#594047] bg-[#f0ede9] hover:bg-[#e5e2dd] hover:text-[#b1005e] border border-[#e5e2dd] transition-all cursor-pointer shadow-xs active:scale-95"
+              title="Return to Main Hub"
+            >
+              <span className="material-symbols-outlined text-[16px]">home</span>
+              <span>Home</span>
+            </button>
             <div className="relative hidden md:flex items-center">
               <span className="material-symbols-outlined absolute left-3 text-[#594047] text-[18px]">
                 search
@@ -243,11 +230,11 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
 
             <div className="flex items-center gap-2 pl-1">
               <div className="hidden md:flex flex-col text-right">
-                <span className="text-xs font-bold text-[#1c1c19]">Growth Partner [DEV SAMPLE]</span>
-                <span className="text-[10px] text-[#594047]">Growth Lead</span>
+                <span className="text-xs font-bold text-[#1c1c19] truncate max-w-[140px]">{displayPartnerName}</span>
+                <span className="text-[10px] text-[#594047] font-mono">{displayReferralCode}</span>
               </div>
               <div className="w-8 h-8 rounded-full bg-[#b1005e] text-white flex items-center justify-center font-bold text-xs shadow-xs">
-                GP
+                {displayPartnerName.slice(0, 2).toUpperCase()}
               </div>
             </div>
           </div>
@@ -256,60 +243,79 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
           <div className="lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex">
-            <div className="w-72 bg-white h-full p-4 flex flex-col justify-between overflow-y-auto shadow-2xl">
-              <div>
-                <div className="flex items-center justify-between pb-4 border-b border-[#e5e2dd]">
-                  <span className="font-bold text-base text-[#1c1c19]">Nexora Partner</span>
-                  <button
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="p-1 text-[#594047]"
-                  >
-                    <span className="material-symbols-outlined text-[20px]">close</span>
-                  </button>
-                </div>
-                <div className="flex flex-col gap-1 mt-4">
-                  {[
-                    { id: 'dashboard', label: 'Dashboard', icon: 'grid_view' },
-                    { id: 'my-referral-code', label: 'My Referral Code', icon: 'qr_code_2' },
-                    { id: 'referred-users', label: 'Referred Users', icon: 'group' },
-                    { id: 'referral-status', label: 'Referral Status', icon: 'query_stats' },
-                    { id: 'rewards', label: 'Rewards', icon: 'military_tech' },
-                    { id: 'extra-onboarding-reward', label: 'Extra Onboarding Reward', icon: 'redeem' },
-                    { id: 'profile', label: 'Profile', icon: 'person' }
-                  ].map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => {
-                        setActiveSidebarNav(item.id);
-                        setMobileMenuOpen(false);
-                      }}
-                      className="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-[#1c1c19] hover:bg-[#f0ede9]"
-                    >
-                      <span className="material-symbols-outlined text-[18px] text-[#b1005e]">{item.icon}</span>
-                      <span>{item.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-[#e5e2dd]">
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    if (onNavigateToHub) onNavigateToHub();
-                  }}
-                  className="w-full py-2 px-3 rounded-lg bg-[#f0ede9] text-xs font-bold text-[#b1005e] text-center"
-                >
-                  🚀 Open Program Hub &amp; Ladder
-                </button>
-              </div>
+            <div className="w-72 bg-white h-full flex flex-col justify-between overflow-y-auto shadow-2xl">
+              <Sidebar
+                activeItem={activeSidebarNav}
+                onNavigateItem={handleSidebarNavigate}
+                onNavigateToHub={onNavigateToHub}
+                onNavigateToSupport={onNavigateToSupport}
+                onLogout={onNavigateToAuth}
+                partnerName={displayPartnerName}
+                partnerId={displayReferralCode}
+                partnerTier={registeredPartner?.kycStatus === 'verified' ? 'Verified Partner' : 'Certified Partner'}
+                isMobileDrawer={true}
+                onCloseMobileDrawer={() => setMobileMenuOpen(false)}
+              />
             </div>
           </div>
         )}
 
         {/* Dashboard Main Content Body */}
         <main className="w-full pt-20 pb-24 lg:pb-12 px-4 sm:px-6 flex-1 bg-[#fcf9f4]">
-          <div className="flex flex-col w-full gap-6 max-w-6xl mx-auto">
+          <div className="flex flex-col w-full gap-4 max-w-6xl mx-auto">
+            {/* Breadcrumb Navigation */}
+            <BreadcrumbNavigation
+              onNavigateToHub={onNavigateToHub}
+              items={[
+                { label: 'Partner Dashboard', isActive: true, icon: 'space_dashboard' }
+              ]}
+            />
+
+            {/* Database Loading / Error / Pending Banner States */}
+            {partnerLoading && (
+              <div className="w-full rounded-2xl bg-white p-5 shadow-xs border border-[#e5e2dd] flex items-center justify-center gap-3 animate-pulse">
+                <span className="w-5 h-5 border-2 border-[#b1005e] border-t-transparent rounded-full animate-spin"></span>
+                <span className="text-xs font-bold text-[#594047]">Fetching verified partner profile from database...</span>
+              </div>
+            )}
+
+            {partnerError && (
+              <div className="w-full rounded-2xl bg-[#fff0f2] p-4 border border-[#ba1a1a]/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="material-symbols-outlined text-[#ba1a1a] text-[22px]">database_off</span>
+                  <div>
+                    <h4 className="text-xs font-bold text-[#ba1a1a]">Database Profile Sync Failed</h4>
+                    <p className="text-[11px] text-[#594047]">{partnerError}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={handleRetrySync}
+                  disabled={isRetrying}
+                  className="px-4 py-1.5 rounded-full bg-[#ba1a1a] text-white text-xs font-bold hover:bg-[#900010] transition-colors cursor-pointer shrink-0"
+                >
+                  {isRetrying ? 'Retrying...' : 'Retry Profile Load'}
+                </button>
+              </div>
+            )}
+
+            {registeredPartner?.isPending && !partnerLoading && !partnerError && (
+              <div className="w-full rounded-2xl bg-[#fff8f0] p-4 border border-[#cca730]/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="material-symbols-outlined text-[#735c00] text-[22px]">pending_actions</span>
+                  <div>
+                    <h4 className="text-xs font-bold text-[#1c1c19]">Partner profile pending</h4>
+                    <p className="text-[11px] text-[#594047]">Your account ({user?.email}) is signed in, but no corresponding Growth Partner record was found in database for auth.uid().</p>
+                  </div>
+                </div>
+                <button
+                  onClick={handleRetrySync}
+                  className="px-4 py-1.5 rounded-full bg-[#735c00] text-white text-xs font-bold hover:bg-[#524100] transition-colors cursor-pointer shrink-0"
+                >
+                  Refresh Database Record
+                </button>
+              </div>
+            )}
+
             {/* Dynamic Ambient Glow Backdrops */}
             <div className="relative w-full">
               <div className="absolute -top-12 left-1/4 w-96 h-96 rounded-full bg-[#d91b77]/5 blur-3xl pointer-events-none -z-10"></div>
@@ -320,12 +326,8 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                   {/* Portrait & Executive Details */}
                   <div className="flex items-start sm:items-center gap-4">
-                    <div className="relative w-16 h-16 rounded-2xl overflow-hidden shadow-md shrink-0 bg-[#ffd8e5]">
-                      <img
-                        className="w-full h-full object-cover"
-                        alt="Growth partner profile avatar"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5nFKwiNJHVG6WXK8xCxUCFyLPE85vQy9YLBrF5W_hs5i4e1JqGTa5AWS5rrKx7rhZlfAP4jQ4XL4znPjpLgXbSxRWNioOWHGpTTFNT1iKxtBmssf5bvNIFRFS6z4NbV2YW_Ek71PMYUTp9ILSGvmZSDmxjeYhWzu9EwVaq5EF5mXWOhGEE70pj7JrrQew8kXiTBeqAXeF4oWXipghdPjy2_YI4xyPNUnKU6GRZjyc2pe7Gq9MOTPi"
-                      />
+                    <div className="relative w-16 h-16 rounded-2xl overflow-hidden shadow-md shrink-0 bg-[#ffd8e5] flex items-center justify-center font-bold text-[#b1005e] text-2xl">
+                      {displayPartnerName.slice(0, 2).toUpperCase()}
                       <span
                         className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-[#b1005e] ring-2 ring-white"
                         title="Active System Status"
@@ -335,11 +337,11 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                     <div className="flex flex-col">
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="text-xl sm:text-2xl font-bold text-[#1c1c19]">
-                          Growth Partner [DEV SAMPLE]
+                          {displayPartnerName}
                         </span>
                         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#ffd9e2] text-[#3e001d] text-[11px] font-bold">
                           <span className="material-symbols-outlined text-[14px]">verified</span>
-                          KYC Verified
+                          {registeredPartner?.kycStatus ? `KYC ${registeredPartner.kycStatus}` : 'Partner Account'}
                         </span>
                         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#ffe088] text-[#241a00] text-[11px] font-bold">
                           <span className="material-symbols-outlined text-[14px]">stars</span>
@@ -349,10 +351,10 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
 
                       <div className="flex items-center gap-3 mt-1 text-[#594047] text-xs flex-wrap">
                         <span className="font-mono tracking-wider font-bold text-[#8e4767]">
-                          REF-5A45019655
+                          {displayReferralCode}
                         </span>
                         <span className="w-1 h-1 rounded-full bg-[#e1bdc6]"></span>
-                        <span>Growth Partner Program</span>
+                        <span>{registeredPartner?.email || user?.email || 'Registered Partner'}</span>
                         <span className="w-1 h-1 rounded-full bg-[#e1bdc6]"></span>
                         <span className="text-[#735c00] text-[11px] uppercase font-bold tracking-wide">
                           Next Payout: Mon, 10:00 AM IST
@@ -474,6 +476,9 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
               </div>
             </div>
 
+            {/* Weekly Goal Tracker with Dynamic Progress Ring */}
+            <WeeklyGoalTracker onNavigateToAddSalon={onNavigateToAddSalon} />
+
             {/* Interactive System Viewport Controller */}
             <div className="w-full flex flex-col md:flex-row md:items-center justify-between gap-3 bg-[#f6f3ee] rounded-xl p-4 border border-[#e5e2dd]">
               <div className="flex items-center gap-2">
@@ -572,7 +577,7 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                     <div className="mt-5 pt-4 border-t border-[#e5e2dd]">
                       <a
                         className="w-full py-2.5 px-4 rounded-full bg-[#f6f3ee] text-[#1c1c19] text-xs font-bold flex items-center justify-center gap-2 hover:bg-[#d91b77] hover:text-white transition-colors"
-                        href="https://api.whatsapp.com/send?text=Join%20Nexora%20Merchant%20Network%20via%20my%20growth%20partner%20link:%20https://nexora.io/p/REF-5A45019655"
+                        href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Join Nexora Merchant Network via my growth partner link: ${referralUrl}`)}`}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -632,7 +637,7 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                     <div className="flex flex-col">
                       <h3 className="text-base font-bold text-[#1c1c19]">Real-Time Referral Ingestion Log</h3>
-                      <span className="text-xs text-[#594047]">Live telemetry from partner gateway REF-5A45019655</span>
+                      <span className="text-xs text-[#594047]">Live telemetry from partner gateway {displayReferralCode}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f6f3ee] text-[#1c1c19] text-[11px] font-semibold border border-[#e5e2dd]">
@@ -770,7 +775,7 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                         onClick={handleCopyLink}
                       >
                         <span className="material-symbols-outlined text-[18px]">content_copy</span>
-                        <span>Copy Link (REF-5A45019655)</span>
+                        <span>Copy Link ({displayReferralCode})</span>
                       </button>
                       <button
                         className="px-6 py-3 rounded-full bg-[#f0ede9] text-[#1c1c19] font-bold text-xs hover:bg-[#e5e2dd] transition-colors flex items-center gap-2 cursor-pointer border border-[#e5e2dd]"
@@ -975,46 +980,52 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
         </main>
 
         {/* Mobile Bottom Navigation */}
-        <nav className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white/90 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-around px-2 border-t border-[#e5e2dd]">
+        <nav className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.06)] z-40 flex items-center justify-around px-2 border-t border-[#e5e2dd]">
           <button
+            type="button"
+            onClick={() => {
+              if (onNavigateToHub) onNavigateToHub();
+            }}
+            className="flex flex-col items-center justify-center gap-0.5 text-xs font-semibold cursor-pointer text-[#594047] hover:text-[#b1005e] active:scale-95 transition-all"
+            title="Return to Main Home Landing Page"
+          >
+            <span className="material-symbols-outlined text-[20px] text-[#b1005e]">home</span>
+            <span className="text-[10px] font-bold text-[#b1005e]">Home</span>
+          </button>
+          <button
+            type="button"
             onClick={() => setActiveSidebarNav('dashboard')}
             className={`flex flex-col items-center justify-center gap-0.5 text-xs font-semibold cursor-pointer ${
-              activeSidebarNav === 'dashboard' ? 'text-[#b1005e]' : 'text-[#594047]'
+              activeSidebarNav === 'dashboard' ? 'text-[#b1005e] font-bold' : 'text-[#594047]'
             }`}
           >
             <span className="material-symbols-outlined text-[20px]">grid_view</span>
-            <span className="text-[10px]">Home</span>
+            <span className="text-[10px]">Dashboard</span>
           </button>
           <button
+            type="button"
             onClick={() => setActiveSidebarNav('referred-users')}
             className={`flex flex-col items-center justify-center gap-0.5 text-xs font-semibold cursor-pointer ${
-              activeSidebarNav === 'referred-users' ? 'text-[#b1005e]' : 'text-[#594047]'
+              activeSidebarNav === 'referred-users' ? 'text-[#b1005e] font-bold' : 'text-[#594047]'
             }`}
           >
             <span className="material-symbols-outlined text-[20px]">group</span>
             <span className="text-[10px]">Referrals</span>
           </button>
           <button
+            type="button"
             onClick={() => {
               if (onNavigateToHub) onNavigateToHub();
             }}
-            className="flex flex-col items-center justify-center gap-0.5 text-xs font-semibold text-[#594047] cursor-pointer"
+            className="flex flex-col items-center justify-center gap-0.5 text-xs font-semibold text-[#594047] hover:text-[#b1005e] cursor-pointer"
           >
             <span className="material-symbols-outlined text-[20px]">military_tech</span>
             <span className="text-[10px]">Rewards</span>
           </button>
           <button
-            onClick={() => setActiveSidebarNav('profile')}
-            className={`flex flex-col items-center justify-center gap-0.5 text-xs font-semibold cursor-pointer ${
-              activeSidebarNav === 'profile' ? 'text-[#b1005e]' : 'text-[#594047]'
-            }`}
-          >
-            <span className="material-symbols-outlined text-[20px]">person</span>
-            <span className="text-[10px]">Profile</span>
-          </button>
-          <button
+            type="button"
             onClick={() => setMobileMenuOpen(true)}
-            className="flex flex-col items-center justify-center gap-0.5 text-xs font-semibold text-[#594047] cursor-pointer"
+            className="flex flex-col items-center justify-center gap-0.5 text-xs font-semibold text-[#594047] hover:text-[#1c1c19] cursor-pointer"
           >
             <span className="material-symbols-outlined text-[20px]">more_horiz</span>
             <span className="text-[10px]">More</span>

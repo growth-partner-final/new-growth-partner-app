@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { NotificationBell } from './NotificationBell';
+import { BreadcrumbNavigation } from './BreadcrumbNavigation';
 
 export interface NewSalonData {
   salonName: string;
@@ -305,6 +306,18 @@ export const AddSalonScreen: React.FC<AddSalonScreenProps> = ({
             </div>
             <NotificationBell onNavigateToReferrals={onNavigateToReferralTimeline} />
 
+            {onNavigateToHub && (
+              <button
+                onClick={onNavigateToHub}
+                className="px-3.5 py-1.5 rounded-xl bg-[#f0ede9] hover:bg-[#e5e2dd] text-xs font-bold text-[#594047] hover:text-[#b1005e] flex items-center gap-1.5 transition-colors cursor-pointer border border-[#e5e2dd]"
+                type="button"
+                title="Return to Main Home Landing Page"
+              >
+                <span className="material-symbols-outlined text-[16px] text-[#b1005e]">home</span>
+                <span>Home</span>
+              </button>
+            )}
+
             <button
               onClick={() => {
                 if (onNavigateToSalonIntelligence) onNavigateToSalonIntelligence();
@@ -320,9 +333,18 @@ export const AddSalonScreen: React.FC<AddSalonScreenProps> = ({
       </header>
 
       {/* Mode Switcher Tabs */}
-      <div className="bg-[#f6f3ee] border-b border-[#e5e2dd] px-4 sm:px-8 py-2.5">
-        <div className="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-2">
-          <div className="flex items-center gap-1.5 bg-white p-1 rounded-2xl border border-[#e5e2dd] shadow-2xs">
+      <div className="bg-[#f6f3ee] border-b border-[#e5e2dd] px-4 sm:px-8 py-2">
+        <div className="max-w-6xl mx-auto flex flex-col gap-2">
+          <BreadcrumbNavigation
+            onNavigateToHub={onNavigateToHub}
+            onNavigateToDashboard={onNavigateToSalonIntelligence}
+            items={[
+              { label: 'Salon Intelligence', onClick: onNavigateToSalonIntelligence, icon: 'storefront' },
+              { label: 'Refer New Salon', isActive: true, icon: 'add_business' }
+            ]}
+          />
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-1.5 bg-white p-1 rounded-2xl border border-[#e5e2dd] shadow-2xs">
             <button
               onClick={() => {
                 setActiveTab('form');
@@ -371,6 +393,7 @@ export const AddSalonScreen: React.FC<AddSalonScreenProps> = ({
           </div>
         </div>
       </div>
+    </div>
 
       {/* Main Container */}
       <main className="max-w-6xl mx-auto w-full px-4 sm:px-8 py-6 flex-1">

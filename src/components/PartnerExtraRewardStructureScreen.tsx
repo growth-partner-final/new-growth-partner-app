@@ -128,6 +128,15 @@ export const PartnerExtraRewardStructureScreen: React.FC<PartnerExtraRewardStruc
 
           {/* Navigation links */}
           <nav className="flex-1 px-4 py-2 flex flex-col gap-1 text-xs">
+            <button
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#b1005e] bg-[#ffd9e2]/50 hover:bg-[#ffd9e2] font-bold border border-[#fda4c9]/60 transition-colors text-left cursor-pointer mb-1 shadow-2xs"
+              type="button"
+              title="Return to Main Landing Hub"
+            >
+              <span className="material-symbols-outlined text-[20px]">home</span>
+              <span>Home (Landing Page)</span>
+            </button>
             <span className="px-3 text-[10px] font-black text-[#8d6f77] uppercase tracking-wider mb-1">
               Performance
             </span>
@@ -228,6 +237,15 @@ export const PartnerExtraRewardStructureScreen: React.FC<PartnerExtraRewardStruc
         {/* Top Header */}
         <header className="fixed top-8 sm:top-7 left-0 lg:left-72 right-0 h-16 bg-[#fcf9f4]/85 backdrop-blur-xl z-40 flex items-center justify-between px-4 sm:px-6 shadow-[0_1px_8px_rgba(74,14,46,0.04)] border-b border-[#e5e2dd]">
           <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#594047] bg-white hover:bg-[#ebe8e3] hover:text-[#b1005e] border border-[#e5e2dd] transition-all cursor-pointer shadow-xs active:scale-95"
+              title="Return to Main Home Landing Page"
+            >
+              <span className="material-symbols-outlined text-[16px] text-[#b1005e]">home</span>
+              <span>Home</span>
+            </button>
             <div className="px-3 py-1 rounded-full bg-[#ffd9e2]/60 text-[#8e004a] text-xs font-bold flex items-center gap-2 border border-[#fda4c9]/50">
               <span className="w-2 h-2 rounded-full bg-[#b1005e] animate-pulse" />
               <span>Live Production Sync</span>

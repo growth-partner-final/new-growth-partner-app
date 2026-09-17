@@ -65,8 +65,7 @@ export interface MilestoneLevel {
   level: number;
   name: string;
   subtitle: string;
-  cashBonus: string;
-  cashBonusNum: number;
+  rewardGift: string;
   perks: string;
   clientsRequired: number;
   highlight?: boolean;

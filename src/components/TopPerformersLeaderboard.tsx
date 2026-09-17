@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BreadcrumbNavigation } from './BreadcrumbNavigation';
 
 interface TopPerformersLeaderboardProps {
   onNavigateToAuth?: () => void;
@@ -170,7 +171,12 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
       {/* ======================================================== */}
       <div className="w-full max-w-[420px] mx-auto bg-[#fcf9f4] flex flex-col pb-24 relative md:hidden min-h-screen shadow-sm">
         <header className="sticky top-[37px] z-30 bg-[#fcf9f4]/95 backdrop-blur-md px-4 py-3 border-b border-slate-200/80 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onNavigateToHub}
+            className="flex items-center gap-2 cursor-pointer bg-transparent border-0 p-0 text-left"
+            title="Return to Main Home Page"
+          >
             <div className="w-8 h-8 rounded-lg bg-[#d91b77] flex items-center justify-center text-white shadow-sm font-black text-sm">
               ▲
             </div>
@@ -178,20 +184,38 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
               <span className="block font-black tracking-tight text-xs text-slate-900 leading-none">NEXORA</span>
               <span className="text-[9px] font-semibold tracking-wider text-[#d91b77] uppercase leading-tight">Growth Partner</span>
             </div>
-          </div>
-          <div className="flex items-center gap-2.5">
-            <button aria-label="Notifications" className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 transition-colors">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={onNavigateToHub}
+              className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold text-[#594047] bg-white hover:bg-slate-100 hover:text-[#b1005e] border border-slate-200 transition-colors shadow-2xs"
+              title="Return to Main Home Page"
+            >
+              <svg className="w-3.5 h-3.5 text-[#b1005e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+              </svg>
+              <span>Home</span>
+            </button>
+            <button aria-label="Notifications" className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 transition-colors">
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
               </svg>
             </button>
-            <div className="w-9 h-9 rounded-full bg-pink-900 text-white font-bold text-xs flex items-center justify-center border border-pink-950 shadow-sm">
+            <div className="w-8 h-8 rounded-full bg-pink-900 text-white font-bold text-xs flex items-center justify-center border border-pink-950 shadow-sm">
               GP
             </div>
           </div>
         </header>
 
         <main className="px-3.5 pt-3.5 space-y-4">
+          <BreadcrumbNavigation
+            onNavigateToHub={onNavigateToHub}
+            onNavigateToDashboard={onNavigateToWorkspace}
+            items={[
+              { label: 'Leaderboard', isActive: true, icon: 'leaderboard' }
+            ]}
+          />
           <section className="space-y-1.5" data-purpose="page-intro">
             <div className="flex items-center justify-between">
               <h1 className="text-xl font-bold tracking-tight text-slate-900">Top Performers</h1>
@@ -545,6 +569,17 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
 
         {/* Mobile Bottom Navigation */}
         <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-1.5 z-40 shadow-sticky flex items-center justify-around" data-purpose="mobile-bottom-nav">
+          <button
+            type="button"
+            onClick={onNavigateToHub}
+            className="flex flex-col items-center justify-center min-h-[44px] py-1 text-slate-500 hover:text-[#b1005e] transition-colors cursor-pointer"
+            title="Return to Main Home Landing Page"
+          >
+            <svg className="w-5 h-5 text-[#b1005e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+            </svg>
+            <span className="text-[9px] font-bold tracking-tight mt-0.5 text-[#b1005e]">Home</span>
+          </button>
           <button onClick={onNavigateToWorkspace} className="flex flex-col items-center justify-center min-h-[44px] py-1 text-slate-500 hover:text-slate-850 transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8"></path>
@@ -587,7 +622,12 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
       <div className="flex-1 hidden md:flex w-full max-w-[1536px] mx-auto min-h-screen">
         <aside className="w-64 shrink-0 bg-[#fcf9f4] border-r border-[#ece8df] p-5 flex flex-col justify-between" data-purpose="partner-sidebar">
           <div>
-            <div className="flex items-center space-x-3 px-1 py-2 mb-6">
+            <button
+              type="button"
+              onClick={onNavigateToHub}
+              className="flex items-center space-x-3 px-1 py-2 mb-6 cursor-pointer bg-transparent border-0 text-left w-full hover:opacity-90 transition-opacity"
+              title="Return to Main Home Landing Page"
+            >
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#d91b77] to-[#500028] flex items-center justify-center text-white font-black text-xl shadow-md">
                 ▲
               </div>
@@ -595,7 +635,7 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
                 <span className="block text-base font-extrabold tracking-tight text-neutral-900 leading-none">NEXORA</span>
                 <span className="text-[10px] tracking-wider uppercase font-bold text-[#d91b77]">Growth Partner</span>
               </div>
-            </div>
+            </button>
 
             <div className="glass-card-user p-3.5 rounded-xl mb-6 shadow-sm">
               <div className="flex items-center space-x-3">
@@ -614,6 +654,17 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
             </div>
 
             <nav className="space-y-1 text-sm font-medium">
+              <button
+                type="button"
+                onClick={onNavigateToHub}
+                className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#b1005e] bg-[#ffd9e2]/50 hover:bg-[#ffd9e2] font-bold border border-[#fda4c9]/60 transition text-left cursor-pointer mb-1"
+                title="Return to Main Home Page"
+              >
+                <svg className="w-4 h-4 text-[#b1005e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                </svg>
+                <span>Home (Landing Page)</span>
+              </button>
               <button onClick={onNavigateToWorkspace} className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 transition text-left">
                 <span>Dashboard</span>
               </button>
@@ -640,6 +691,15 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
         </aside>
 
         <main className="flex-1 p-6 lg:p-8 overflow-y-auto max-w-6xl">
+          <div className="mb-4">
+            <BreadcrumbNavigation
+              onNavigateToHub={onNavigateToHub}
+              onNavigateToDashboard={onNavigateToWorkspace}
+              items={[
+                { label: 'Top Performers Leaderboard', isActive: true, icon: 'leaderboard' }
+              ]}
+            />
+          </div>
           <section className="mb-6" data-purpose="page-header">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
@@ -653,6 +713,17 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
               </div>
 
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <button
+                  type="button"
+                  onClick={onNavigateToHub}
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#594047] bg-[#f0ede9] hover:bg-[#e5e2dd] hover:text-[#b1005e] border border-[#e5e2dd] transition-all cursor-pointer shadow-xs"
+                  title="Return to Main Home Landing Page"
+                >
+                  <svg className="w-4 h-4 text-[#b1005e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                  </svg>
+                  <span>Home</span>
+                </button>
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-900 border border-amber-300 shadow-sm">
                   PREVIEW DATA — Demo
                 </span>

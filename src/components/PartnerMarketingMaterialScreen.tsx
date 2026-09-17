@@ -327,6 +327,15 @@ export function PartnerMarketingMaterialScreen({
 
           {/* Navigation Links */}
           <nav className="flex flex-col gap-space-xs px-space-md py-space-sm">
+            <button
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-space-sm px-space-md py-2.5 rounded-xl font-label-lg text-label-lg text-[#b1005e] bg-[#ffd9e2]/50 hover:bg-[#ffd9e2] font-bold border border-[#fda4c9]/60 transition-all text-left cursor-pointer mb-1 shadow-2xs"
+              type="button"
+              title="Return to Main Landing Hub"
+            >
+              <span className="material-symbols-outlined text-[20px]">home</span>
+              <span>Home (Landing Page)</span>
+            </button>
             <span className="px-3 text-[10px] font-black text-[#8d6f77] uppercase tracking-wider mb-1">Performance</span>
             
             <button
@@ -438,6 +447,15 @@ export function PartnerMarketingMaterialScreen({
         {/* HEADER BAR */}
         <header className="fixed top-0 left-0 lg:left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg">
           <div className="flex items-center gap-space-sm text-on-surface-variant font-label-md text-label-md">
+            <button
+              type="button"
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold text-[#594047] bg-white hover:bg-[#ebe8e3] hover:text-[#b1005e] border border-[#e5e2dd] transition-all cursor-pointer shadow-2xs active:scale-95 mr-2"
+              title="Return to Main Home Landing Page"
+            >
+              <span className="material-symbols-outlined text-[16px] text-[#b1005e]">home</span>
+              <span>Home</span>
+            </button>
             <span className="material-symbols-outlined text-[18px] text-on-surface-variant">hub</span>
             <span className="hover:text-on-surface cursor-pointer" onClick={() => onNavigateToDashboard && onNavigateToDashboard()}>Nexora Partner</span>
             <span className="material-symbols-outlined text-[16px] text-outline">chevron_right</span>

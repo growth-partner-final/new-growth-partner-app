@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NotificationBell } from './NotificationBell';
+import { useAuth } from '../context/AuthContext';
 
 interface PartnerProfileSettingsScreenProps {
   onNavigateToHub?: () => void;
@@ -14,6 +15,7 @@ interface PartnerProfileSettingsScreenProps {
   onNavigateToStepAuditWorkspace?: () => void;
   onNavigateToMobileFastTrack?: () => void;
   onNavigateToWebsiteTemplates?: () => void;
+  onLogout?: () => void;
 }
 
 export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreenProps> = ({
@@ -28,15 +30,32 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
   onNavigateToLockedOnboarding,
   onNavigateToStepAuditWorkspace,
   onNavigateToMobileFastTrack,
-  onNavigateToWebsiteTemplates
+  onNavigateToWebsiteTemplates,
+  onLogout
 }) => {
+  const { user, registeredPartner, signOut } = useAuth();
+
   // Navigation Section Tab
   const [activeSettingsTab, setActiveSettingsTab] = useState<'contact' | 'payout' | 'preferences' | 'security'>('contact');
 
   // Contact & Personal Info State
-  const [fullName, setFullName] = useState<string>('Growth Partner [DEV SAMPLE]');
+  const [fullName, setFullName] = useState<string>(registeredPartner?.name || 'Growth Partner');
   const [agencyName, setAgencyName] = useState<string>('Growth Partner Desk');
-  const [email, setEmail] = useState<string>('partner@nexorapartner.com');
+  const [email, setEmail] = useState<string>(user?.email || 'partner@nexorapartner.com');
+
+  useEffect(() => {
+    if (user?.email) setEmail(user.email);
+    if (registeredPartner?.name) setFullName(registeredPartner.name);
+  }, [user, registeredPartner]);
+
+  const handleLogoutClick = async () => {
+    await signOut();
+    if (onLogout) {
+      onLogout();
+    } else if (onNavigateToHub) {
+      onNavigateToHub();
+    }
+  };
   const [phone, setPhone] = useState<string>('+91 98400 12390');
   const [whatsappPhone, setWhatsappPhone] = useState<string>('+91 98400 12390');
   const [isWhatsappSame, setIsWhatsappSame] = useState<boolean>(true);
@@ -103,8 +122,15 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
     }, 1200);
   };
 
+  const partnerCode = registeredPartner?.isPending
+    ? 'PENDING'
+    : (registeredPartner?.referralCode || registeredPartner?.partnerId || 'PENDING');
+
+  const appOrigin = typeof window !== 'undefined' && window.location ? window.location.origin : 'https://nexora.network';
+  const realReferralLink = `${appOrigin}/signup?ref=${partnerCode}`;
+
   const copyReferralLink = () => {
-    navigator.clipboard.writeText('https://nexora.network/join?ref=REF-5A45019655');
+    navigator.clipboard.writeText(registeredPartner?.referralLink || realReferralLink);
     showToast('Partner referral link copied to clipboard!');
   };
 
@@ -126,7 +152,12 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
       <header className="fixed top-8 sm:top-7 inset-x-0 z-40 bg-[#fcf9f4]/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(74,14,46,0.04)] border-b border-[#e5e2dd]">
         <div className="h-20 w-full px-4 sm:px-6 max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-2.5 cursor-pointer bg-transparent border-0 p-0 text-left hover:opacity-90 transition-opacity"
+              title="Return to Main Home Landing Page"
+            >
               <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#b1005e] to-[#d91b77] text-white flex items-center justify-center font-black text-lg shadow-sm">
                 N
               </div>
@@ -138,16 +169,25 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
                   Partner Settings
                 </span>
               </div>
-              <span className="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#ffd8e5] text-[#3c0223] text-[11px] font-extrabold uppercase tracking-wider border border-[#fda4c9]/60">
-                Growth Partner #REF-5A45019655
-              </span>
-            </div>
+            </button>
+            <span className="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#ffd8e5] text-[#3c0223] text-[11px] font-extrabold uppercase tracking-wider border border-[#fda4c9]/60">
+              Growth Partner #{partnerCode}
+            </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#f0ede9] text-[#594047] hover:text-[#b1005e] hover:bg-[#e5e2dd] text-xs font-bold transition-all cursor-pointer border border-[#e5e2dd] shadow-2xs active:scale-95"
+              title="Return to Main Home Page"
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[16px] text-[#b1005e]">home</span>
+              <span>Home</span>
+            </button>
             <div className="hidden sm:flex items-center gap-2 bg-[#f6f3ee] px-3 py-1.5 rounded-full border border-[#e5e2dd] text-xs">
               <span className="text-[#594047]">Referral Code:</span>
-              <span className="font-mono font-black text-[#1c1c19]">REF-5A45019655</span>
+              <span className="font-mono font-black text-[#1c1c19]">{partnerCode}</span>
               <button
                 onClick={copyReferralLink}
                 className="text-[#b1005e] hover:text-[#d91b77] cursor-pointer"
@@ -166,6 +206,16 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
               type="button"
             >
               Back to Dashboard
+            </button>
+
+            <button
+              onClick={handleLogoutClick}
+              className="px-4 py-2 rounded-full bg-[#fff0f2] text-[#ba1a1a] hover:bg-[#ffe088]/30 font-bold text-xs flex items-center gap-1.5 border border-[#ba1a1a]/20 transition-all cursor-pointer shadow-2xs"
+              type="button"
+              title="Sign Out of Partner Account"
+            >
+              <span className="material-symbols-outlined text-[16px]">logout</span>
+              <span>Log Out</span>
             </button>
           </div>
         </div>

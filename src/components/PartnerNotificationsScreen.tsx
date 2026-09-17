@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { BreadcrumbNavigation } from './BreadcrumbNavigation';
 import {
   Bell,
   CheckCircle2,
@@ -30,7 +31,21 @@ const initialNotifications = [
   { id: 6, type: 'system', title: 'Security Update', body: 'Your password was updated successfully.', time: 'Last Month', unread: false, createdAt: createDate(40) },
 ];
 
-export const PartnerNotificationsScreen: React.FC = () => {
+interface PartnerNotificationsScreenProps {
+  onNavigateToHub?: () => void;
+  onNavigateToDashboard?: () => void;
+  onNavigateToEarningsLedger?: () => void;
+  onNavigateToWithdrawals?: () => void;
+  onNavigateBack?: () => void;
+}
+
+export const PartnerNotificationsScreen: React.FC<PartnerNotificationsScreenProps> = ({
+  onNavigateToHub,
+  onNavigateToDashboard,
+  onNavigateToEarningsLedger,
+  onNavigateToWithdrawals,
+  onNavigateBack
+}) => {
   const [notifications, setNotifications] = useState(initialNotifications);
   const [filter, setFilter] = useState<'all' | 'milestones' | 'payouts'>('all');
   const [view, setView] = useState<'active' | 'archived'>('active');
@@ -61,14 +76,56 @@ export const PartnerNotificationsScreen: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-black text-[#1c1c19]">Notifications</h1>
-        <div className="flex gap-2">
-          <button onClick={markAllAsRead} className="px-4 py-2 rounded-full bg-primary text-white text-xs font-bold">Mark All Read</button>
-          <button onClick={clearAll} className="px-4 py-2 rounded-full bg-red-100 text-red-600 text-xs font-bold">Clear All</button>
+    <div className="min-h-screen bg-[#fcf9f4] pb-24">
+      {/* Top Header */}
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-[#e5e2dd] px-4 sm:px-6 py-3 shadow-xs">
+        <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            {onNavigateBack && (
+              <button
+                type="button"
+                onClick={onNavigateBack}
+                className="w-9 h-9 rounded-full bg-[#f0ede9] hover:bg-[#e5e2dd] text-[#1c1c19] flex items-center justify-center cursor-pointer transition-colors"
+                title="Go Back"
+              >
+                <ChevronRight className="w-5 h-5 rotate-180" />
+              </button>
+            )}
+            <div className="flex flex-col">
+              <span className="text-base font-bold text-[#1c1c19] leading-tight">Notifications</span>
+              <span className="text-xs text-[#594047]">Partner alerts and updates</span>
+            </div>
+          </div>
+
+          {onNavigateToHub && (
+            <button
+              type="button"
+              onClick={onNavigateToHub}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#594047] bg-[#f0ede9] hover:bg-[#e5e2dd] hover:text-[#b1005e] border border-[#e5e2dd] transition-all cursor-pointer shadow-xs active:scale-95"
+              title="Return to Main Home Landing Page"
+            >
+              <span className="material-symbols-outlined text-[16px]">home</span>
+              <span>Home</span>
+            </button>
+          )}
         </div>
-      </div>
+      </header>
+
+      <div className="p-4 sm:p-6 max-w-4xl mx-auto space-y-4">
+        <BreadcrumbNavigation
+          onNavigateToHub={onNavigateToHub}
+          onNavigateToDashboard={onNavigateToDashboard}
+          items={[
+            { label: 'Notifications', isActive: true, icon: 'notifications' }
+          ]}
+        />
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <h1 className="text-2xl sm:text-3xl font-black text-[#1c1c19]">Notifications</h1>
+          <div className="flex gap-2">
+            <button onClick={markAllAsRead} className="px-4 py-2 rounded-full bg-[#d91b77] text-white text-xs font-bold cursor-pointer hover:bg-[#b1005e] transition-colors">Mark All Read</button>
+            <button onClick={clearAll} className="px-4 py-2 rounded-full bg-red-100 text-red-600 text-xs font-bold cursor-pointer hover:bg-red-200 transition-colors">Clear All</button>
+          </div>
+        </div>
 
       <div className="flex gap-4 border-b">
         <button onClick={() => setView('active')} className={`pb-2 font-bold text-sm ${view === 'active' ? 'border-b-2 border-primary' : 'text-gray-400'}`}>Active</button>
@@ -104,5 +161,6 @@ export const PartnerNotificationsScreen: React.FC = () => {
         )}
       </div>
     </div>
-  );
+  </div>
+);
 };

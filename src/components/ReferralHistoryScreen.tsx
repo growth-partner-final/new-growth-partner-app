@@ -437,6 +437,11 @@ export const ReferralHistoryScreen: React.FC<ReferralHistoryScreenProps> = ({
         <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-5">
           <div>
             <div className="flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-[#d91b77] mb-1">
+              <span className="hover:underline cursor-pointer flex items-center gap-1" onClick={onNavigateToHub}>
+                <span className="material-symbols-outlined text-[14px]">home</span>
+                <span>Home</span>
+              </span>
+              <span className="text-slate-400">/</span>
               <span className="hover:underline cursor-pointer" onClick={onNavigateToDashboard}>Partner Workspace</span>
               <span className="text-slate-400">/</span>
               <span className="hover:underline cursor-pointer" onClick={onNavigateToSalonIntelligence}>CRM Intelligence</span>
@@ -452,6 +457,15 @@ export const ReferralHistoryScreen: React.FC<ReferralHistoryScreenProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={onNavigateToHub}
+              type="button"
+              className="flex items-center gap-1.5 px-3.5 py-2.5 bg-[#f0ede9] hover:bg-[#e5e2dd] text-[#594047] hover:text-[#b1005e] border border-[#e5e2dd] rounded-xl text-xs font-bold transition shadow-xs cursor-pointer whitespace-nowrap min-h-[44px]"
+              title="Return to Main Home Landing Page"
+            >
+              <span className="material-symbols-outlined text-[16px] text-[#b1005e]">home</span>
+              <span>Home</span>
+            </button>
             <button
               onClick={onNavigateToAddSalon}
               className="flex items-center gap-2 px-4 py-2.5 bg-[#d91b77] hover:bg-pink-700 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer whitespace-nowrap min-h-[44px]"

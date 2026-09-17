@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { NotificationBell } from './NotificationBell';
+import { WeeklyGoalTracker } from './WeeklyGoalTracker';
+import { BreadcrumbNavigation } from './BreadcrumbNavigation';
 
 interface SalonIntelligenceDashboardProps {
   onNavigateToAuth?: () => void;
@@ -46,19 +48,24 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
       <aside className="hidden lg:flex fixed left-0 top-0 h-full w-72 bg-[#f6f3ee]/90 backdrop-blur-xl z-40 flex-col justify-between py-6 px-4 shadow-[0_8px_32px_0_rgba(74,14,46,0.04)] border-r border-[#e5e2dd]">
         <div className="flex flex-col gap-4">
           {/* Brand Logo & Name */}
-          <div className="flex items-center gap-2 px-2 py-1">
+          <button
+            type="button"
+            onClick={onNavigateToHub}
+            className="flex items-center gap-2 px-2 py-1 cursor-pointer group select-none text-left bg-transparent border-0 p-0"
+            title="Return to Main Landing Hub"
+          >
             <img
               alt="Nexora Brand Logo"
-              className="h-8 w-auto object-contain"
+              className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
               src="https://lh3.googleusercontent.com/aida/AEtjO1XZxTb-KtdsPjo0U0odHwDY485hRuwmfDBk7sy7hvncIa4xg3AdjCaLVTut6pSuuRiQJj_3YtSdqJ3TLo2klHSJMNebL6mVq0uWtOhluaULb7Cy_34No2AloAlRtDCW1-HCFGFyKGQkrv2OMGEMkXFJpEFLcxUma8v2Z1hXG0pFOlEix77UvOTw-NfNuX20oyBgVrPL--0n2ZNjrI0vKNBImBop03G0p3fTT3hR_Chdf05d_h_ZbzfoKQ"
             />
             <div className="flex flex-col leading-tight">
-              <span className="font-bold text-lg text-[#1c1c19] tracking-tight">Nexora</span>
+              <span className="font-bold text-lg text-[#1c1c19] tracking-tight group-hover:text-[#b1005e] transition-colors">Nexora</span>
               <span className="text-[11px] font-bold text-[#8e4767] uppercase tracking-wider">
                 Growth Partner
               </span>
             </div>
-          </div>
+          </button>
 
           <div className="h-px w-full bg-[#e5e2dd]/60 my-1"></div>
 
@@ -178,18 +185,37 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
               <span className="material-symbols-outlined text-[24px]">menu</span>
             </button>
 
-            <img
-              alt="Nexora Brand Logo"
-              className="h-8 w-auto object-contain shrink-0"
-              src="https://lh3.googleusercontent.com/aida/AEtjO1XZxTb-KtdsPjo0U0odHwDY485hRuwmfDBk7sy7hvncIa4xg3AdjCaLVTut6pSuuRiQJj_3YtSdqJ3TLo2klHSJMNebL6mVq0uWtOhluaULb7Cy_34No2AloAlRtDCW1-HCFGFyKGQkrv2OMGEMkXFJpEFLcxUma8v2Z1hXG0pFOlEix77UvOTw-NfNuX20oyBgVrPL--0n2ZNjrI0vKNBImBop03G0p3fTT3hR_Chdf05d_h_ZbzfoKQ"
-            />
+            <button
+              type="button"
+              onClick={onNavigateToHub}
+              className="flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 text-left"
+              title="Return to Main Landing Hub"
+            >
+              <img
+                alt="Nexora Brand Logo"
+                className="h-8 w-auto object-contain shrink-0 transition-transform hover:scale-105"
+                src="https://lh3.googleusercontent.com/aida/AEtjO1XZxTb-KtdsPjo0U0odHwDY485hRuwmfDBk7sy7hvncIa4xg3AdjCaLVTut6pSuuRiQJj_3YtSdqJ3TLo2klHSJMNebL6mVq0uWtOhluaULb7Cy_34No2AloAlRtDCW1-HCFGFyKGQkrv2OMGEMkXFJpEFLcxUma8v2Z1hXG0pFOlEix77UvOTw-NfNuX20oyBgVrPL--0n2ZNjrI0vKNBImBop03G0p3fTT3hR_Chdf05d_h_ZbzfoKQ"
+              />
+              <span className="hidden sm:inline font-bold text-base text-[#1c1c19]">Nexora</span>
+            </button>
+
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffe088] text-[#241a00] text-[11px] font-bold shadow-[0_2px_8px_rgba(115,92,0,0.1)]">
               <span className="material-symbols-outlined text-[16px] text-[#735c00]">workspace_premium</span>
-              <span>Growth Partner • REF-5A45019655</span>
+              <span className="hidden sm:inline">Growth Partner • </span>REF-5A45019655
             </div>
           </div>
 
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Dedicated Home Return Button */}
+            <button
+              type="button"
+              onClick={onNavigateToHub}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#594047] bg-[#f0ede9] hover:bg-[#e5e2dd] hover:text-[#b1005e] border border-[#e5e2dd] transition-all cursor-pointer shadow-xs active:scale-95"
+              title="Return to Main Hub"
+            >
+              <span className="material-symbols-outlined text-[16px]">home</span>
+              <span>Home</span>
+            </button>
             <button
               onClick={handleQuickInvite}
               className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#d91b77] text-white font-bold text-xs shadow-[0_4px_16px_rgba(217,27,119,0.28)] hover:bg-[#b1005e] transition-all cursor-pointer active:scale-95"
@@ -296,7 +322,16 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
 
         {/* Main Content Area */}
         <main className="w-full pt-20 px-4 sm:px-6 py-6 flex-1">
-          <div className="flex flex-col w-full gap-8 max-w-6xl mx-auto">
+          <div className="flex flex-col w-full gap-5 max-w-6xl mx-auto">
+            {/* Breadcrumb Navigation */}
+            <BreadcrumbNavigation
+              onNavigateToHub={onNavigateToHub}
+              onNavigateToDashboard={onNavigateToWorkspace}
+              items={[
+                { label: 'Salon Intelligence CRM', isActive: true, icon: 'storefront' }
+              ]}
+            />
+
             {/* Subtle Ambient Glow Orbs */}
             <div className="relative w-full">
               <div className="absolute -top-12 left-1/4 w-96 h-96 rounded-full bg-[#b1005e]/5 blur-3xl pointer-events-none -z-10"></div>
@@ -436,6 +471,9 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
                 </div>
               </div>
             </div>
+
+            {/* Weekly Goal Tracker with Dynamic Progress Ring */}
+            <WeeklyGoalTracker onNavigateToAddSalon={onNavigateToAddSalon} />
 
             {/* 2. Referral Funnel Visualization */}
             <div className="rounded-2xl bg-white/80 backdrop-blur-xl p-5 sm:p-6 shadow-[0_8px_32px_0_rgba(74,14,46,0.04)] border border-[#e5e2dd] flex flex-col gap-6">

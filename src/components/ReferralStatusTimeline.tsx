@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NotificationBell } from './NotificationBell';
+import { BreadcrumbNavigation } from './BreadcrumbNavigation';
 
 interface ReferralStatusTimelineProps {
   onNavigateToAuth?: () => void;
@@ -352,7 +353,17 @@ export const ReferralStatusTimeline: React.FC<ReferralStatusTimelineProps> = ({
 
         {/* Main Content Area */}
         <main className="w-full pt-20 px-4 sm:px-6 py-6 flex-1">
-          <div className="flex flex-col w-full gap-8 max-w-6xl mx-auto">
+          <div className="flex flex-col w-full gap-5 max-w-6xl mx-auto">
+            {/* Breadcrumb Navigation */}
+            <BreadcrumbNavigation
+              onNavigateToHub={onNavigateToHub}
+              onNavigateToDashboard={onNavigateToSalonIntelligence}
+              items={[
+                { label: 'Salon Intelligence', onClick: onNavigateToSalonIntelligence, icon: 'storefront' },
+                { label: '5-Stage Referral Timeline', isActive: true, icon: 'timeline' }
+              ]}
+            />
+
             {/* Dynamic Ambient Backdrops & Top Headline Metric Strip */}
             <div className="relative w-full overflow-hidden rounded-2xl bg-[#f6f3ee] p-5 sm:p-7 shadow-xs border border-[#e5e2dd]">
               <div className="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-[#b1005e]/5 blur-3xl pointer-events-none"></div>

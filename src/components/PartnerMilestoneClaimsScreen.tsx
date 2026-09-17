@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import nexoraTshirtImg from '../assets/images/nexora_tshirt_gift_1789626886832.jpg';
 import {
   Award,
   CheckCircle2,
@@ -208,9 +209,9 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
       tier: 'Tier 1',
       salons: 25,
       category: 'dispatched',
-      title: 'Partner Welcome Merch Kit',
-      subtitle: '240 GSM Organic Cotton + Gold Crest',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDEwOuAF8BCeEn_LfIQaiPcyeFbv2qe9rv-ZXHlHXi2nsPnvGQhtw4e8RVZpnHt3-aehDU0wdQ8_Nfd0T2eEYDYZ1OT6yfVLZ0-EpLCPiqGc8jIpfzxJt_g2DEruMQPctjHBKrC5Mjq2SGPCHyXzaRFZYqpdgp3ur5pjQb4SoQz-FT5HQ1YbGzoPxnhLaW9OiHzqmVc3Vs2MfvjJgp0kcAOqa1dqF7dY1t-waEoe8yJ-RC0Fs3g8r1O',
+      title: 'Official Nexora Partner T-Shirt',
+      subtitle: 'NEXORA SALONOS Branded Logo • 240 GSM Organic Cotton',
+      image: nexoraTshirtImg,
       progressCount: 25,
       progressTarget: 25,
       percentage: 100,
@@ -246,9 +247,9 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
       tier: 'Tier 3',
       salons: 100,
       category: 'dispatched',
-      title: 'HP ProBook Laptop',
-      subtitle: 'Intel Core i5 • 16GB RAM • 512GB SSD',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDZiusyd182GdJjEqWUUkXlQD48FfvC1T274VsrRC9rZT1mBZdroZaA0sjgL9L820TVCfB3K2kfdca9NzjfJIMdAaZSXLCUnJx7QbrqgawtK1YloAUOyYWQnBZgGo6-7k00UZ_tLM5_AvwPYfnfvcn-FXr9EDClWQQ_F6aY1bk_WJGF0hZS_twtg2sHXWUYgKTCvX2kAg9Y0roPj3sUWgNZKDORpA5w237nAlw7Vpk563jas4ZUP6Cz',
+      title: 'HP OmniBook / ProBook AI Laptop (Latest Model)',
+      subtitle: 'Intel Core Ultra 7 / i5 • 16GB RAM • 512GB SSD',
+      image: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=1000&q=80',
       progressCount: 100,
       progressTarget: 100,
       percentage: 100,
@@ -257,7 +258,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
       carrier: 'BlueDart Express Air #REF-AIR-5A450',
       date: 'Est: Nov 18, 2024',
       actionType: 'tracking',
-      serial: 'HP-PB450-G10-SAMPLE',
+      serial: 'HP-OB-ULTRA7-2026-SAMPLE',
       recipient: 'Growth Partner [DEV SAMPLE]'
     },
     {
@@ -299,7 +300,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
       salons: 750,
       category: simulatorState === 'all-delivered' ? 'dispatched' : 'locked',
       title: 'Royal Enfield Classic 350',
-      subtitle: 'Chrome & Stealth Black • Full On-Road',
+      subtitle: 'Chrome & Stealth Black • Full On-Road Local Showroom Handover',
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAyaJz_ASu4-x7k0myBEceY0p85BsDLCdNtcwNrJ5sGe-OxyAP73iB1LUKmA9TNIPRZTvs9kOTSISCBog7-sRKcWd_tDQMsT096rH-pHjeuZmU5-BXecEesu3G6LWtRrTawAtsiAFKIM9I8KhWQNXWFXfiBrL3nNxxljqsxXP6pBV6xctgUAJu538x2uyDV1w7rx7dFeqHBW7S2pjbNDpfmrZoZ5rjLksetCXgn5YcV-KM7xfUl4pjN',
       progressCount: simulatorState === 'all-delivered' ? 750 : 118,
       progressTarget: 750,
@@ -309,6 +310,23 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
       remaining: simulatorState === 'all-delivered' ? 0 : 632,
       actionType: 'criteria',
       grantValue: 'Authorized Local Showroom Handover'
+    },
+    {
+      id: 7,
+      tier: 'Tier 7',
+      salons: 1000,
+      category: simulatorState === 'all-delivered' ? 'dispatched' : 'locked',
+      title: 'District Partner SUV Car',
+      subtitle: 'Mahindra XUV700 / Creta • Brand New Vehicle Handover',
+      image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80',
+      progressCount: simulatorState === 'all-delivered' ? 1000 : 118,
+      progressTarget: 1000,
+      percentage: simulatorState === 'all-delivered' ? 100 : 11.8,
+      statusLabel: simulatorState === 'all-delivered' ? 'Delivered' : 'Locked',
+      statusColor: simulatorState === 'all-delivered' ? 'delivered' : 'locked',
+      remaining: simulatorState === 'all-delivered' ? 0 : 882,
+      actionType: 'criteria',
+      grantValue: 'District Fleet Asset Grant + Lifetime Royalty'
     }
   ];
 
@@ -534,7 +552,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
               </div>
               <div className="flex items-baseline gap-3">
                 <h1 className="text-3xl font-extrabold text-[#1c1c19] tracking-tight">
-                  Milestone Rewards &amp; Asset Claims
+                  Nexora Milestone Rewards &amp; Asset Claims
                 </h1>
                 <span className="px-2.5 py-0.5 rounded-full bg-[#ffe088] text-[#241a00] text-xs font-bold tracking-wide">
                   Gold Tier
@@ -1306,6 +1324,75 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
                 <p className="text-xs text-[#594047] leading-relaxed">
                   Vehicles &amp; high-value computing assets are titled directly in the accredited Growth Partner's registered business or personal PAN name with comprehensive factory warranty handover.
                 </p>
+              </div>
+            </div>
+
+            {/* Documents That May Be Required Before Reward Release */}
+            <div className="mt-6 pt-6 border-t border-[#e5e2dd] space-y-4">
+              <div className="flex items-center gap-2">
+                <FileText className="w-5 h-5 text-[#b1005e]" />
+                <h4 className="font-bold text-sm text-[#1c1c19]">
+                  Reward Release से पहले Growth Partner से मांगे जा सकने वाले Documents
+                </h4>
+                <span className="text-xs text-[#8d6f77] font-medium hidden sm:inline">
+                  (Documents That May Be Required Before Reward Release)
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-[#f6f3ee] border border-[#e5e2dd] flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#b1005e] shrink-0" />
+                  <span className="font-bold text-[#1c1c19]">PAN</span>
+                </div>
+
+                <div className="p-3 rounded-xl bg-[#f6f3ee] border border-[#e5e2dd] flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#b1005e] shrink-0" />
+                  <span className="font-bold text-[#1c1c19]">Aadhaar या Valid Identity Proof</span>
+                </div>
+
+                <div className="p-3 rounded-xl bg-[#f6f3ee] border border-[#e5e2dd] flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#b1005e] shrink-0" />
+                  <span className="font-bold text-[#1c1c19]">Address Proof</span>
+                </div>
+
+                <div className="p-3 rounded-xl bg-[#f6f3ee] border border-[#e5e2dd] flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#b1005e] shrink-0" />
+                  <span className="font-bold text-[#1c1c19]">Photograph</span>
+                </div>
+
+                <div className="p-3 rounded-xl bg-[#f6f3ee] border border-[#e5e2dd] flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#b1005e] shrink-0" />
+                  <span className="font-bold text-[#1c1c19]">Bank Details, जहाँ Required हों</span>
+                </div>
+
+                <div className="p-3 rounded-xl bg-[#f6f3ee] border border-[#e5e2dd] flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#b1005e] shrink-0" />
+                  <span className="font-bold text-[#1c1c19]">Driving Licence — Vehicle Rewards के लिए</span>
+                </div>
+
+                <div className="p-3 rounded-xl bg-[#f6f3ee] border border-[#e5e2dd] flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#b1005e] shrink-0" />
+                  <span className="font-bold text-[#1c1c19]">Tax Declaration</span>
+                </div>
+
+                <div className="p-3 rounded-xl bg-[#f6f3ee] border border-[#e5e2dd] flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#b1005e] shrink-0" />
+                  <span className="font-bold text-[#1c1c19]">Reward Acceptance Form</span>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[#f6f3ee] border border-[#e5e2dd] space-y-2 text-xs text-[#594047]">
+                <p className="leading-relaxed">
+                  <strong>Reward release से पहले applicable verification, documentation और compliance requirements पूरी करना आवश्यक हो सकता है। Required documents reward type, eligibility और applicable requirements के अनुसार अलग-अलग हो सकते हैं।</strong>
+                </p>
+                <div className="pt-2 border-t border-[#e5e2dd] flex flex-col gap-0.5">
+                  <p className="font-bold text-[#1c1c19]">
+                    Final tax responsibility signed Growth Partner Agreement में clearly लिखी जाए।
+                  </p>
+                  <p className="text-[11px] text-[#8d6f77] font-semibold">
+                    Final tax responsibility must be clearly stated in the signed Growth Partner Agreement.
+                  </p>
+                </div>
               </div>
             </div>
           </section>

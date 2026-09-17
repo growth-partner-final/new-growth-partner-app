@@ -125,13 +125,24 @@ export const SalonMobileFastTrackScreen: React.FC<SalonMobileFastTrackScreenProp
           {/* Partner Lock & Cloud Status Header */}
           <div className="pt-2 pb-2 flex flex-col gap-2 relative z-10">
             <div className="flex items-center justify-between text-[#1c1c19]">
-              <div className="flex items-center gap-1.5 bg-[#ebe8e3] px-3 py-1 rounded-full shadow-2xs border border-[#e5e2dd]">
-                <span className="material-symbols-outlined text-[#8e4767] text-base leading-none">
-                  lock
-                </span>
-                <span className="text-xs font-bold text-[#8e4767] truncate max-w-[200px] sm:max-w-none">
-                  Partner: Growth Partner (REF-5A45019655)
-                </span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => onNavigateToHub && onNavigateToHub()}
+                  className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold text-[#b1005e] bg-[#ffd9e2]/60 hover:bg-[#ffd9e2] border border-[#fda4c9]/60 cursor-pointer transition-all active:scale-95"
+                  title="Return to Main Home Landing Page"
+                >
+                  <span className="material-symbols-outlined text-[16px]">home</span>
+                  <span>Home</span>
+                </button>
+                <div className="flex items-center gap-1.5 bg-[#ebe8e3] px-3 py-1 rounded-full shadow-2xs border border-[#e5e2dd]">
+                  <span className="material-symbols-outlined text-[#8e4767] text-base leading-none">
+                    lock
+                  </span>
+                  <span className="text-xs font-bold text-[#8e4767] truncate max-w-[150px] sm:max-w-none">
+                    Partner: Growth Partner
+                  </span>
+                </div>
               </div>
               <button
                 onClick={() => {
@@ -627,6 +638,19 @@ export const SalonMobileFastTrackScreen: React.FC<SalonMobileFastTrackScreenProp
 
         {/* Action Buttons Row */}
         <div className="flex items-center gap-3">
+          {/* Home button */}
+          <button
+            aria-label="Home"
+            onClick={() => {
+              if (onNavigateToHub) onNavigateToHub();
+            }}
+            className="h-12 w-12 rounded-full bg-[#ffd9e2]/60 flex items-center justify-center text-[#b1005e] active:scale-95 transition-transform shrink-0 cursor-pointer border border-[#fda4c9]/60 hover:bg-[#ffd9e2]"
+            type="button"
+            title="Return to Main Home Landing Page"
+          >
+            <span className="material-symbols-outlined text-xl">home</span>
+          </button>
+
           {/* Back button */}
           <button
             aria-label="Previous Step"

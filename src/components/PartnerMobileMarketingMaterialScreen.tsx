@@ -225,7 +225,12 @@ export const PartnerMobileMarketingMaterialScreen: React.FC<PartnerMobileMarketi
         {/* HEADER BAR */}
         <header className="sticky top-0 w-full z-40 pt-safe bg-[#fcf9f4]/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)] border-b border-[#f0ede9]">
           <div className="h-16 px-4 flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2 min-w-0">
+            <button
+              type="button"
+              onClick={() => onNavigateToHub && onNavigateToHub()}
+              className="flex items-center gap-2 min-w-0 bg-transparent border-0 p-0 text-left cursor-pointer hover:opacity-90"
+              title="Return to Main Home Landing Page"
+            >
               <div className="w-8 h-8 rounded-lg bg-[#b1005e] flex items-center justify-center text-white font-bold shrink-0">
                 NX
               </div>
@@ -233,22 +238,25 @@ export const PartnerMobileMarketingMaterialScreen: React.FC<PartnerMobileMarketi
                 <span className="text-[10px] font-bold tracking-wider uppercase text-[#b1005e] truncate">Nexora Partner</span>
                 <h1 className="text-sm text-[#1c1c19] font-black truncate leading-tight">Approved Marketing Hub</h1>
               </div>
-            </div>
+            </button>
             
-            <div className="flex items-center gap-1 shrink-0">
+            <div className="flex items-center gap-1.5 shrink-0">
               <button 
+                type="button"
+                onClick={() => onNavigateToHub && onNavigateToHub()}
+                className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold text-[#b1005e] bg-[#ffd9e2]/60 hover:bg-[#ffd9e2] border border-[#fda4c9]/60 cursor-pointer"
+                title="Return to Main Home Landing Page"
+              >
+                <span className="material-symbols-outlined text-[16px]">home</span>
+                <span>Home</span>
+              </button>
+              <button 
+                type="button"
                 onClick={() => onNavigateToDashboard && onNavigateToDashboard()}
-                className="w-9 h-9 rounded-full flex items-center justify-center text-[#594047] hover:text-[#b1005e] hover:bg-black/5"
+                className="w-9 h-9 rounded-full flex items-center justify-center text-[#594047] hover:text-[#b1005e] hover:bg-black/5 cursor-pointer"
                 title="Go to Dashboard"
               >
                 <span className="material-symbols-outlined text-[20px]">space_dashboard</span>
-              </button>
-              <button 
-                onClick={() => onNavigateToHub && onNavigateToHub()}
-                className="w-9 h-9 rounded-full flex items-center justify-center text-[#594047] hover:text-red-600 hover:bg-black/5"
-                title="Exit to Hub"
-              >
-                <span className="material-symbols-outlined text-[20px]">logout</span>
               </button>
             </div>
           </div>
