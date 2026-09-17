@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { Header } from '@/components/layout/Header';
+import { PublicHeader } from '@/components/layout/PublicHeader';
 import { Footer } from '@/components/layout/Footer';
 import './globals.css';
 
@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           Skip to main content
         </a>
 
-        <Header />
+        <PublicHeader />
         <main id="main-content" style={{ minHeight: 'calc(100vh - 400px)' }}>
           {children}
         </main>

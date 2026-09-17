@@ -17,6 +17,8 @@ import {
 } from './lib/constants/commissions';
 import { REWARD_MILESTONES, REWARD_MILESTONE_LABELS } from './lib/constants/rewards';
 import { PosterSection, findPosterAsset } from './components/programme/PosterSection';
+import { NEXORA_COLORS } from './styles/tokens';
+import { PublicHeader } from './components/layout/PublicHeader';
 
 const EXPECTED_ROUTES = [
   '/',
@@ -100,7 +102,7 @@ describe('Phase 1 — Public Programme UI Contract Tests', () => {
 
   describe('Working Navigation Targets', () => {
     it('header links to all primary public routes and CTAs', () => {
-      const headerPath = resolve(process.cwd(), 'src/components/layout/Header.tsx');
+      const headerPath = resolve(process.cwd(), 'src/components/layout/PublicHeader.tsx');
       const content = readFileSync(headerPath, 'utf8');
       const expectedTargets = [
         '/programme',
@@ -115,7 +117,7 @@ describe('Phase 1 — Public Programme UI Contract Tests', () => {
         '/partner/login',
       ];
       for (const target of expectedTargets) {
-        expect(content, `Header must contain link to ${target}`).toContain(target);
+        expect(content, `PublicHeader must contain link to ${target}`).toContain(target);
       }
     });
 
@@ -232,6 +234,27 @@ describe('Phase 1 — Public Programme UI Contract Tests', () => {
       const content = readFileSync(legalNoticePath, 'utf8');
       expect(content).toContain('Cash alternative available nahi hai');
       expect(content).toContain('Rewards verified qualifying shops');
+    });
+  });
+
+  describe('Design Tokens & PublicHeader', () => {
+    it('defines reusable Nexora brand colours', () => {
+      expect(NEXORA_COLORS.magenta).toBe('#b1005e');
+      expect(NEXORA_COLORS.deepWine).toBe('#54123b');
+      expect(NEXORA_COLORS.mutedLavender).toBe('#fda4c9');
+      expect(NEXORA_COLORS.white).toBe('#ffffff');
+      expect(NEXORA_COLORS.textMain).toBe('#1f151c');
+      expect(NEXORA_COLORS.border).toBe('#ecd8e3');
+    });
+
+    it('exports the reusable PublicHeader component', () => {
+      expect(typeof PublicHeader).toBe('function');
+      const headerPath = resolve(process.cwd(), 'src/components/layout/PublicHeader.tsx');
+      const content = readFileSync(headerPath, 'utf8');
+      expect(content).toContain('Nexora');
+      expect(content).toContain('Growth Partner');
+      expect(content).toContain('aria-label="Open navigation menu"');
+      expect(content).toContain('MobileNav');
     });
   });
 

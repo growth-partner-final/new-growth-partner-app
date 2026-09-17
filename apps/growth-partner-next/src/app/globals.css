@@ -1,4 +1,10 @@
 :root {
+  /* Nexora Design System Tokens */
+  --color-magenta: #b1005e;
+  --color-deep-wine: #54123b;
+  --color-muted-lavender: #fda4c9;
+  --color-white: #ffffff;
+
   --color-primary: #b1005e;
   --color-primary-hover: #90004c;
   --color-primary-light: #fce7f3;
