@@ -58,7 +58,6 @@ interface MobileJourneyNavigatorScreenProps {
   onNavigateToMilestoneUnlock?: () => void;
   onNavigateToMobileRewards?: () => void;
   onNavigateToOpsMilestoneClaims?: () => void;
-  onNavigateToPrototypeOrchestrator?: () => void;
   onNavigateToMobileMarketing?: () => void;
   onNavigateToMarketingMaterial?: () => void;
   onNavigateToPartnerLevels?: () => void;
@@ -87,7 +86,6 @@ export const MobileJourneyNavigatorScreen: React.FC<MobileJourneyNavigatorScreen
   onNavigateToMilestoneUnlock,
   onNavigateToMobileRewards,
   onNavigateToOpsMilestoneClaims,
-  onNavigateToPrototypeOrchestrator,
   onNavigateToMobileMarketing,
   onNavigateToMarketingMaterial,
   onNavigateToPartnerLevels,
@@ -475,7 +473,7 @@ export const MobileJourneyNavigatorScreen: React.FC<MobileJourneyNavigatorScreen
                   <div className="flex flex-col gap-1">
                     <label className="text-xs text-[#ba1a1a] font-bold flex items-center justify-between">
                       <span>Merchant Processing Volume (₹)</span>
-                      <span className="text-[10px] font-normal">Must exceed ₹50,000/mo</span>
+                      <span className="text-[10px] font-normal">Must meet minimum daily volume</span>
                     </label>
                     <div className="relative">
                       <input
@@ -1122,11 +1120,7 @@ export const MobileJourneyNavigatorScreen: React.FC<MobileJourneyNavigatorScreen
 
         <button
           onClick={() => {
-            if (onNavigateToPrototypeOrchestrator) {
-              onNavigateToPrototypeOrchestrator();
-            } else {
-              triggerToast('Viewing full route tree (8 nodes). Click any route above.');
-            }
+            triggerToast('Viewing full route tree (8 nodes). Click any route above.');
           }}
           className="flex flex-col items-center justify-center min-w-[56px] min-h-[48px] text-[#594047] hover:text-[#1c1c19] cursor-pointer"
           type="button"

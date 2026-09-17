@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { NotificationBell } from './NotificationBell';
+import { partnerDbService } from '../services/partnerDbService';
+import { BUSINESS_RULES } from '../constants/businessRules';
 
 interface PartnerWithdrawalsScreenProps {
   onNavigateToHub?: () => void;
@@ -76,7 +78,7 @@ export function PartnerWithdrawalsScreen({
   const [flowState, setFlowState] = useState<'normal' | 'no-method' | 'pending-kyc' | 'low-balance' | 'empty-history' | 'network-error'>('normal');
 
   // Input Amount for Payout Form
-  const [withdrawAmountInput, setWithdrawAmountInput] = useState<string>('5000');
+  const [withdrawAmountInput, setWithdrawAmountInput] = useState<string>(BUSINESS_RULES.WITHDRAWAL.MIN.toString());
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>('all');
@@ -296,12 +298,12 @@ export function PartnerWithdrawalsScreen({
   };
 
   const handleProceedWithRequest = () => {
-    if (parsedInputAmount < 1000) {
-      triggerToast('Minimum withdrawal amount is ₹1,000.');
+    if (parsedInputAmount < BUSINESS_RULES.WITHDRAWAL.MIN) {
+      triggerToast(`Minimum withdrawal amount is ₹${BUSINESS_RULES.WITHDRAWAL.MIN.toLocaleString('en-IN')}.`);
       return;
     }
-    if (parsedInputAmount > metrics.available) {
-      triggerToast('Requested amount exceeds cleared available balance.');
+    if (parsedInputAmount > BUSINESS_RULES.WITHDRAWAL.MAX) {
+      triggerToast(`Maximum withdrawal amount is ₹${BUSINESS_RULES.WITHDRAWAL.MAX.toLocaleString('en-IN')}.`);
       return;
     }
     if (flowState === 'no-method') {
@@ -315,9 +317,23 @@ export function PartnerWithdrawalsScreen({
     setShowConfirmModal(true);
   };
 
-  const handleFinalConfirm = () => {
+  const handleFinalConfirm = async () => {
     setShowConfirmModal(false);
-    triggerToast(`Request Queued Successfully! ₹${netDisbursed.toLocaleString('en-IN')} net payout dispatched to settlement audit queue.`);
+    try {
+      const partnerId = await partnerDbService.getCurrentPartnerId() || '00000000-0000-0000-0000-000000000000';
+      await partnerDbService.requestWithdrawal({
+        partnerId,
+        amount: parsedInputAmount,
+        bankAccountDetails: {
+          bankName: 'HDFC Bank',
+          accountNumber: '•••• 4829',
+          ifscCode: 'HDFC0000428'
+        }
+      });
+      triggerToast(`Request Queued Successfully! ₹${netDisbursed.toLocaleString('en-IN')} net payout dispatched to settlement audit queue.`);
+    } catch (err: any) {
+      triggerToast(err.message || 'Withdrawal request failed');
+    }
   };
 
   return (
@@ -788,7 +804,7 @@ export function PartnerWithdrawalsScreen({
                 <div className="flex flex-col">
                   <span className="text-xs font-black text-[#1c1c19] uppercase tracking-wide">Statutory Compliance &amp; Payout Guardrails</span>
                   <p className="text-xs text-[#594047] mt-0.5 leading-relaxed">
-                    Minimum single withdrawal limit: <strong>₹1,000</strong>. Maximum: <strong>₹50,000</strong>. Commission payouts attract <strong>5% TDS under Section 194H</strong> of the Income Tax Act with verified PAN, or 20% standard default rate. Automated clearing runs weekly on Mondays.
+                    Minimum single withdrawal limit: <strong>₹{BUSINESS_RULES.WITHDRAWAL.MIN.toLocaleString('en-IN')}</strong>. Maximum: <strong>₹{BUSINESS_RULES.WITHDRAWAL.MAX.toLocaleString('en-IN')}</strong>. Commission payouts attract <strong>5% TDS under Section 194H</strong> of the Income Tax Act with verified PAN, or 20% standard default rate. Automated clearing runs weekly on Mondays.
                   </p>
                 </div>
               </div>

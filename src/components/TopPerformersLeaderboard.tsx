@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BreadcrumbNavigation } from './BreadcrumbNavigation';
+import { partnerDbService } from '../services/partnerDbService';
 
 interface TopPerformersLeaderboardProps {
   onNavigateToAuth?: () => void;
@@ -47,6 +48,24 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
 }) => {
   const [simulationState, setSimulationState] = useState<SimState>('preview');
   const [activeTab, setActiveTab] = useState<TabPeriod>('monthly');
+  const [rankings, setRankings] = useState<LeaderboardItem[]>(mockRankings);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (simulationState === 'loading' || simulationState === 'error' || simulationState === 'empty') {
+      return;
+    }
+    partnerDbService.getLeaderboardData(activeTab).then(data => {
+      if (isMounted && data) {
+        setRankings(data);
+      }
+    }).catch(() => {
+      if (isMounted) setSimulationState('error');
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [activeTab, simulationState]);
 
   // Filter form states
   const [filterState, setFilterState] = useState('all');
@@ -73,7 +92,7 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
     setSimulationState('preview');
   };
 
-  const filteredRankings = mockRankings.filter(item => {
+  const filteredRankings = rankings.filter(item => {
     if (!filterSearch) return true;
     const query = filterSearch.toLowerCase();
     return item.name.toLowerCase().includes(query) || item.id.toLowerCase().includes(query);
@@ -554,7 +573,7 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
           )}
 
           {/* Compliance Notice */}
-          <section className="pt-2" data-purpose="compliance-disclaimer">
+          <section className="pt-2 pb-24 lg:pb-12" data-purpose="compliance-disclaimer">
             <div className="bg-slate-100/90 rounded-xl p-3 border border-slate-200/80 flex items-start gap-2.5">
               <svg className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
@@ -566,131 +585,12 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
             </div>
           </section>
         </main>
-
-        {/* Mobile Bottom Navigation */}
-        <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-1.5 z-40 shadow-sticky flex items-center justify-around" data-purpose="mobile-bottom-nav">
-          <button
-            type="button"
-            onClick={onNavigateToHub}
-            className="flex flex-col items-center justify-center min-h-[44px] py-1 text-slate-500 hover:text-[#b1005e] transition-colors cursor-pointer"
-            title="Return to Main Home Landing Page"
-          >
-            <svg className="w-5 h-5 text-[#b1005e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
-            </svg>
-            <span className="text-[9px] font-bold tracking-tight mt-0.5 text-[#b1005e]">Home</span>
-          </button>
-          <button onClick={onNavigateToWorkspace} className="flex flex-col items-center justify-center min-h-[44px] py-1 text-slate-500 hover:text-slate-850 transition-colors">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8"></path>
-            </svg>
-            <span className="text-[9px] font-medium tracking-tight mt-0.5">Dashboard</span>
-          </button>
-          <button onClick={onNavigateToReferralTimeline} className="flex flex-col items-center justify-center min-h-[44px] py-1 text-slate-500 hover:text-slate-850 transition-colors">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8"></path>
-            </svg>
-            <span className="text-[9px] font-medium tracking-tight mt-0.5">Referrals</span>
-          </button>
-          <button onClick={onNavigateToHub} className="flex flex-col items-center justify-center min-h-[44px] py-1 text-slate-500 hover:text-slate-850 transition-colors">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8"></path>
-            </svg>
-            <span className="text-[9px] font-medium tracking-tight mt-0.5">Rewards</span>
-          </button>
-          <button className="flex flex-col items-center justify-center min-h-[44px] py-1 text-[#d91b77] transition-colors">
-            <div className="relative">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path clipRule="evenodd" d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-.285 1.05A3.989 3.989 0 0115 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.715-5.349L11 6.477V16h2a1 1 0 110 2H7a1 1 0 110-2h2V6.477L6.237 7.582l1.715 5.349a1 1 0 01-.285 1.05A3.989 3.989 0 015 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.738-5.42-1.233-.617a1 1 0 01.894-1.788l1.599.799L9 4.323V3a1 1 0 011-1z" fillRule="evenodd"></path>
-              </svg>
-              <span className="absolute -top-1 -right-1.5 w-2 h-2 rounded-full bg-primary ring-2 ring-white"></span>
-            </div>
-            <span className="text-[9px] font-bold tracking-tight mt-0.5 text-[#d91b77]">Performers</span>
-          </button>
-          <button onClick={onNavigateToWorkspace} className="flex flex-col items-center justify-center min-h-[44px] py-1 text-slate-500 hover:text-slate-850 transition-colors">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8"></path>
-            </svg>
-            <span className="text-[9px] font-medium tracking-tight mt-0.5">Profile</span>
-          </button>
-        </nav>
       </div>
-
       {/* ======================================================== */}
       {/* VIEWPORT 2: DESKTOP VIEWPORT (hidden md:flex)            */}
       {/* ======================================================== */}
-      <div className="flex-1 hidden md:flex w-full max-w-[1536px] mx-auto min-h-screen">
-        <aside className="w-64 shrink-0 bg-[#fcf9f4] border-r border-[#ece8df] p-5 flex flex-col justify-between" data-purpose="partner-sidebar">
-          <div>
-            <button
-              type="button"
-              onClick={onNavigateToHub}
-              className="flex items-center space-x-3 px-1 py-2 mb-6 cursor-pointer bg-transparent border-0 text-left w-full hover:opacity-90 transition-opacity"
-              title="Return to Main Home Landing Page"
-            >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#d91b77] to-[#500028] flex items-center justify-center text-white font-black text-xl shadow-md">
-                ▲
-              </div>
-              <div>
-                <span className="block text-base font-extrabold tracking-tight text-neutral-900 leading-none">NEXORA</span>
-                <span className="text-[10px] tracking-wider uppercase font-bold text-[#d91b77]">Growth Partner</span>
-              </div>
-            </button>
-
-            <div className="glass-card-user p-3.5 rounded-xl mb-6 shadow-sm">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-lg bg-[#500028] text-white flex items-center justify-center font-bold text-sm shrink-0">
-                  GP
-                </div>
-                <div className="overflow-hidden">
-                  <div className="text-xs font-bold text-neutral-900 truncate">Growth Partner</div>
-                  <div className="text-[11px] font-mono text-neutral-500 truncate">ID: GP-PARTNER</div>
-                  <div className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded mt-0.5 border border-emerald-200">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    VERIFIED PARTNER
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <nav className="space-y-1 text-sm font-medium">
-              <button
-                type="button"
-                onClick={onNavigateToHub}
-                className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#b1005e] bg-[#ffd9e2]/50 hover:bg-[#ffd9e2] font-bold border border-[#fda4c9]/60 transition text-left cursor-pointer mb-1"
-                title="Return to Main Home Page"
-              >
-                <svg className="w-4 h-4 text-[#b1005e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-                </svg>
-                <span>Home (Landing Page)</span>
-              </button>
-              <button onClick={onNavigateToWorkspace} className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 transition text-left">
-                <span>Dashboard</span>
-              </button>
-              <button onClick={onNavigateToReferralTimeline} className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 transition text-left">
-                <span>My Referral Code</span>
-              </button>
-              <button onClick={onNavigateToSalonIntelligence} className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 transition text-left">
-                <span>Referred Salons</span>
-              </button>
-              <button onClick={onNavigateToHub} className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 transition text-left">
-                <span>Rewards</span>
-              </button>
-              <button className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#d91b77] text-white font-semibold transition text-left shadow-md">
-                <span>Top Performers</span>
-              </button>
-            </nav>
-          </div>
-
-          <div className="pt-6 border-t border-[#ece8df] space-y-2">
-            <button onClick={onNavigateToAuth} className="w-full flex items-center gap-3 px-3.5 py-2 rounded-lg text-sm text-rose-600 hover:bg-rose-50 transition text-left">
-              <span>Logout</span>
-            </button>
-          </div>
-        </aside>
-
-        <main className="flex-1 p-6 lg:p-8 overflow-y-auto max-w-6xl">
+      <div className="flex-1 hidden md:flex w-full bg-[#fcf9f4] min-h-full">
+        <main className="flex-1 p-6 lg:p-8 max-w-6xl">
           <div className="mb-4">
             <BreadcrumbNavigation
               onNavigateToHub={onNavigateToHub}

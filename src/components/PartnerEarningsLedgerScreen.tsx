@@ -25,6 +25,7 @@ interface PartnerEarningsLedgerScreenProps {
   onNavigateToMarketingMaterial?: () => void;
   onNavigateToPartnerLevels?: () => void;
   onNavigateToReferralHistory?: () => void;
+  onNavigateToScreen?: (screen: string) => void;
 }
 
 interface LedgerTransaction {
@@ -173,7 +174,8 @@ export const PartnerEarningsLedgerScreen: React.FC<PartnerEarningsLedgerScreenPr
   onNavigateToWithdrawals,
   onNavigateToMarketingMaterial,
   onNavigateToPartnerLevels,
-  onNavigateToReferralHistory
+  onNavigateToReferralHistory,
+  onNavigateToScreen
 }) => {
   const [activeLedgerTab, setActiveLedgerTab] = useState<'all' | 'paid' | 'pending' | 'disputed'>('all');
   const [cycleFilter, setCycleFilter] = useState<string>('current');
@@ -194,7 +196,7 @@ export const PartnerEarningsLedgerScreen: React.FC<PartnerEarningsLedgerScreenPr
   }, [activeLedgerTab]);
 
   return (
-    <div className="bg-[#fcf9f4] font-sans text-[#1c1c19] min-h-screen flex selection:bg-[#fda4c9]">
+    <div className="bg-[#fcf9f4] font-sans text-[#1c1c19] min-h-full flex flex-col selection:bg-[#fda4c9]">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#31302d] text-white shadow-2xl animate-in fade-in slide-in-from-top-4 duration-200 border border-white/10 max-w-md text-center">
@@ -203,101 +205,10 @@ export const PartnerEarningsLedgerScreen: React.FC<PartnerEarningsLedgerScreenPr
         </div>
       )}
 
-      {/* LEFT SIDEBAR NAVIGATION */}
-      <Sidebar
-        activeItem="earnings"
-        onNavigateItem={(key) => {
-          switch (key) {
-            case 'dashboard':
-              if (onNavigateToDashboard) onNavigateToDashboard();
-              break;
-            case 'my-referral-code':
-              if (onNavigateToShareEarn) onNavigateToShareEarn();
-              break;
-            case 'referred-users':
-              if (onNavigateToReferralHistory) onNavigateToReferralHistory();
-              else if (onNavigateToSalonIntelligence) onNavigateToSalonIntelligence();
-              break;
-            case 'referral-status':
-              if (onNavigateToReferralTimeline) onNavigateToReferralTimeline();
-              break;
-            case 'rewards':
-              if (onNavigateToRewardsMilestones) onNavigateToRewardsMilestones();
-              break;
-            case 'extra-onboarding-reward':
-              if (onNavigateToExtraOnboardingReward) onNavigateToExtraOnboardingReward();
-              break;
-            case 'profile':
-              if (onNavigateToProfileSettings) onNavigateToProfileSettings();
-              break;
-            case 'top-performers':
-              if (onNavigateToLeaderboard) onNavigateToLeaderboard();
-              break;
-            case 'earnings':
-              // already here
-              break;
-            case 'withdrawals':
-              if (onNavigateToWithdrawals) onNavigateToWithdrawals();
-              break;
-            case 'marketing-material':
-              if (onNavigateToMarketingMaterial) onNavigateToMarketingMaterial();
-              break;
-            case 'partner-levels':
-              if (onNavigateToPartnerLevels) onNavigateToPartnerLevels();
-              break;
-          }
-        }}
-        onNavigateToHub={onNavigateToHub}
-        partnerName="Growth Partner [DEV SAMPLE]"
-        partnerId="REF-5A45019655"
-        partnerTier="Gold Partner"
-      />
-
       {/* MAIN BODY CONTENT AREA */}
-      <div className="flex-1 lg:pl-72 flex flex-col min-w-0">
-        {/* Top Header */}
-        <header className="fixed top-8 sm:top-7 left-0 lg:left-72 right-0 h-16 bg-[#fcf9f4]/85 backdrop-blur-xl z-40 flex items-center justify-between px-4 sm:px-6 shadow-[0_1px_8px_rgba(74,14,46,0.04)] border-b border-[#e5e2dd]">
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => onNavigateToHub && onNavigateToHub()}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#594047] bg-white hover:bg-[#ebe8e3] hover:text-[#b1005e] border border-[#e5e2dd] transition-all cursor-pointer shadow-xs active:scale-95"
-              title="Return to Main Home Landing Page"
-            >
-              <span className="material-symbols-outlined text-[16px] text-[#b1005e]">home</span>
-              <span>Home</span>
-            </button>
-            <div className="px-3 py-1 rounded-full bg-[#ffd9e2]/60 text-[#8e004a] text-xs font-bold flex items-center gap-2 border border-[#fda4c9]/50">
-              <span className="w-2 h-2 rounded-full bg-[#b1005e] animate-pulse" />
-              <span>Live Production Sync</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => onNavigateToShareEarn && onNavigateToShareEarn()}
-              className="h-9 px-4 rounded-full bg-[#d91b77] text-white text-xs font-black flex items-center gap-1.5 shadow-[0_4px_16px_rgba(217,27,119,0.28)] hover:bg-[#b1005e] transition-all cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[18px]">share</span>
-              <span>Quick Invite</span>
-            </button>
-
-            <NotificationBell onNavigateToReferrals={onNavigateToReferralTimeline} />
-
-            <button
-              onClick={() => onNavigateToProfileSettings && onNavigateToProfileSettings()}
-              className="w-8 h-8 rounded-full bg-[#b1005e] text-white flex items-center justify-center shadow-xs cursor-pointer"
-              title="Partner Profile"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[18px]">person</span>
-            </button>
-          </div>
-        </header>
-
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Main Workspace */}
-        <main className="w-full pt-28 pb-24 bg-[#fcf9f4] px-4 sm:px-6 max-w-7xl mx-auto flex-grow">
+        <main className="w-full pt-12 pb-24 bg-[#fcf9f4] px-4 sm:px-6 max-w-7xl mx-auto flex-grow">
           <div className="flex flex-col w-full space-y-6">
             {/* Payout Announcement Banner */}
             <div className="relative overflow-hidden rounded-3xl bg-white/90 backdrop-blur-xl p-5 sm:p-6 shadow-[0_8px_32px_0_rgba(74,14,46,0.05)] border border-[#e5e2dd] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">

@@ -57,7 +57,7 @@ export const AddSalonScreen: React.FC<AddSalonScreenProps> = ({
     locality: 'Bandra West',
     address: 'Shop 4, Hill Road, Near Mehboob Studio',
     chairs: 6,
-    expectedVolume: 350000,
+    expectedVolume: 30000,
     hardwareType: 'soundbox',
     preferredLanguage: 'Hindi & English',
     settlementType: 'instant'
@@ -291,7 +291,7 @@ export const AddSalonScreen: React.FC<AddSalonScreenProps> = ({
                 </span>
               </div>
               <span className="text-xs text-[#594047] hidden sm:block">
-                Onboard merchants to earn ₹1,500–₹3,000 upfront + lifetime monthly volume share
+                Onboard merchants to earn performance-based activation rewards + lifetime monthly commission.
               </span>
             </div>
           </div>

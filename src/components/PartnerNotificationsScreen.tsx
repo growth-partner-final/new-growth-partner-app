@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { BreadcrumbNavigation } from './BreadcrumbNavigation';
+import { partnerDbService } from '../services/partnerDbService';
 import {
   Bell,
   CheckCircle2,
@@ -15,21 +16,11 @@ import {
   Target
 } from 'lucide-react';
 
-// Mock Notification Data with createdAt dates
 const createDate = (daysAgo: number) => {
   const d = new Date();
   d.setDate(d.getDate() - daysAgo);
   return d;
 };
-
-const initialNotifications = [
-  { id: 1, type: 'earnings', title: 'Payout Dispatched • ₹4,750 Credited', body: 'Commission payout successfully credited to HDFC Bank.', time: '10:42 AM', unread: true, createdAt: createDate(1) },
-  { id: 2, type: 'milestone', title: 'Day 15 Streak Verified!', body: 'Enchante Luxe Hair Studio maintained activity. ₹500 credited.', time: '09:15 AM', unread: true, createdAt: createDate(2) },
-  { id: 3, type: 'referral', title: 'New Salon Onboarded', body: 'Vogue Aura Unisex Salon registered.', time: '08:04 AM', unread: true, createdAt: createDate(5) },
-  { id: 4, type: 'milestone', title: 'Soundbox Milestone Claim Ready', body: 'Crossed 10 successful transitions.', time: 'Yesterday', unread: true, createdAt: createDate(10) },
-  { id: 5, type: 'earnings', title: 'Withdrawal Request Under Review', body: 'Ticket WDR-2025-0874 submitted.', time: 'Yesterday', unread: false, createdAt: createDate(35) },
-  { id: 6, type: 'system', title: 'Security Update', body: 'Your password was updated successfully.', time: 'Last Month', unread: false, createdAt: createDate(40) },
-];
 
 interface PartnerNotificationsScreenProps {
   onNavigateToHub?: () => void;
@@ -46,9 +37,52 @@ export const PartnerNotificationsScreen: React.FC<PartnerNotificationsScreenProp
   onNavigateToWithdrawals,
   onNavigateBack
 }) => {
-  const [notifications, setNotifications] = useState(initialNotifications);
+  const [notifications, setNotifications] = useState<any[]>([]);
   const [filter, setFilter] = useState<'all' | 'milestones' | 'payouts'>('all');
   const [view, setView] = useState<'active' | 'archived'>('active');
+
+  useEffect(() => {
+    let isMounted = true;
+    let subscription: { unsubscribe: () => void } | null = null;
+
+    partnerDbService.getCurrentPartnerId().then(async (partnerId) => {
+      if (!partnerId) partnerId = 'default-partner-id';
+      const items = await partnerDbService.getNotifications(partnerId);
+      if (isMounted) {
+        setNotifications(items.map((n: any) => ({
+          id: n.id,
+          type: n.type || 'earnings',
+          title: n.title,
+          body: n.message || n.body,
+          time: new Date(n.created_at || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          unread: !n.read_at,
+          createdAt: new Date(n.created_at || Date.now())
+        })));
+      }
+
+      subscription = partnerDbService.subscribeToNotifications(partnerId, (newNotif) => {
+        if (isMounted && newNotif) {
+          setNotifications(prev => [
+            {
+              id: newNotif.id || Date.now().toString(),
+              type: newNotif.type || 'earnings',
+              title: newNotif.title,
+              body: newNotif.message || newNotif.body,
+              time: new Date(newNotif.created_at || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              unread: !newNotif.read_at,
+              createdAt: new Date(newNotif.created_at || Date.now())
+            },
+            ...prev
+          ]);
+        }
+      });
+    });
+
+    return () => {
+      isMounted = false;
+      if (subscription) subscription.unsubscribe();
+    };
+  }, []);
 
   const { active, archived } = useMemo(() => {
     const thirtyDaysAgo = new Date();
@@ -67,8 +101,12 @@ export const PartnerNotificationsScreen: React.FC<PartnerNotificationsScreenProp
     return true;
   });
 
-  const markAllAsRead = () => {
+  const markAllAsRead = async () => {
     setNotifications(prev => prev.map(n => ({ ...n, unread: false })));
+    const partnerId = await partnerDbService.getCurrentPartnerId();
+    if (partnerId) {
+      await partnerDbService.markAllNotificationsRead(partnerId);
+    }
   };
 
   const clearAll = () => {

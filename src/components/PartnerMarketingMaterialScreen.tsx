@@ -786,19 +786,19 @@ export function PartnerMarketingMaterialScreen({
                           <div className="flex items-center gap-2 pl-6">
                             <div className="w-6 h-6 rounded-full bg-pink-300 text-[#500028] flex items-center justify-center text-[12px] font-bold shadow">5</div>
                             <div className="bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-lg text-[11px] font-medium">
-                              <span className="text-pink-200 font-bold">L5: Vice President</span> (₹1,50,000)
+                              <span className="text-pink-200 font-bold">L5: Executive Leader</span> (iPhone 16 Pro)
                             </div>
                           </div>
                           <div className="flex items-center gap-2 pl-3">
                             <div className="w-6 h-6 rounded-full bg-pink-400 text-[#500028] flex items-center justify-center text-[12px] font-bold shadow">4</div>
                             <div className="bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-lg text-[11px] font-medium">
-                              <span className="text-pink-100 font-bold">L4: Director</span> (₹75,000 Bonus)
+                              <span className="text-pink-100 font-bold">L4: Senior Leader</span> (EV Scooter)
                             </div>
                           </div>
                           <div className="flex items-center gap-2 pl-0">
                             <div className="w-6 h-6 rounded-full bg-pink-500 text-white flex items-center justify-center text-[12px] font-bold shadow">1</div>
                             <div className="bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-lg text-[11px] font-medium">
-                              <span className="text-white font-bold">L1: Rising Star</span> (₹5,000 Bonus)
+                              <span className="text-white font-bold">L1: Starter</span> (Nexora T-Shirt)
                             </div>
                           </div>
                         </div>
@@ -1308,7 +1308,7 @@ export function PartnerMarketingMaterialScreen({
                           <ul className="text-[11px] text-on-surface-variant space-y-1">
                             <li>• Salon owner objection handling guide</li>
                             <li>• Daily visit checklist &amp; KYC collection scripts</li>
-                            <li>• Fast-track to Level 4 Director in 45 days</li>
+                            <li>• Fast-track to Level 4 Senior Leader milestone</li>
                           </ul>
                         </div>
 
@@ -1422,16 +1422,16 @@ export function PartnerMarketingMaterialScreen({
                           <p className="font-label-sm text-secondary-fixed uppercase tracking-wider text-[11px] font-bold">Rewards &amp; Income Ladder</p>
                         </div>
                         <div className="bg-gradient-to-br from-tertiary-container to-tertiary text-on-tertiary-fixed p-2 rounded-xl text-center shadow">
-                          <span className="font-label-sm uppercase font-bold text-[9px] leading-tight">CASH BONUS UP TO</span>
-                          <div className="font-headline-sm font-extrabold text-[15px]">₹5,00,000</div>
+                          <span className="font-label-sm uppercase font-bold text-[9px] leading-tight">PERFORMANCE REWARDS</span>
+                          <div className="font-headline-sm font-extrabold text-[15px]">SUV / EV / Tech</div>
                         </div>
                       </div>
                       <div className="space-y-2 py-4 relative z-10">
-                        <div className="flex items-center gap-2 pl-12"><div className="w-5 h-5 rounded-full bg-amber-400 text-black flex items-center justify-center text-[10px] font-bold">7</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 7: Global Ambassador (₹5,00,000)</span></div>
-                        <div className="flex items-center gap-2 pl-9"><div className="w-5 h-5 rounded-full bg-amber-300 text-black flex items-center justify-center text-[10px] font-bold">6</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 6: President (₹3,00,000)</span></div>
-                        <div className="flex items-center gap-2 pl-6"><div className="w-5 h-5 rounded-full bg-pink-300 text-black flex items-center justify-center text-[10px] font-bold">5</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 5: Vice President (₹1,50,000)</span></div>
-                        <div className="flex items-center gap-2 pl-3"><div className="w-5 h-5 rounded-full bg-pink-400 text-white flex items-center justify-center text-[10px] font-bold">4</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 4: Director (₹75,000)</span></div>
-                        <div className="flex items-center gap-2 pl-0"><div className="w-5 h-5 rounded-full bg-pink-500 text-white flex items-center justify-center text-[10px] font-bold">1</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 1: Rising Star (₹5,000)</span></div>
+                        <div className="flex items-center gap-2 pl-12"><div className="w-5 h-5 rounded-full bg-amber-400 text-black flex items-center justify-center text-[10px] font-bold">7</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 7: District Partner SUV Car</span></div>
+                        <div className="flex items-center gap-2 pl-9"><div className="w-5 h-5 rounded-full bg-amber-300 text-black flex items-center justify-center text-[10px] font-bold">6</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 6: Royal Enfield 350 CC</span></div>
+                        <div className="flex items-center gap-2 pl-6"><div className="w-5 h-5 rounded-full bg-pink-300 text-black flex items-center justify-center text-[10px] font-bold">5</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 5: iPhone 16 Pro</span></div>
+                        <div className="flex items-center gap-2 pl-3"><div className="w-5 h-5 rounded-full bg-pink-400 text-white flex items-center justify-center text-[10px] font-bold">4</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 4: Electric Scooter</span></div>
+                        <div className="flex items-center gap-2 pl-0"><div className="w-5 h-5 rounded-full bg-pink-500 text-white flex items-center justify-center text-[10px] font-bold">1</div><span className="bg-white/10 px-2 py-0.5 rounded text-[11px]">Level 1: Nexora T-Shirt</span></div>
                       </div>
                       <div className="text-[10px] text-pink-200 text-center relative z-10">Unlock Your Financial Future • Nexora Luxury Fintech 2024</div>
                     </div>

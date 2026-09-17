@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NotificationBell } from './NotificationBell';
 import { useAuth } from '../context/AuthContext';
+import { partnerDbService } from '../services/partnerDbService';
 
 interface PartnerProfileSettingsScreenProps {
   onNavigateToHub?: () => void;
@@ -44,9 +45,20 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
   const [email, setEmail] = useState<string>(user?.email || 'partner@nexorapartner.com');
 
   useEffect(() => {
-    if (user?.email) setEmail(user.email);
-    if (registeredPartner?.name) setFullName(registeredPartner.name);
-  }, [user, registeredPartner]);
+    let isMounted = true;
+    partnerDbService.getUserProfile().then((prof) => {
+      if (isMounted && prof) {
+        if (prof.full_name) setFullName(prof.full_name);
+        if (prof.phone) setPhone(prof.phone);
+        if (prof.city) setCity(prof.city);
+        if (prof.state) setStateVal(prof.state);
+        if (prof.email) setEmail(prof.email);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleLogoutClick = async () => {
     await signOut();
@@ -104,13 +116,28 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  const handleSaveAllChanges = () => {
+  const handleSaveAllChanges = async () => {
     setIsSaving(true);
-    setTimeout(() => {
+    try {
+      await partnerDbService.updateUserProfile({
+        full_name: fullName,
+        phone,
+        city,
+        state: stateVal
+      });
+
+      if (email && email !== user?.email) {
+        await partnerDbService.updateUserEmail(email);
+        showToast('Confirmation email sent to new address.');
+      }
+
       setIsSaving(false);
       setIsDirty(false);
-      showToast('Profile & Payout Settings saved successfully!');
-    }, 800);
+      showToast('Profile & Settings saved successfully to database!');
+    } catch (err: any) {
+      setIsSaving(false);
+      showToast(err.message || 'Failed to save profile changes.');
+    }
   };
 
   const handleTestPennyDrop = () => {
@@ -124,7 +151,7 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
 
   const partnerCode = registeredPartner?.isPending
     ? 'PENDING'
-    : (registeredPartner?.referralCode || registeredPartner?.partnerId || 'PENDING');
+    : (registeredPartner?.partnerId || 'PENDING');
 
   const appOrigin = typeof window !== 'undefined' && window.location ? window.location.origin : 'https://nexora.network';
   const realReferralLink = `${appOrigin}/signup?ref=${partnerCode}`;

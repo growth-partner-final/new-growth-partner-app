@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import nexoraTshirtImg from '../assets/images/nexora_tshirt_gift_1789626886832.jpg';
+import { partnerDbService } from '../services/partnerDbService';
 import {
   Award,
   CheckCircle2,
@@ -102,9 +103,17 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
   // Modals state
   const [claimModalOpen, setClaimModalOpen] = useState(false);
   const [selectedAssetForClaim, setSelectedAssetForClaim] = useState<string>('Ather 450X EV Scooter');
-  const [otpValues, setOtpValues] = useState<string[]>(['7', '4', '2', '9', '1', '8']);
+  const [shippingAddressInput, setShippingAddressInput] = useState<string>('Flat 402, Prestige Heights, Indiranagar, Bangalore, KA 560038');
+  const [phoneInput, setPhoneInput] = useState<string>('+91 9876543210');
+  const [selectedMilestoneId, setSelectedMilestoneId] = useState<string>('m4');
   const [isAuthorizing, setIsAuthorizing] = useState(false);
   const [claimSuccessAlert, setClaimSuccessAlert] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3500);
+  };
 
   // Tracking Modal
   const [trackingModalOpen, setTrackingModalOpen] = useState(false);
@@ -163,28 +172,27 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
     setTimeout(() => setCopiedLink(false), 2500);
   };
 
-  const handleOtpChange = (index: number, value: string) => {
-    if (value.length > 1) value = value.slice(-1);
-    const newOtp = [...otpValues];
-    newOtp[index] = value;
-    setOtpValues(newOtp);
 
-    // Auto-focus next input
-    if (value && index < 5) {
-      const nextInput = document.getElementById(`otp-input-${index + 1}`);
-      if (nextInput) nextInput.focus();
-    }
-  };
 
-  const handleAuthorizeClaim = () => {
+  const handleAuthorizeClaim = async () => {
     setIsAuthorizing(true);
-    setTimeout(() => {
+    try {
+      const partnerId = await partnerDbService.getCurrentPartnerId() || '00000000-0000-0000-0000-000000000000';
+      await partnerDbService.claimMilestoneReward({
+        partnerId,
+        milestoneId: selectedMilestoneId,
+        shippingAddress: shippingAddressInput,
+        contactPhone: phoneInput
+      });
       setIsAuthorizing(false);
       setClaimModalOpen(false);
       setSimulatorState('review');
       setClaimSuccessAlert(true);
       setTimeout(() => setClaimSuccessAlert(false), 6000);
-    }, 1200);
+    } catch (err: any) {
+      setIsAuthorizing(false);
+      showToast(err.message || 'Claim registration failed.');
+    }
   };
 
   const openPodModal = (asset: string, deliveredDate: string, carrierAwb: string, signedBy: string, serial: string) => {
@@ -339,207 +347,38 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
   });
 
   return (
-    <div className="min-h-screen bg-[#fcf9f4] text-[#1c1c19] flex relative">
-      {/* LEFT SIDEBAR NAVIGATION */}
-      <aside className="fixed left-0 top-0 h-full w-72 bg-[#ffffff] z-40 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-r border-[#f0ede9]">
-        <div className="flex flex-col">
-          {/* Logo & Platform Branding */}
-          <div className="h-20 flex items-center px-6 gap-3 bg-[#ffffff] border-b border-[#f0ede9]">
-            <div className="w-10 h-10 rounded-xl bg-[#b1005e] flex items-center justify-center text-white font-black text-xl shadow-sm">
-              N
-            </div>
-            <div className="flex flex-col">
-              <span className="font-extrabold text-lg tracking-tight text-[#1c1c19]">NEXORA</span>
-              <span className="text-[11px] font-bold tracking-wider uppercase text-[#8e4767]">Growth Partner</span>
-            </div>
-          </div>
-
-          {/* Partner Identity Card */}
-          <div className="px-4 py-3">
-            <div className="bg-[#f6f3ee] rounded-xl p-3 flex items-center justify-between border border-[#e5e2dd]/60">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-[#b1005e]/10 text-[#b1005e] flex items-center justify-center font-bold text-xs">
-                  <ShieldCheck className="w-4 h-4" />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-xs font-bold text-[#1c1c19]">Tier 2 Partner</span>
-                  <span className="text-[10px] text-[#594047] font-mono">REF-5A45019655</span>
-                </div>
+    <div className="min-h-full bg-[#fcf9f4] text-[#1c1c19] flex flex-col">
+      {/* Dynamic Success Alert Banner */}
+      <AnimatePresence>
+        {claimSuccessAlert && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="mx-8 mt-4 p-4 rounded-xl bg-gradient-to-r from-[#b1005e] to-[#8e4767] text-white flex items-center justify-between shadow-lg"
+          >
+            <div className="flex items-center gap-3">
+              <CheckCircle2 className="w-6 h-6 text-[#ffd9e2]" />
+              <div>
+                <h4 className="font-bold text-sm">Asset Claim Dispatched to Audit Queue!</h4>
+                <p className="text-xs text-white/90">
+                  Dispatch Order #NX-CLAIM-4402 has been queued for warehouse allocation. Verification window: 48 hours.
+                </p>
               </div>
-              <span className="px-2 py-0.5 rounded-full bg-[#fda4c9]/40 text-[#7a3656] text-[10px] font-bold">
-                Gold Active
-              </span>
-            </div>
-          </div>
-
-          {/* Navigation Items */}
-          <nav className="flex flex-col gap-1 px-3 mt-1 text-sm font-semibold">
-            <div className="px-3 pt-2 pb-1 text-[11px] font-bold tracking-wider uppercase text-[#8d6f77]">
-              Performance &amp; Fleet
             </div>
             <button
-              onClick={() => onNavigateToHub && onNavigateToHub()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
+              onClick={() => setClaimSuccessAlert(false)}
+              className="text-white/80 hover:text-white p-1"
               type="button"
             >
-              <Store className="w-4 h-4" />
-              <span>Program Overview</span>
+              <X className="w-4 h-4" />
             </button>
-            <button
-              onClick={() => onNavigateToShareEarn && onNavigateToShareEarn()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <QrCode className="w-4 h-4" />
-              <span>My Referral Code</span>
-            </button>
-            <button
-              onClick={() => onNavigateToSalonIntelligence && onNavigateToSalonIntelligence()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <Users className="w-4 h-4" />
-              <span>Referred Salons</span>
-            </button>
-            <button
-              onClick={() => onNavigateToReferralTimeline && onNavigateToReferralTimeline()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <Activity className="w-4 h-4" />
-              <span>Referral Status Timeline</span>
-            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-            <div className="px-3 pt-3 pb-1 text-[11px] font-bold tracking-wider uppercase text-[#8d6f77]">
-              Finance &amp; Rewards
-            </div>
-            <button
-              onClick={() => onNavigateToEarningsLedger && onNavigateToEarningsLedger()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <Wallet className="w-4 h-4" />
-              <span>Earnings &amp; Ledger</span>
-            </button>
-            <button
-              onClick={() => onNavigateToExtraOnboardingReward && onNavigateToExtraOnboardingReward()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <Gift className="w-4 h-4" />
-              <span>Extra Onboarding Reward</span>
-            </button>
-            <button
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#d91b77] text-white font-bold text-left shadow-xs cursor-default"
-              type="button"
-            >
-              <Award className="w-4 h-4" />
-              <span>Rewards &amp; Milestones</span>
-            </button>
-
-            <div className="px-3 pt-3 pb-1 text-[11px] font-bold tracking-wider uppercase text-[#8d6f77]">
-              System &amp; Verification
-            </div>
-            <button
-              onClick={() => onNavigateToSecureHandoff && onNavigateToSecureHandoff()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <Shield className="w-4 h-4" />
-              <span>Secure Handoff Hub</span>
-            </button>
-            <button
-              onClick={() => onNavigateToProfileSettings && onNavigateToProfileSettings()}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[#594047] hover:bg-[#ebe8e3] hover:text-[#1c1c19] transition-colors font-bold text-left cursor-pointer"
-              type="button"
-            >
-              <Sliders className="w-4 h-4" />
-              <span>Profile &amp; Bank Settings</span>
-            </button>
-          </nav>
-        </div>
-
-        {/* Compliance Footer in Sidebar */}
-        <div className="p-4 bg-[#f6f3ee] m-4 rounded-xl flex flex-col gap-1 border border-[#e5e2dd]">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] text-[#594047] uppercase font-bold tracking-wider">Compliance ID</span>
-            <Lock className="w-3.5 h-3.5 text-[#8d6f77]" />
-          </div>
-          <span className="text-xs font-mono font-bold text-[#1c1c19]">COMPLIANCE-POLICY-AUDITED</span>
-          <span className="text-[11px] text-[#594047]">Strict Section 194R statutory physical asset policy.</span>
-        </div>
-      </aside>
-
-      {/* MAIN CONTENT AREA */}
-      <div className="pl-72 w-full flex flex-col min-h-screen">
-        {/* Top Floating App Bar */}
-        <header className="sticky top-0 right-0 h-20 bg-[#fcf9f4]/90 backdrop-blur-xl border-b border-[#f0ede9] z-30 flex items-center justify-between px-8 shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ebe8e3] border border-[#e5e2dd]">
-              <span className="w-2 h-2 rounded-full bg-[#cca730] animate-pulse"></span>
-              <span className="text-xs font-bold text-[#594047]">Hardware Telemetry: Active (118 Nodes)</span>
-            </div>
-            <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ffd9e2] text-[#3e001d] font-bold text-xs">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#b1005e]" />
-              <span>Growth Partner [DEV SAMPLE]</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleCopyLink}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#b1005e] text-white font-bold text-xs shadow-md hover:bg-[#d91b77] transition-all cursor-pointer"
-              type="button"
-            >
-              {copiedLink ? <Check className="w-3.5 h-3.5" /> : <Share2 className="w-3.5 h-3.5" />}
-              <span>{copiedLink ? 'Link Copied!' : 'Quick Invite Link'}</span>
-            </button>
-            <div className="relative">
-              <button
-                className="w-9 h-9 rounded-full bg-[#f0ede9] hover:bg-[#ebe8e3] flex items-center justify-center text-[#594047] transition-colors cursor-pointer"
-                type="button"
-              >
-                <Radio className="w-4 h-4 text-[#b1005e]" />
-              </button>
-              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-[#b1005e] ring-2 ring-white"></span>
-            </div>
-            <div className="w-9 h-9 rounded-full bg-[#b1005e] flex items-center justify-center text-white font-bold text-xs shadow-sm">
-              MV
-            </div>
-          </div>
-        </header>
-
-        {/* Dynamic Success Alert Banner */}
-        <AnimatePresence>
-          {claimSuccessAlert && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="mx-8 mt-4 p-4 rounded-xl bg-gradient-to-r from-[#b1005e] to-[#8e4767] text-white flex items-center justify-between shadow-lg"
-            >
-              <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-6 h-6 text-[#ffd9e2]" />
-                <div>
-                  <h4 className="font-bold text-sm">Asset Claim Dispatched to Audit Queue!</h4>
-                  <p className="text-xs text-white/90">
-                    Dispatch Order #NX-CLAIM-4402 has been queued for warehouse allocation. Verification window: 48 hours.
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => setClaimSuccessAlert(false)}
-                className="text-white/80 hover:text-white p-1"
-                type="button"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* MAIN BODY CONTAINER */}
-        <main className="p-8 space-y-8 flex-1">
+      {/* MAIN BODY CONTAINER */}
+      <main className="p-8 space-y-8 flex-1 pb-24 lg:pb-12">
           {/* Header Section with Breadcrumb & Operational Health */}
           <section className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div className="flex flex-col gap-1">
@@ -1397,8 +1236,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
             </div>
           </section>
         </main>
-      </div>
-
+      
       {/* MODAL 1: INSTANT OTP CLAIM MODAL */}
       <AnimatePresence>
         {claimModalOpen && (
@@ -1434,26 +1272,31 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
                   </p>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-[#1c1c19] mb-2">
-                    Enter 6-Digit Partner Security Authorization OTP
-                  </label>
-                  <div className="flex gap-2 justify-between">
-                    {otpValues.map((digit, idx) => (
-                      <input
-                        key={idx}
-                        id={`otp-input-${idx}`}
-                        type="text"
-                        maxLength={1}
-                        value={digit}
-                        onChange={(e) => handleOtpChange(idx, e.target.value)}
-                        className="w-12 h-12 text-center text-lg font-bold rounded-lg bg-[#f0ede9] text-[#1c1c19] border border-[#e5e2dd] focus:ring-2 focus:ring-[#b1005e] focus:outline-none"
-                      />
-                    ))}
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs font-bold text-[#1c1c19] mb-1">
+                      Shipping Address (Detailed)
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={shippingAddressInput}
+                      onChange={(e) => setShippingAddressInput(e.target.value)}
+                      className="w-full p-2.5 rounded-lg bg-[#f6f3ee] text-xs text-[#1c1c19] border border-[#e5e2dd] focus:ring-2 focus:ring-[#b1005e] focus:outline-none"
+                      placeholder="Enter exact delivery address with pin code"
+                    />
                   </div>
-                  <span className="text-[11px] text-[#594047] mt-1.5 block">
-                    Sent to registered mobile ending in •••• 9104
-                  </span>
+                  <div>
+                    <label className="block text-xs font-bold text-[#1c1c19] mb-1">
+                      Contact Phone Number
+                    </label>
+                    <input
+                      type="text"
+                      value={phoneInput}
+                      onChange={(e) => setPhoneInput(e.target.value)}
+                      className="w-full p-2.5 rounded-lg bg-[#f6f3ee] text-xs text-[#1c1c19] border border-[#e5e2dd] focus:ring-2 focus:ring-[#b1005e] focus:outline-none"
+                      placeholder="+91 9876543210"
+                    />
+                  </div>
                 </div>
 
                 <div className="p-3 rounded-lg bg-[#ebe8e3] text-xs text-[#1c1c19] flex items-center gap-2">
@@ -1619,7 +1462,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
               <div className="mt-6 flex gap-2">
                 <button
                   onClick={() => {
-                    alert('Official PDF POD document has been saved to your downloads.');
+                    showToast('Official PDF POD document has been saved to your downloads.');
                     setPodModalOpen(false);
                   }}
                   className="flex-1 py-2.5 rounded-lg bg-[#b1005e] text-white hover:bg-[#d91b77] text-xs font-bold shadow-xs cursor-pointer flex items-center justify-center gap-1.5"
@@ -1836,7 +1679,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
                   <CheckCircle2 className="w-8 h-8 text-[#b1005e] mx-auto" />
                   <h4 className="font-bold text-sm text-[#3e001d]">Request Registered!</h4>
                   <p className="text-xs text-[#3e001d]">
-                    A Senior Growth Director will contact the Growth Partner (+91 •••• 9104) within 4 business hours with territory mapping tools.
+                    A Senior Growth Manager will contact the Growth Partner (+91 •••• 9104) within 4 business hours with territory mapping tools.
                   </p>
                 </div>
               ) : (
@@ -1886,6 +1729,21 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
               </div>
             </motion.div>
           </div>
+        )}
+      </AnimatePresence>
+
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            className="fixed bottom-6 right-6 z-50 bg-[#1c1c19] text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 text-xs font-medium border border-white/10"
+          >
+            <CheckCircle2 className="w-4 h-4 text-[#b1005e]" />
+            <span>{toastMessage}</span>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

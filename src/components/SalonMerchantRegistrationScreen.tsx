@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NotificationBell } from './NotificationBell';
+import { partnerDbService } from '../services/partnerDbService';
+import { supabase } from '../lib/supabase';
 
 interface SalonMerchantRegistrationScreenProps {
   onNavigateToHub?: () => void;
@@ -21,8 +23,52 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
   onNavigateToDashboard
 }) => {
   // Referral State
-  const [referralState, setReferralState] = useState<'valid' | 'invalid' | 'suspended' | 'expired' | 'standard'>('valid');
-  const [customRefCode, setCustomRefCode] = useState<string>('REF-5A45019655');
+  const [referralState, setReferralState] = useState<'valid' | 'invalid' | 'suspended' | 'expired' | 'standard'>('standard');
+  const [customRefCode, setCustomRefCode] = useState<string>('');
+
+  useEffect(() => {
+    const loadAndValidateRef = async () => {
+      const getCookie = (name: string): string | null => {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for(let i=0;i < ca.length;i++) {
+          let c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+      };
+
+      const codeFromCookie = getCookie('partner_ref_code') || localStorage.getItem('partner_ref_code');
+      const targetCode = codeFromCookie || '';
+
+      if (targetCode) {
+        setCustomRefCode(targetCode);
+        try {
+          const { data: gp, error } = await supabase
+            .from('growth_partners')
+            .select('id, referral_code, status')
+            .eq('referral_code', targetCode.trim())
+            .maybeSingle();
+
+          if (error || !gp) {
+            setReferralState('invalid');
+          } else if (gp.status === 'inactive' || gp.status === 'suspended') {
+            setReferralState('suspended');
+          } else {
+            setReferralState('valid');
+          }
+        } catch (err) {
+          console.error('Referral validation error:', err);
+          setReferralState('invalid');
+        }
+      } else {
+        setReferralState('standard');
+      }
+    };
+
+    loadAndValidateRef();
+  }, []);
 
   // Form Fields
   const [salonName, setSalonName] = useState<string>('');
@@ -30,17 +76,20 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
   const [proprietorName, setProprietorName] = useState<string>('');
   const [salonPhone, setSalonPhone] = useState<string>('');
   const [salonEmail, setSalonEmail] = useState<string>('');
+  const [streetAddress, setStreetAddress] = useState<string>('');
   const [salonPincode, setSalonPincode] = useState<string>('560038');
   const [detectedLocation, setDetectedLocation] = useState<string>('Indiranagar, Bengaluru - Karnataka');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [attributionConsent, setAttributionConsent] = useState<boolean>(true);
 
-  // Validation / Duplicate Triggers
+  // Validation / Duplicate Triggers / Submission
   const [showDupPhone, setShowDupPhone] = useState<boolean>(false);
   const [showDupEmail, setShowDupEmail] = useState<boolean>(false);
   const [otpSent, setOtpSent] = useState<boolean>(false);
   const [otpToast, setOtpToast] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [submittedApp, setSubmittedApp] = useState<{ id: string; salon_id: string } | null>(null);
 
   // Modals
   const [isLoadingOverlay, setIsLoadingOverlay] = useState<boolean>(false);
@@ -83,11 +132,13 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
   const handlePresetMode = (mode: 'normal' | 'validated' | 'duplicate' | 'loading') => {
     setShowDupPhone(false);
     setShowDupEmail(false);
+    setFormError(null);
     if (mode === 'normal') {
       setSalonName('');
       setProprietorName('');
       setSalonPhone('');
       setSalonEmail('');
+      setStreetAddress('');
       setPassword('');
       setSalonCategory('');
     } else if (mode === 'validated') {
@@ -96,6 +147,7 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
       setProprietorName('Rohan Mehra');
       setSalonPhone('9876543210');
       setSalonEmail('contact@auralumiere.in');
+      setStreetAddress('100 Feet Rd, 12th Main, Stage 2');
       setPassword('AuraSecure#2025');
     } else if (mode === 'duplicate') {
       setSalonPhone('9876543210');
@@ -111,13 +163,74 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
     }
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
+
+    // Form Validations
+    if (!salonName.trim()) {
+      setFormError('Please enter a valid Salon Business Name.');
+      return;
+    }
+    if (!proprietorName.trim()) {
+      setFormError('Please enter the Proprietor / Owner Name.');
+      return;
+    }
+    const cleanPhone = salonPhone.replace(/\D/g, '');
+    if (cleanPhone.length < 10) {
+      setFormError('Please enter a valid 10-digit Mobile Number.');
+      return;
+    }
+    const cleanEmail = salonEmail.trim().toLowerCase();
+    if (!cleanEmail || !cleanEmail.includes('@') || !cleanEmail.includes('.')) {
+      setFormError('Please enter a valid Official Business Email.');
+      return;
+    }
+    if (!salonPincode.trim() || salonPincode.trim().length < 6) {
+      setFormError('Please enter a valid 6-digit Postal PIN Code.');
+      return;
+    }
+    const fullAddress = streetAddress.trim()
+      ? `${streetAddress.trim()}, ${detectedLocation}, PIN: ${salonPincode.trim()}`
+      : `${detectedLocation}, PIN: ${salonPincode.trim()}`;
+
+    if (!attributionConsent) {
+      setFormError('You must agree to the merchant terms and partner referral attribution.');
+      return;
+    }
+
     setIsLoadingOverlay(true);
-    setTimeout(() => {
+
+    try {
+      // Get current authenticated partner ID if logged in
+      const partnerId = await partnerDbService.getCurrentPartnerId();
+
+      const result = await partnerDbService.submitShopOnboardingApplication({
+        partnerId: partnerId || null,
+        salonName: salonName.trim(),
+        ownerName: proprietorName.trim(),
+        phone: cleanPhone,
+        email: cleanEmail,
+        city: 'Bengaluru',
+        address: fullAddress,
+        category: salonCategory || undefined,
+        referralCode: customRefCode || undefined,
+      });
+
       setIsLoadingOverlay(false);
+      setSubmittedApp({ id: result.applicationId, salon_id: result.salon.id });
       setIsSuccessModal(true);
-    }, 1500);
+    } catch (err: any) {
+      setIsLoadingOverlay(false);
+      const errMsg = err.message || '';
+      setFormError(errMsg || 'Failed to submit salon registration application.');
+      if (errMsg.toLowerCase().includes('phone') || errMsg.toLowerCase().includes('mobile')) {
+        setShowDupPhone(true);
+      }
+      if (errMsg.toLowerCase().includes('email')) {
+        setShowDupEmail(true);
+      }
+    }
   };
 
   const promptNewCode = () => {
@@ -578,7 +691,23 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
                   </p>
                 </div>
 
-                {/* Duplicate Alert Banners */}
+                {/* Duplicate / Form Error Alert Banners */}
+                {formError && (
+                  <div className="mb-4 p-4 rounded-2xl bg-[#ffdad6] text-[#93000a] border border-[#ba1a1a]/30 shadow-xs flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="material-symbols-outlined text-[22px] text-[#ba1a1a] shrink-0">error</span>
+                      <span className="text-xs font-bold">{formError}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setFormError(null)}
+                      className="text-xs font-bold text-[#b1005e] underline cursor-pointer"
+                    >
+                      Dismiss
+                    </button>
+                  </div>
+                )}
+
                 {showDupPhone && (
                   <div className="mb-4 p-4 rounded-2xl bg-[#ffdad6] text-[#93000a] border border-[#ba1a1a]/30 shadow-xs">
                     <div className="flex items-start gap-3">
@@ -772,7 +901,21 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
                     </div>
                   </div>
 
-                  {/* Field 5: City & Pin Code */}
+                  {/* Field 5: Street Address, City & Pin Code */}
+                  <div>
+                    <label className="text-xs font-bold text-[#1c1c19] block mb-1" htmlFor="salon-street">
+                      Premises / Street Address
+                    </label>
+                    <input
+                      id="salon-street"
+                      value={streetAddress}
+                      onChange={(e) => setStreetAddress(e.target.value)}
+                      placeholder="e.g. Shop #12, 100 Feet Rd, Indiranagar"
+                      className="w-full bg-[#f6f3ee] px-4 py-3 rounded-xl text-xs sm:text-sm text-[#1c1c19] border border-[#e5e2dd] focus:bg-white focus:outline-none focus:border-[#b1005e] transition-all"
+                      type="text"
+                    />
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
                     <div className="md:col-span-5">
                       <label className="text-xs font-bold text-[#1c1c19] block mb-1" htmlFor="salon-pincode">
@@ -1131,6 +1274,12 @@ export const SalonMerchantRegistrationScreen: React.FC<SalonMerchantRegistration
             </div>
 
             <div className="bg-[#f6f3ee] rounded-2xl p-4 space-y-2 mb-4 border border-[#e5e2dd] text-xs">
+              {submittedApp?.id && (
+                <div className="flex items-center justify-between">
+                  <span className="text-[#594047]">Application Reference</span>
+                  <span className="font-mono font-bold text-[#b1005e]">{submittedApp.id}</span>
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <span className="text-[#594047]">Attributed Partner</span>
                 <span className="font-bold text-[#1c1c19]">Growth Partner (#REF-5A45019655)</span>

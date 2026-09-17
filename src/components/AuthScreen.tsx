@@ -74,6 +74,25 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
     };
   }, [isTimerActive, countdown]);
 
+  // Load referral code from cookie / localStorage
+  useEffect(() => {
+    const getCookie = (name: string): string | null => {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for(let i=0;i < ca.length;i++) {
+        let c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    };
+
+    const cookieRef = getCookie('partner_ref_code') || localStorage.getItem('partner_ref_code');
+    if (cookieRef) {
+      setSignupReferral(cookieRef);
+    }
+  }, []);
+
   const startCountdownTimer = (sec = 45) => {
     setCountdown(sec);
     setIsTimerActive(true);
@@ -128,8 +147,27 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
       return;
     }
 
-    showToast('Creating partner account in Supabase...', 'sync');
+    showToast('Validating referral / invite credentials...', 'sync');
     try {
+      // Validate referral code if entered
+      if (signupReferral.trim()) {
+        const { data: gp, error: gpErr } = await supabase
+          .from('growth_partners')
+          .select('id, referral_code, status')
+          .eq('referral_code', signupReferral.trim().toUpperCase())
+          .maybeSingle();
+
+        if (gpErr || !gp) {
+          showToast(`Invalid referral code: "${signupReferral}". This code does not exist.`, 'error', 'error');
+          return;
+        }
+        if (gp.status === 'inactive' || gp.status === 'suspended') {
+          showToast(`The referral code "${signupReferral}" is inactive or suspended.`, 'error', 'error');
+          return;
+        }
+      }
+
+      showToast('Creating partner account in Supabase...', 'sync');
       const { error, partner } = await signUp(signupEmail.trim(), signupPassword, {
         data: {
           full_name: signupName.trim(),
@@ -685,7 +723,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
                       {otpValues.map((val, idx) => (
                         <input
                           key={idx}
-                          ref={(el) => (otpRefs.current[idx] = el)}
+                          ref={(el) => { otpRefs.current[idx] = el; }}
                           className="w-10 sm:w-11 h-12 text-center text-lg font-bold rounded-lg bg-[#f6f3ee] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#b1005e] border border-[#e5e2dd]"
                           maxLength={1}
                           value={val}

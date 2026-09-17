@@ -28,7 +28,7 @@ const INITIAL_NOTIFICATIONS: PartnerNotification[] = [
     id: 'notif-1',
     type: 'payout',
     title: '₹1,500 Milestone Bonus Released',
-    message: 'Glow & Grace Unisex Salon completed all 30-day onboarding milestones (182 UPI transactions cleared). Credited to linked HDFC Bank A/C.',
+    message: 'Glow & Grace Unisex Salon completed all onboarding milestones (182 UPI transactions cleared). Credited to linked HDFC Bank A/C.',
     timestamp: '10 min ago',
     isRead: false,
     priority: 'high',

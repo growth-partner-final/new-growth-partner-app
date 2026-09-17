@@ -62,7 +62,7 @@ const VISUAL_REWARDS: VisualMilestoneReward[] = [
     rewardHeadline: 'HP OmniBook Ultra / ProBook AI Laptop (Latest Intel Core Ultra 7/i5, 16GB RAM, 512GB SSD)',
     perks: 'High-Performance AI Workstation + Next-Day On-Site HP Warranty Desk',
     colorGradient: 'from-blue-500/10 to-indigo-500/5',
-    badgeTag: 'Level 3 Manager',
+    badgeTag: 'Level 3 Professional',
     progressPercent: 45
   },
   {
@@ -77,7 +77,7 @@ const VISUAL_REWARDS: VisualMilestoneReward[] = [
     rewardHeadline: 'Flagship Smart Electric Scooter (Ather 450X Apex / Ola S1 Pro Gen 2)',
     perks: 'Brand New Smart Electric Scooter with Fast Charger & Registration',
     colorGradient: 'from-emerald-500/10 to-teal-500/5',
-    badgeTag: 'Level 4 Director',
+    badgeTag: 'Level 4 Senior Leader',
     progressPercent: 60
   },
   {
@@ -92,7 +92,7 @@ const VISUAL_REWARDS: VisualMilestoneReward[] = [
     rewardHeadline: 'Latest Apple iPhone 16 Pro (256GB Titanium Edition)',
     perks: 'AppleCare+ 2-Year Warranty & Damage Protection Included',
     colorGradient: 'from-purple-500/10 to-fuchsia-500/5',
-    badgeTag: 'Level 5 VP',
+    badgeTag: 'Level 5 Executive',
     progressPercent: 75
   },
   {
@@ -107,7 +107,7 @@ const VISUAL_REWARDS: VisualMilestoneReward[] = [
     rewardHeadline: 'Royal Enfield Classic 350 CC (Chrome & Stealth Black Edition)',
     perks: 'Full On-Road Local Showroom Delivery with Insurance & 5-Year Warranty',
     colorGradient: 'from-rose-500/15 to-pink-500/10',
-    badgeTag: 'Level 6 President',
+    badgeTag: 'Level 6 Master Captain',
     progressPercent: 90
   },
   {
@@ -122,7 +122,7 @@ const VISUAL_REWARDS: VisualMilestoneReward[] = [
     rewardHeadline: 'Mahindra XUV700 AX7 / Hyundai Creta District SUV Car',
     perks: 'Brand New SUV Handover + District Fleet Circle Key & Lifetime Royalty',
     colorGradient: 'from-amber-400/25 via-[#ffe088] to-[#cca730]/20',
-    badgeTag: '👑 Level 7 District Director',
+    badgeTag: '👑 Level 7 District Partner',
     progressPercent: 100
   }
 ];

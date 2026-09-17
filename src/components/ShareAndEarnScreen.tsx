@@ -21,11 +21,15 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
   onNavigateToDashboard,
   onNavigateToAuth
 }) => {
-  const { user, registeredPartner, partnerLoading, partnerError, refetchPartnerProfile } = useAuth();
+  const { user, registeredPartner, loading: partnerLoading } = useAuth();
+  const partnerError = null;
+  const refetchPartnerProfile = async () => {
+    window.location.reload();
+  };
 
   const codeVal = registeredPartner?.isPending
     ? 'PENDING'
-    : (registeredPartner?.referralCode || registeredPartner?.partnerId || 'PENDING');
+    : (registeredPartner?.partnerId || 'PENDING');
 
   const partnerName = registeredPartner?.isPending
     ? 'Partner Profile Pending'
@@ -116,63 +120,9 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
   };
 
   return (
-    <div className="bg-[#fcf9f4] font-sans text-[#1c1c19] flex flex-col min-h-screen relative pb-28">
-      {/* Top Header */}
-      <header className="fixed top-8 sm:top-7 inset-x-0 z-40 bg-[#fcf9f4]/85 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(74,14,46,0.04)] border-b border-[#e5e2dd]">
-        <div className="h-16 px-4 sm:px-6 max-w-4xl mx-auto flex items-center justify-between gap-3">
-          {/* Brand & Partner ID */}
-          <div className="flex items-center gap-3 min-w-0 flex-1">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#b1005e] to-[#d91b77] text-white flex items-center justify-center font-black text-sm shadow-sm shrink-0">
-              N
-            </div>
-            <div className="flex flex-col min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-sm sm:text-base text-[#1c1c19] tracking-tight truncate">
-                  NEXORA
-                </span>
-                <span className="px-2 py-0.5 rounded-full bg-[#ffe088] text-[#241a00] text-[10px] uppercase tracking-wider font-extrabold flex items-center gap-1">
-                  <span className="material-symbols-outlined text-[12px] text-[#735c00]">
-                    workspace_premium
-                  </span>
-                  Gold Partner
-                </span>
-              </div>
-              <span className="text-[11px] text-[#594047] tracking-wider font-semibold">
-                {partnerName} • {codeVal}
-              </span>
-            </div>
-          </div>
-
-          {/* Right Action Icons */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => {
-                if (onNavigateToAddSalon) onNavigateToAddSalon();
-              }}
-              className="hidden sm:flex px-3 py-1.5 rounded-full bg-[#d91b77] text-white text-xs font-bold items-center gap-1 shadow-xs hover:bg-[#b1005e] transition-colors cursor-pointer"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[16px]">person_add</span>
-              <span>Refer Salon</span>
-            </button>
-
-            <NotificationBell onNavigateToReferrals={onNavigateToReferralTimeline} />
-
-            <div
-              onClick={() => {
-                if (onNavigateToAuth) onNavigateToAuth();
-              }}
-              title="Partner Account"
-              className="w-9 h-9 rounded-full bg-[#b1005e] text-white flex items-center justify-center shrink-0 shadow-sm cursor-pointer hover:opacity-90"
-            >
-              <span className="material-symbols-outlined text-[18px]">person</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <div className="bg-[#fcf9f4] font-sans text-[#1c1c19] flex flex-col min-h-full relative">
       {/* Main Content Area */}
-      <main className="flex flex-col relative w-full pt-28 px-4 sm:px-6 max-w-3xl mx-auto space-y-6">
+      <main className="flex flex-col relative w-full pt-6 px-4 sm:px-6 max-w-3xl mx-auto space-y-6 pb-24">
         {/* Dynamic Atmospheric Glow Accent */}
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-80 h-80 bg-[#d91b77]/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
@@ -549,83 +499,6 @@ export const ShareAndEarnScreen: React.FC<ShareAndEarnScreenProps> = ({
           </span>
         </div>
       </main>
-
-      {/* Persistent Bottom Navigation Bar */}
-      <nav className="fixed bottom-0 inset-x-0 z-40 pb-safe bg-white/95 backdrop-blur-xl border-t border-[#e5e2dd] shadow-[0_-2px_16px_rgba(74,14,46,0.05)]">
-        <div className="flex justify-around items-center h-16 px-2 max-w-lg mx-auto">
-          <button
-            onClick={() => {
-              if (onNavigateToSalonIntelligence) onNavigateToSalonIntelligence();
-            }}
-            className="flex flex-col items-center justify-center min-w-[56px] h-12 text-[#594047] hover:text-[#b1005e] transition-colors group cursor-pointer"
-            type="button"
-          >
-            <span className="material-symbols-outlined text-[22px] mb-0.5 group-hover:scale-105 transition-transform">
-              dashboard
-            </span>
-            <span className="text-[10px] font-semibold leading-tight text-center tracking-tight">
-              Overview
-            </span>
-          </button>
-
-          <button
-            className="flex flex-col items-center justify-center min-w-[56px] h-12 text-[#b1005e] font-bold transition-colors group cursor-pointer"
-            type="button"
-          >
-            <span className="material-symbols-outlined text-[22px] mb-0.5 group-hover:scale-105 transition-transform">
-              qr_code_2
-            </span>
-            <span className="text-[10px] leading-tight text-center tracking-tight">
-              Referral
-            </span>
-          </button>
-
-          <button
-            onClick={() => {
-              if (onNavigateToAddSalon) onNavigateToAddSalon();
-            }}
-            className="flex flex-col items-center justify-center min-w-[56px] h-12 text-[#594047] hover:text-[#b1005e] transition-colors group cursor-pointer"
-            type="button"
-          >
-            <span className="material-symbols-outlined text-[22px] mb-0.5 group-hover:scale-105 transition-transform">
-              add_circle
-            </span>
-            <span className="text-[10px] font-semibold leading-tight text-center tracking-tight">
-              Add Salon
-            </span>
-          </button>
-
-          <button
-            onClick={() => {
-              if (onNavigateToReferralTimeline) onNavigateToReferralTimeline();
-            }}
-            className="flex flex-col items-center justify-center min-w-[56px] h-12 text-[#594047] hover:text-[#b1005e] transition-colors group cursor-pointer"
-            type="button"
-          >
-            <span className="material-symbols-outlined text-[22px] mb-0.5 group-hover:scale-105 transition-transform">
-              timeline
-            </span>
-            <span className="text-[10px] font-semibold leading-tight text-center tracking-tight">
-              Status
-            </span>
-          </button>
-
-          <button
-            onClick={() => {
-              if (onNavigateToLeaderboard) onNavigateToLeaderboard();
-            }}
-            className="flex flex-col items-center justify-center min-w-[56px] h-12 text-[#594047] hover:text-[#b1005e] transition-colors group cursor-pointer"
-            type="button"
-          >
-            <span className="material-symbols-outlined text-[22px] mb-0.5 group-hover:scale-105 transition-transform">
-              military_tech
-            </span>
-            <span className="text-[10px] font-semibold leading-tight text-center tracking-tight">
-              Rewards
-            </span>
-          </button>
-        </div>
-      </nav>
     </div>
   );
 };

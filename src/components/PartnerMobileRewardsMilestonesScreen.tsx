@@ -608,7 +608,7 @@ export const PartnerMobileRewardsMilestonesScreen: React.FC<PartnerMobileRewards
                 />
                 <div className="absolute inset-0 bg-[#31302d]/40 flex items-center justify-center">
                   <span className="bg-[#ffffff]/90 backdrop-blur-md px-3 py-1 rounded-full text-xs text-[#1c1c19] font-bold flex items-center gap-1 shadow-sm">
-                    <Award className="w-3.5 h-3.5 text-[#b1005e]" /> District Director Honor
+                    <Award className="w-3.5 h-3.5 text-[#b1005e]" /> District Partner Honor
                   </span>
                 </div>
               </div>

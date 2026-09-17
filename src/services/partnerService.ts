@@ -70,49 +70,49 @@ export const EXACT_MILESTONES: MilestoneProgressItem[] = [
   {
     threshold: 25,
     rewardName: 'Official Nexora T-Shirt',
-    tierTitle: 'Level 1: Rising Star',
-    description: 'Custom partner welcome merchandise kit awarded upon 25 qualified onboardings.',
+    tierTitle: 'Level 1: Starter',
+    description: 'Official Nexora Partner T-Shirt awarded upon 25 qualified onboardings.',
     status: 'eligible'
   },
   {
     threshold: 50,
     rewardName: 'Samsung Tablet',
-    tierTitle: 'Level 2: Associate',
+    tierTitle: 'Level 2: Growth',
     description: 'Dedicated partner digital presentation tablet awarded upon 50 qualified onboardings.',
     status: 'in_progress'
   },
   {
     threshold: 100,
     rewardName: 'Branded HP Laptop',
-    tierTitle: 'Level 3: Manager',
+    tierTitle: 'Level 3: Professional',
     description: 'Enterprise laptop awarded upon 100 qualified onboardings.',
     status: 'locked'
   },
   {
     threshold: 250,
     rewardName: 'Electric Scooter',
-    tierTitle: 'Level 4: Director',
+    tierTitle: 'Level 4: Senior Leader',
     description: 'Eco-mobility partner vehicle grant awarded upon 250 qualified onboardings.',
     status: 'locked'
   },
   {
     threshold: 500,
     rewardName: 'Latest iPhone',
-    tierTitle: 'Level 5: Vice President',
+    tierTitle: 'Level 5: Executive',
     description: 'Flagship executive smartphone awarded upon 500 qualified onboardings.',
     status: 'locked'
   },
   {
     threshold: 750,
     rewardName: 'Royal Enfield 350 CC',
-    tierTitle: 'Level 6: President',
+    tierTitle: 'Level 6: Master Captain',
     description: 'Classic cruiser motorcycle grant awarded upon 750 qualified onboardings.',
     status: 'locked'
   },
   {
     threshold: 1000,
     rewardName: 'District Partner SUV Car',
-    tierTitle: 'Level 7: Global Ambassador',
+    tierTitle: 'Level 7: District Partner',
     description: 'Apex district partner automobile award upon 1,000+ qualified onboardings.',
     status: 'locked'
   }

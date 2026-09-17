@@ -99,7 +99,7 @@ export const EarningsCalculator: React.FC = () => {
               className="w-full accent-[#cca730] cursor-pointer h-2 bg-[#e5e2dd] rounded-lg"
             />
             <div className="flex justify-between text-[11px] text-[#594047]">
-              <span>₹50,000</span>
+              <span>Low Volume</span>
               <span>₹10 Lakhs</span>
               <span>₹20+ Lakhs</span>
             </div>
