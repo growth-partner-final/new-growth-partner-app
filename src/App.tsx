@@ -45,12 +45,46 @@ import { PartnerMobileMarketingMaterialScreen } from './components/PartnerMobile
 import { PartnerLevelsScreen } from './components/PartnerLevelsScreen';
 import { PartnerNotificationsScreen } from './components/PartnerNotificationsScreen';
 
+const PROTECTED_PARTNER_SCREENS = new Set([
+  'dashboard',
+  'salon-intelligence',
+  'leaderboard',
+  'referral-timeline',
+  'referral-history',
+  'add-salon',
+  'share-earn',
+  'merchant-register',
+  'locked-onboarding',
+  'step-audit-workspace',
+  'mobile-fast-track',
+  'website-templates',
+  'profile-settings',
+  'secure-handoff',
+  'handoff-hub',
+  'earnings-ledger',
+  'withdrawals',
+  'extra-onboarding-reward',
+  'milestone-claims',
+  'milestone-unlock',
+  'mobile-rewards',
+  'ops-milestone-claims',
+  'partner-levels',
+  'partner-notifications',
+  'marketing-material',
+  'mobile-marketing',
+  'journey-navigator',
+]);
+
 function MainApp() {
   const [currentScreen, setCurrentScreen] = useState<'leaderboard' | 'referral-timeline' | 'salon-intelligence' | 'dashboard' | 'auth' | 'hub' | 'add-salon' | 'share-earn' | 'merchant-register' | 'locked-onboarding' | 'step-audit-workspace' | 'mobile-fast-track' | 'website-templates' | 'profile-settings' | 'secure-handoff' | 'handoff-hub' | 'earnings-ledger' | 'withdrawals' | 'extra-onboarding-reward' | 'milestone-claims' | 'milestone-unlock' | 'mobile-rewards' | 'ops-milestone-claims' | 'prototype-orchestrator' | 'journey-navigator' | 'referral-history' | 'marketing-material' | 'mobile-marketing' | 'partner-levels' | 'partner-notifications'>('prototype-orchestrator');
   const [isApplyOpen, setIsApplyOpen] = useState<boolean>(false);
   const [isSupportOpen, setIsSupportOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>('home');
-  const { registeredPartner, setRegisteredPartner } = useAuth();
+  const { user, registeredPartner, setRegisteredPartner } = useAuth();
+
+  // Auth guard: logged-out users must not access partner dashboard screens
+  const isProtected = PROTECTED_PARTNER_SCREENS.has(currentScreen);
+  const activeScreen = (!user && isProtected) ? 'auth' : currentScreen;
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -63,9 +97,9 @@ function MainApp() {
     setRegisteredPartner({
       name: partnerData.name,
       partnerId: partnerData.partnerId,
-      referralLink: `https://nexora.network/join?ref=${partnerData.partnerId}`
+      referralLink: partnerData.partnerId === 'Partner profile pending' ? '' : `https://nexora.network/join?ref=${partnerData.partnerId}`
     });
-    setCurrentScreen('salon-intelligence');
+    setCurrentScreen('dashboard');
   };
 
   return (
@@ -76,7 +110,7 @@ function MainApp() {
         onNavigateToHome={() => setCurrentScreen('hub')}
         registeredPartner={registeredPartner}
       />
-      {currentScreen === 'prototype-orchestrator' ? (
+      {activeScreen === 'prototype-orchestrator' ? (
         /* SCREEN: Prototype Hub & Journey Orchestrator (Live Diagnostic Sandbox & 18-Route Register) */
         <PrototypeHubOrchestratorScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -108,7 +142,7 @@ function MainApp() {
           onNavigateToPartnerLevels={() => setCurrentScreen('partner-levels')}
           onNavigateToNotifications={() => setCurrentScreen('partner-notifications')}
         />
-      ) : currentScreen === 'partner-notifications' ? (
+      ) : activeScreen === 'partner-notifications' ? (
         /* SCREEN: Partner Notifications Hub */
         <PartnerNotificationsScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -116,7 +150,7 @@ function MainApp() {
           onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
           onNavigateToWithdrawals={() => setCurrentScreen('withdrawals')}
         />
-      ) : currentScreen === 'journey-navigator' ? (
+      ) : activeScreen === 'journey-navigator' ? (
         /* SCREEN: Mobile Journey Navigator (Canary Sandbox & Mobile UX Sandbox) */
         <MobileJourneyNavigatorScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -145,7 +179,7 @@ function MainApp() {
           onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
           onNavigateToPartnerLevels={() => setCurrentScreen('partner-levels')}
         />
-      ) : currentScreen === 'ops-milestone-claims' ? (
+      ) : activeScreen === 'ops-milestone-claims' ? (
         /* SCREEN: Ops Console Milestone Asset Claims & Dispatch Protocol (Risk Audit, Telemetry Gate & Adjudication) */
         <OpsConsoleMilestoneAssetClaimsScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -169,7 +203,7 @@ function MainApp() {
           onNavigateToMilestoneUnlock={() => setCurrentScreen('milestone-unlock')}
           onNavigateToMobileRewards={() => setCurrentScreen('mobile-rewards')}
         />
-      ) : currentScreen === 'mobile-rewards' ? (
+      ) : activeScreen === 'mobile-rewards' ? (
         /* SCREEN: Mobile Responsive Rewards & Milestones Hub (7 Incentive Tiers, Dynamic Fill, In-Transit Trackers, POD & Bottom Bar) */
         <PartnerMobileRewardsMilestonesScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -191,7 +225,7 @@ function MainApp() {
           onNavigateToExtraOnboardingReward={() => setCurrentScreen('extra-onboarding-reward')}
           onNavigateToMilestoneUnlock={() => setCurrentScreen('milestone-unlock')}
         />
-      ) : currentScreen === 'milestone-unlock' ? (
+      ) : activeScreen === 'milestone-unlock' ? (
         /* SCREEN: Milestone 3 Unlocked Celebration & Asset Claim Protocol (100 Qualified Salons Unlocked) */
         <PartnerMilestoneUnlockCelebrationScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -213,7 +247,7 @@ function MainApp() {
           onNavigateToExtraOnboardingReward={() => setCurrentScreen('extra-onboarding-reward')}
           onNavigateToRewardsMilestones={() => setCurrentScreen('milestone-claims')}
         />
-      ) : currentScreen === 'milestone-claims' ? (
+      ) : activeScreen === 'milestone-claims' ? (
         /* SCREEN: Milestone Rewards & Asset Claims Architecture (7 Physical Incentive Tiers, OTP Claim, Live Telemetry) */
         <PartnerMilestoneClaimsScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -236,7 +270,7 @@ function MainApp() {
           onNavigateToRewardsMilestones={() => setCurrentScreen('milestone-claims')}
           onNavigateToMilestoneUnlock={() => setCurrentScreen('milestone-unlock')}
         />
-      ) : currentScreen === 'extra-onboarding-reward' ? (
+      ) : activeScreen === 'extra-onboarding-reward' ? (
         /* SCREEN: Extra Onboarding Reward & Commission Structure Architecture (15-Day Accelerator & Recurring Growth Model) */
         <PartnerExtraRewardStructureScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -257,7 +291,7 @@ function MainApp() {
           onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
           onNavigateToRewardsMilestones={() => setCurrentScreen('milestone-claims')}
         />
-      ) : currentScreen === 'earnings-ledger' ? (
+      ) : activeScreen === 'earnings-ledger' ? (
         /* SCREEN: Partner Treasury Earnings & Commission Ledger with Interactive Audit & Disbursal Table */
         <PartnerEarningsLedgerScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -280,7 +314,7 @@ function MainApp() {
           onNavigateToWithdrawals={() => setCurrentScreen('withdrawals')}
           onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
         />
-      ) : currentScreen === 'withdrawals' ? (
+      ) : activeScreen === 'withdrawals' ? (
         /* SCREEN: Partner Withdrawals & Secure Settlements Portal */
         <PartnerWithdrawalsScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -304,7 +338,7 @@ function MainApp() {
           onNavigateToWithdrawals={() => setCurrentScreen('withdrawals')}
           onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
         />
-      ) : currentScreen === 'marketing-material' ? (
+      ) : activeScreen === 'marketing-material' ? (
         /* SCREEN: Marketing Materials and approved creative templates */
         <PartnerMarketingMaterialScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -328,7 +362,7 @@ function MainApp() {
           onNavigateToWithdrawals={() => setCurrentScreen('withdrawals')}
           onNavigateToMarketingMaterial={() => setCurrentScreen('marketing-material')}
         />
-      ) : currentScreen === 'mobile-marketing' ? (
+      ) : activeScreen === 'mobile-marketing' ? (
         /* SCREEN: Mobile Approved Marketing Materials Creative Hub */
         <PartnerMobileMarketingMaterialScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -351,7 +385,7 @@ function MainApp() {
           onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
           onNavigateToMobileRewards={() => setCurrentScreen('mobile-rewards')}
         />
-      ) : currentScreen === 'partner-levels' ? (
+      ) : activeScreen === 'partner-levels' ? (
         /* SCREEN: Partner Levels and verified progression tiers status */
         <PartnerLevelsScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -374,7 +408,7 @@ function MainApp() {
           onNavigateToEarningsLedger={() => setCurrentScreen('earnings-ledger')}
           onNavigateToMobileRewards={() => setCurrentScreen('mobile-rewards')}
         />
-      ) : currentScreen === 'handoff-hub' ? (
+      ) : activeScreen === 'handoff-hub' ? (
         /* SCREEN: Salon Launchpad Cryptographic Handoff Hub & Interactive Lifecycle State Simulator (Full Desktop/Tablet Suite) */
         <SalonHandoffHubScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -391,7 +425,7 @@ function MainApp() {
           onNavigateToWebsiteTemplates={() => setCurrentScreen('website-templates')}
           onNavigateToProfileSettings={() => setCurrentScreen('profile-settings')}
         />
-      ) : currentScreen === 'secure-handoff' ? (
+      ) : activeScreen === 'secure-handoff' ? (
         /* SCREEN: Salon Secure Handoff Overview & Multi-Stage State Simulator */
         <SalonSecureHandoffScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -408,7 +442,7 @@ function MainApp() {
           onNavigateToWebsiteTemplates={() => setCurrentScreen('website-templates')}
           onNavigateToProfileSettings={() => setCurrentScreen('profile-settings')}
         />
-      ) : currentScreen === 'profile-settings' ? (
+      ) : activeScreen === 'profile-settings' ? (
         /* SCREEN: Partner Profile Settings & Bank Payout Management */
         <PartnerProfileSettingsScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -424,7 +458,7 @@ function MainApp() {
           onNavigateToMobileFastTrack={() => setCurrentScreen('mobile-fast-track')}
           onNavigateToWebsiteTemplates={() => setCurrentScreen('website-templates')}
         />
-      ) : currentScreen === 'website-templates' ? (
+      ) : activeScreen === 'website-templates' ? (
         /* SCREEN: Salon Website & Booking Templates Explorer (Live Simulator) */
         <SalonWebsiteTemplatesScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -439,7 +473,7 @@ function MainApp() {
           onNavigateToStepAuditWorkspace={() => setCurrentScreen('step-audit-workspace')}
           onNavigateToMobileFastTrack={() => setCurrentScreen('mobile-fast-track')}
         />
-      ) : currentScreen === 'mobile-fast-track' ? (
+      ) : activeScreen === 'mobile-fast-track' ? (
         /* SCREEN: Mobile-Optimized Salon Location Fast-Track (Step 3 of 5) */
         <SalonMobileFastTrackScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -453,7 +487,7 @@ function MainApp() {
           onNavigateToLockedOnboarding={() => setCurrentScreen('locked-onboarding')}
           onNavigateToStepAuditWorkspace={() => setCurrentScreen('step-audit-workspace')}
         />
-      ) : currentScreen === 'step-audit-workspace' ? (
+      ) : activeScreen === 'step-audit-workspace' ? (
         /* SCREEN: 5-Step Locked Salon Onboarding & Compliance Audit Workspace */
         <SalonStepAuditWorkspaceScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -466,7 +500,7 @@ function MainApp() {
           onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
           onNavigateToLockedOnboarding={() => setCurrentScreen('locked-onboarding')}
         />
-      ) : currentScreen === 'locked-onboarding' ? (
+      ) : activeScreen === 'locked-onboarding' ? (
         /* SCREEN: Mobile-First Salon Locked Referral Registration & Audit State Simulator */
         <SalonLockedOnboardingScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -478,7 +512,7 @@ function MainApp() {
           onNavigateToDashboard={() => setCurrentScreen('dashboard')}
           onNavigateToMerchantRegister={() => setCurrentScreen('merchant-register')}
         />
-      ) : currentScreen === 'merchant-register' ? (
+      ) : activeScreen === 'merchant-register' ? (
         /* SCREEN: Salon Merchant Direct Registration & Attribution */
         <SalonMerchantRegistrationScreen
           onNavigateToHub={() => setCurrentScreen('hub')}
@@ -489,7 +523,7 @@ function MainApp() {
           onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
           onNavigateToDashboard={() => setCurrentScreen('dashboard')}
         />
-      ) : currentScreen === 'share-earn' ? (
+      ) : activeScreen === 'share-earn' ? (
         /* SCREEN: Share & Earn / Exclusive Code & In-Store QR Scanner */
         <ShareAndEarnScreen
           onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
@@ -500,7 +534,7 @@ function MainApp() {
           onNavigateToDashboard={() => setCurrentScreen('dashboard')}
           onNavigateToAuth={() => setCurrentScreen('auth')}
         />
-      ) : currentScreen === 'add-salon' ? (
+      ) : activeScreen === 'add-salon' ? (
         /* SCREEN: Refer / Add New Salon */
         <div className="pt-20 px-4">
           <BackButton onClick={() => setCurrentScreen('hub')} />
@@ -512,7 +546,7 @@ function MainApp() {
             onNavigateToHub={() => setCurrentScreen('hub')}
           />
         </div>
-      ) : currentScreen === 'leaderboard' ? (
+      ) : activeScreen === 'leaderboard' ? (
         /* SCREEN 1: Top Performers Leaderboard */
         <TopPerformersLeaderboard
           onNavigateToAuth={() => setCurrentScreen('auth')}
@@ -521,7 +555,7 @@ function MainApp() {
           onNavigateToSalonIntelligence={() => setCurrentScreen('salon-intelligence')}
           onNavigateToReferralTimeline={() => setCurrentScreen('referral-timeline')}
         />
-      ) : currentScreen === 'referral-timeline' ? (
+      ) : activeScreen === 'referral-timeline' ? (
         /* SCREEN 2: Referral Lifecycle & Milestone Roadmap / Referral Status Timeline */
         <ReferralStatusTimeline
           onNavigateToAuth={() => setCurrentScreen('auth')}
@@ -532,7 +566,7 @@ function MainApp() {
           onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
           onNavigateToAddSalon={() => setCurrentScreen('add-salon')}
         />
-      ) : currentScreen === 'referral-history' ? (
+      ) : activeScreen === 'referral-history' ? (
         /* SCREEN: Referral History & Stage Portfolio Ledger */
         <div className="pt-20 px-4">
           <BackButton onClick={() => setCurrentScreen('hub')} />
@@ -545,7 +579,7 @@ function MainApp() {
             onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
           />
         </div>
-      ) : currentScreen === 'salon-intelligence' ? (
+      ) : activeScreen === 'salon-intelligence' ? (
         /* SCREEN 3: Growth Partner Intelligence (Salon Distribution Network) */
         <div className="pt-20 px-4">
           <BackButton onClick={() => setCurrentScreen('hub')} />
@@ -559,7 +593,7 @@ function MainApp() {
             onNavigateToShareEarn={() => setCurrentScreen('share-earn')}
           />
         </div>
-      ) : currentScreen === 'dashboard' ? (
+      ) : activeScreen === 'dashboard' ? (
         /* SCREEN 4: Partner Workspace Telemetry Dashboard */
         <div className="pt-20 px-4">
           <BackButton onClick={() => setCurrentScreen('hub')} />
@@ -575,7 +609,7 @@ function MainApp() {
             onNavigateToSupport={() => setIsSupportOpen(true)}
           />
         </div>
-      ) : currentScreen === 'auth' ? (
+      ) : activeScreen === 'auth' ? (
         /* SCREEN 3: Partner Auth Master Portal */
         <main className="flex-1 flex items-center justify-center p-4 sm:p-6">
           <AuthScreen
