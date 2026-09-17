@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { supabase } from '../lib/supabase';
 
 interface AuthScreenProps {
   onSuccessLogin?: (partnerData: { name: string; partnerId: string }) => void;
@@ -6,6 +8,7 @@ interface AuthScreenProps {
 }
 
 export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNavigateToHub }) => {
+  const { signIn, signUp, resetPassword } = useAuth();
   const [activeTab, setActiveTab] = useState<'login' | 'signup' | 'reset'>('login');
 
   // Login form state
@@ -18,6 +21,8 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
   const [signupName, setSignupName] = useState('');
   const [signupPhone, setSignupPhone] = useState('');
   const [signupEmail, setSignupEmail] = useState('');
+  const [signupPassword, setSignupPassword] = useState('');
+  const [showSignupPassword, setShowSignupPassword] = useState(false);
   const [signupCity, setSignupCity] = useState('');
   const [signupReferral, setSignupReferral] = useState('');
   const [agreeTerms, setAgreeTerms] = useState(true);
@@ -80,63 +85,102 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
     hideToast();
   };
 
-  // Login handler
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  // Login handler using real Supabase Auth
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!loginIdentifier || !loginPassword) {
+    if (!loginIdentifier.trim() || !loginPassword) {
       showToast('Please enter both identifier and password.', 'error', 'error');
       return;
     }
 
-    showToast('Authenticating partner credentials with vault...', 'sync');
-    setTimeout(() => {
+    showToast('Authenticating partner credentials with Supabase...', 'sync');
+    try {
+      const { error, partner } = await signIn(loginIdentifier.trim(), loginPassword);
+      if (error) {
+        showToast(error.message || 'Login failed. Please verify credentials.', 'error', 'error');
+        return;
+      }
+
       showToast('Login authorized. Redirecting to workspace...', 'verified', 'success');
       if (onSuccessLogin) {
         setTimeout(() => {
           onSuccessLogin({
-            name: loginIdentifier.includes('@') ? loginIdentifier.split('@')[0] : 'Rahul Sharma',
-            partnerId: loginIdentifier.startsWith('NEX-') || loginIdentifier.startsWith('NX-') ? loginIdentifier : 'NX-8841'
+            name: partner?.name || (loginIdentifier.includes('@') ? loginIdentifier.split('@')[0] : 'Partner'),
+            partnerId: partner?.partnerId || 'Partner profile pending'
           });
-        }, 1000);
+        }, 500);
       }
-    }, 900);
+    } catch (err: any) {
+      showToast(err.message || 'An unexpected error occurred during login.', 'error', 'error');
+    }
   };
 
-  // Signup handler
-  const handleSignupSubmit = (e: React.FormEvent) => {
+  // Signup handler using real Supabase Auth
+  const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!signupName || !signupPhone || !signupEmail) {
+    if (!signupName.trim() || !signupEmail.trim() || !signupPassword) {
       showToast('Please fill all mandatory fields.', 'error', 'error');
       return;
     }
 
-    showToast('Creating partner onboarding request & issuing 2FA verification...', 'check_circle', 'success');
-    setTimeout(() => {
-      const generatedId = `NX-${Math.floor(10000 + Math.random() * 90000)}`;
-      showToast(`Partner account created! ID: ${generatedId}`, 'verified', 'success');
-      setTimeout(() => {
-        if (onSuccessLogin) {
-          onSuccessLogin({
-            name: signupName,
-            partnerId: generatedId
-          });
-        }
-      }, 1200);
-    }, 1000);
-  };
-
-  // Recovery Step 1: Send OTP
-  const handleSendRecoveryOtp = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!recoveryIdentifier.trim()) {
-      showToast('Please enter your registered phone number or partner email.', 'error', 'error');
+    if (signupPassword.length < 6) {
+      showToast('Password must be at least 6 characters.', 'error', 'error');
       return;
     }
 
-    setRecoveryStep(2);
-    setOtpValues(['', '', '', '', '', '']);
-    showToast('6-digit security PIN dispatched via SMS & Email', 'check_circle', 'success');
-    startCountdownTimer(45);
+    showToast('Creating partner account in Supabase...', 'sync');
+    try {
+      const { error, partner } = await signUp(signupEmail.trim(), signupPassword, {
+        data: {
+          full_name: signupName.trim(),
+          phone: signupPhone.trim(),
+          city: signupCity.trim(),
+          referral_code: signupReferral.trim()
+        }
+      });
+
+      if (error) {
+        showToast(error.message || 'Partner registration failed.', 'error', 'error');
+        return;
+      }
+
+      showToast('Partner account created successfully!', 'verified', 'success');
+      if (onSuccessLogin) {
+        setTimeout(() => {
+          onSuccessLogin({
+            name: partner?.name || signupName.trim(),
+            partnerId: partner?.partnerId || 'Partner profile pending'
+          });
+        }, 500);
+      }
+    } catch (err: any) {
+      showToast(err.message || 'An unexpected error occurred during registration.', 'error', 'error');
+    }
+  };
+
+  // Recovery Step 1: Send real Supabase password reset email
+  const handleSendRecoveryOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!recoveryIdentifier.trim()) {
+      showToast('Please enter your registered partner email.', 'error', 'error');
+      return;
+    }
+
+    showToast('Dispatching password recovery via Supabase...', 'sync');
+    try {
+      const { error } = await resetPassword(recoveryIdentifier.trim());
+      if (error) {
+        showToast(error.message || 'Password recovery request failed.', 'error', 'error');
+        return;
+      }
+
+      setRecoveryStep(2);
+      setOtpValues(['', '', '', '', '', '']);
+      showToast('Password recovery instructions sent to your email.', 'check_circle', 'success');
+      startCountdownTimer(45);
+    } catch (err: any) {
+      showToast(err.message || 'Failed to request password reset.', 'error', 'error');
+    }
   };
 
   // OTP input auto focus next
@@ -159,23 +203,48 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
     }
   };
 
-  // Password reset complete
-  const handleCompleteReset = () => {
-    const enteredOtp = otpValues.join('');
-    if (enteredOtp.length < 6) {
-      showToast('Please enter complete 6-digit verification code.', 'error', 'error');
+  // Password reset complete using real Supabase Auth
+  const handleCompleteReset = async () => {
+    const enteredOtp = otpValues.join('').trim();
+    if (enteredOtp.length < 6 && !newPassword) {
+      showToast('Please enter the 6-digit verification code or new password.', 'error', 'error');
       return;
     }
-    if (!newPassword || newPassword.length < 8) {
-      showToast('New password must contain at least 8 secure characters.', 'error', 'error');
+    if (newPassword && newPassword.length < 6) {
+      showToast('New password must contain at least 6 secure characters.', 'error', 'error');
       return;
     }
 
-    showToast('Password credentials successfully updated. Launching portal...', 'verified', 'success');
-    setTimeout(() => {
-      handleTabSwitch('login');
-      showToast('Please authenticate with your new credentials.', 'check_circle', 'success');
-    }, 1200);
+    showToast('Verifying recovery with Supabase Auth...', 'sync');
+    try {
+      if (enteredOtp.length === 6) {
+        const { error: otpErr } = await supabase.auth.verifyOtp({
+          email: recoveryIdentifier.trim(),
+          token: enteredOtp,
+          type: 'recovery',
+        });
+        if (otpErr) {
+          showToast(otpErr.message || 'Invalid or expired verification code.', 'error', 'error');
+          return;
+        }
+      }
+
+      if (newPassword) {
+        const { error: updateErr } = await supabase.auth.updateUser({ password: newPassword });
+        if (updateErr) {
+          showToast(updateErr.message || 'Failed to update password.', 'error', 'error');
+          return;
+        }
+      }
+
+      showToast('Password credentials successfully updated. Launching portal...', 'verified', 'success');
+      setTimeout(() => {
+        handleTabSwitch('login');
+        showToast('Please authenticate with your new credentials.', 'check_circle', 'success');
+      }, 1000);
+    } catch (err: any) {
+      showToast(err.message || 'Password reset failed.', 'error', 'error');
+    }
   };
 
   const formatTime = (seconds: number) => {
@@ -277,7 +346,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
               <form className="space-y-4 pt-1" onSubmit={handleLoginSubmit}>
                 <div className="space-y-1">
                   <label className="block text-xs font-semibold text-[#594047]">
-                    Mobile Number or Partner ID
+                    Email or Partner ID
                   </label>
                   <div className="relative flex items-center">
                     <span className="material-symbols-outlined absolute left-3 text-[#8d6f77] text-[20px]">
@@ -285,7 +354,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
                     </span>
                     <input
                       className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f6f3ee] text-[#1c1c19] text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#b1005e] border border-[#e5e2dd] transition-all"
-                      placeholder="+91 98765 43210 or NEX-8841"
+                      placeholder="partner@example.com or mobile"
                       required
                       type="text"
                       value={loginIdentifier}
@@ -341,49 +410,34 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
                       Trust this terminal for 30 days
                     </span>
                   </label>
+                  <span className="text-[11px] text-[#8e4767] font-semibold">256-Bit SSL</span>
                 </div>
 
                 <button
-                  className="w-full py-3 px-4 rounded-full bg-gradient-to-r from-[#d91b77] to-[#b1005e] text-white font-bold text-sm shadow-lg shadow-[#d91b77]/25 hover:shadow-[#d91b77]/40 hover:opacity-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3 px-4 rounded-full bg-[#b1005e] text-white font-bold text-sm shadow-md shadow-[#b1005e]/20 hover:opacity-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
                   type="submit"
                 >
-                  <span>Sign In to Partner Portal</span>
-                  <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                  <span className="material-symbols-outlined text-[18px]">lock</span>
+                  <span>Sign In To Partner Workspace</span>
                 </button>
 
-                {/* Divider */}
-                <div className="relative flex py-2 items-center">
-                  <div className="flex-grow bg-[#e5e2dd] h-px"></div>
-                  <span className="flex-shrink mx-3 text-[#8d6f77] text-[10px] font-bold uppercase tracking-wider">
-                    Or Continue With
-                  </span>
-                  <div className="flex-grow bg-[#e5e2dd] h-px"></div>
-                </div>
-
-                {/* Biometric / Fast OTP Alternative */}
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    className="py-2.5 px-3 rounded-lg bg-[#f0ede9] hover:bg-[#ebe8e3] transition-colors flex items-center justify-center gap-2 text-[#1c1c19] text-xs font-semibold cursor-pointer border border-[#e5e2dd]"
-                    onClick={() => showToast('Fast SMS OTP sent to registered number', 'sms', 'info')}
-                    type="button"
-                  >
-                    <span className="material-symbols-outlined text-[#b1005e] text-[20px]">sms</span>
-                    <span>Fast OTP</span>
-                  </button>
-                  <button
-                    className="py-2.5 px-3 rounded-lg bg-[#f0ede9] hover:bg-[#ebe8e3] transition-colors flex items-center justify-center gap-2 text-[#1c1c19] text-xs font-semibold cursor-pointer border border-[#e5e2dd]"
-                    onClick={() => showToast('Biometric security challenge verified', 'fingerprint', 'success')}
-                    type="button"
-                  >
-                    <span className="material-symbols-outlined text-[#8e4767] text-[20px]">fingerprint</span>
-                    <span>Passkey</span>
-                  </button>
+                <div className="pt-2 text-center">
+                  <p className="text-xs text-[#594047]">
+                    New partner seeking network enrollment?{' '}
+                    <button
+                      className="text-[#b1005e] font-semibold hover:underline cursor-pointer"
+                      onClick={() => handleTabSwitch('signup')}
+                      type="button"
+                    >
+                      Register now
+                    </button>
+                  </p>
                 </div>
               </form>
             </section>
           )}
 
-          {/* VIEW 2: SIGN UP */}
+          {/* VIEW 2: SIGNUP */}
           {activeTab === 'signup' && (
             <section className="space-y-4">
               <div className="space-y-1">
@@ -461,6 +515,35 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <div className="space-y-1">
                     <label className="block text-xs font-semibold text-[#594047]">
+                      Create Password <span className="text-[#ba1a1a]">*</span>
+                    </label>
+                    <div className="relative flex items-center">
+                      <span className="material-symbols-outlined absolute left-3 text-[#8d6f77] text-[20px]">
+                        key
+                      </span>
+                      <input
+                        className="w-full pl-10 pr-11 py-2.5 rounded-lg bg-[#f6f3ee] text-[#1c1c19] text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#b1005e] border border-[#e5e2dd] transition-all"
+                        placeholder="At least 6 secure characters"
+                        required
+                        minLength={6}
+                        type={showSignupPassword ? 'text' : 'password'}
+                        value={signupPassword}
+                        onChange={(e) => setSignupPassword(e.target.value)}
+                      />
+                      <button
+                        className="absolute right-3 text-[#8d6f77] hover:text-[#1c1c19] flex items-center justify-center p-1 cursor-pointer"
+                        onClick={() => setShowSignupPassword(!showSignupPassword)}
+                        type="button"
+                      >
+                        <span className="material-symbols-outlined text-[20px]">
+                          {showSignupPassword ? 'visibility_off' : 'visibility'}
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="block text-xs font-semibold text-[#594047]">
                       Operating City / State <span className="text-[#ba1a1a]">*</span>
                     </label>
                     <div className="relative flex items-center">
@@ -477,21 +560,21 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
                       />
                     </div>
                   </div>
+                </div>
 
-                  <div className="space-y-1">
-                    <label className="block text-xs font-semibold text-[#594047]">Referral / Invite Code</label>
-                    <div className="relative flex items-center">
-                      <span className="material-symbols-outlined absolute left-3 text-[#8d6f77] text-[20px]">
-                        loyalty
-                      </span>
-                      <input
-                        className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f6f3ee] text-[#1c1c19] text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#b1005e] border border-[#e5e2dd] transition-all uppercase"
-                        placeholder="Optional (e.g. NX-WEST)"
-                        type="text"
-                        value={signupReferral}
-                        onChange={(e) => setSignupReferral(e.target.value)}
-                      />
-                    </div>
+                <div className="space-y-1">
+                  <label className="block text-xs font-semibold text-[#594047]">Referral / Invite Code</label>
+                  <div className="relative flex items-center">
+                    <span className="material-symbols-outlined absolute left-3 text-[#8d6f77] text-[20px]">
+                      loyalty
+                    </span>
+                    <input
+                      className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f6f3ee] text-[#1c1c19] text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#b1005e] border border-[#e5e2dd] transition-all uppercase"
+                      placeholder="Optional (e.g. NX-WEST)"
+                      type="text"
+                      value={signupReferral}
+                      onChange={(e) => setSignupReferral(e.target.value)}
+                    />
                   </div>
                 </div>
 
@@ -537,25 +620,25 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
             <section className="space-y-4">
               <div className="space-y-1">
                 <h2 className="text-xl font-bold text-[#1c1c19]">Secure Recovery</h2>
-                <p className="text-xs text-[#594047]">Reset security credentials using registered 2FA authentication.</p>
+                <p className="text-xs text-[#594047]">Reset security credentials using Supabase password recovery.</p>
               </div>
 
               {recoveryStep === 1 ? (
-                /* Step 1: Request OTP */
+                /* Step 1: Request Recovery */
                 <form className="space-y-4 pt-1" onSubmit={handleSendRecoveryOtp}>
                   <div className="space-y-1">
                     <label className="block text-xs font-semibold text-[#594047]">
-                      Registered Partner Mobile or Email
+                      Registered Partner Email
                     </label>
                     <div className="relative flex items-center">
                       <span className="material-symbols-outlined absolute left-3 text-[#8d6f77] text-[20px]">
-                        contact_phone
+                        mail
                       </span>
                       <input
                         className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f6f3ee] text-[#1c1c19] text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#b1005e] border border-[#e5e2dd] transition-all"
-                        placeholder="e.g., +91 99887 76655 or partner@nexora.io"
+                        placeholder="e.g. partner@nexora.io"
                         required
-                        type="text"
+                        type="email"
                         value={recoveryIdentifier}
                         onChange={(e) => setRecoveryIdentifier(e.target.value)}
                       />
@@ -579,7 +662,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
                         mark_email_read
                       </span>
                       <span className="text-xs text-[#1c1c19] font-semibold truncate max-w-[200px]">
-                        {recoveryIdentifier || '+91 99887 76655'}
+                        {recoveryIdentifier || 'partner@nexora.io'}
                       </span>
                     </div>
                     <button
@@ -593,9 +676,9 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
 
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
-                      <label className="text-xs font-semibold text-[#594047]">Enter 6-Digit OTP</label>
+                      <label className="text-xs font-semibold text-[#594047]">Enter 6-Digit OTP / Token</label>
                       <span className="text-xs text-[#8e4767] font-semibold">
-                        {isTimerActive ? `Resend in ${formatTime(countdown)}` : 'OTP expired'}
+                        {isTimerActive ? `Resend in ${formatTime(countdown)}` : 'Code expired'}
                       </span>
                     </div>
                     <div className="flex gap-2 justify-between">
@@ -622,7 +705,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
                       </span>
                       <input
                         className="w-full pl-10 pr-11 py-2.5 rounded-lg bg-[#f6f3ee] text-[#1c1c19] text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#b1005e] border border-[#e5e2dd] transition-all"
-                        placeholder="At least 8 characters"
+                        placeholder="At least 6 characters"
                         required
                         type={showNewPassword ? 'text' : 'password'}
                         value={newPassword}
@@ -657,9 +740,15 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccessLogin, onNaviga
                           : 'text-[#b1005e] hover:underline cursor-pointer font-semibold'
                       }`}
                       disabled={isTimerActive}
-                      onClick={() => {
-                        showToast('A fresh OTP was sent to your contact channel.', 'check_circle', 'success');
-                        startCountdownTimer(45);
+                      onClick={async () => {
+                        showToast('Requesting fresh recovery link from Supabase...', 'sync');
+                        const { error } = await resetPassword(recoveryIdentifier.trim());
+                        if (error) {
+                          showToast(error.message, 'error', 'error');
+                        } else {
+                          showToast('Fresh recovery instructions sent to your email.', 'check_circle', 'success');
+                          startCountdownTimer(45);
+                        }
                       }}
                       type="button"
                     >
