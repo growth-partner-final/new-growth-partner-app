@@ -19,6 +19,7 @@ const NAV_ITEMS = [
     { to: '/partner/profile', label: 'Profile', icon: 'person' }
   ]},
   { group: 'Finance & Growth', items: [
+    { to: '/partner/leaderboard', label: 'Partner Leaderboard', icon: 'emoji_events', badge: 'Live Ranks' },
     { to: '/partner/top-performers', label: 'Top Performers', icon: 'leaderboard' },
     { to: '/partner/earnings', label: 'Earnings', icon: 'account_balance_wallet' },
     { to: '/partner/withdrawals', label: 'Withdrawals', icon: 'payments' },

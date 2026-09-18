@@ -9,11 +9,14 @@ import { PartnerEarningsLedgerScreen } from '../components/PartnerEarningsLedger
 import { PartnerWithdrawalsScreen } from '../components/PartnerWithdrawalsScreen';
 import { PartnerLevelsScreen } from '../components/PartnerLevelsScreen';
 import { PartnerMarketingMaterialScreen } from '../components/PartnerMarketingMaterialScreen';
+import { PartnerLeaderboard } from '../components/PartnerLeaderboard';
 import { TopPerformersLeaderboard } from '../components/TopPerformersLeaderboard';
 import { PartnerNotificationsScreen } from '../components/PartnerNotificationsScreen';
 
 export const routes = [
   { path: '/dashboard', component: PartnerDashboard, label: 'Dashboard', icon: 'grid_view' },
+  { path: '/partner/leaderboard', component: PartnerLeaderboard, label: 'Leaderboard', icon: 'emoji_events' },
+  { path: '/leaderboard', component: PartnerLeaderboard, label: 'Leaderboard', icon: 'emoji_events' },
   { path: '/partner/share-earn', component: ShareAndEarnScreen, label: 'Share & Earn', icon: 'qr_code_2' },
   { path: '/partner/referred-salons', component: ReferralHistoryScreen, label: 'Referred Salons', icon: 'group' },
   { path: '/partner/referral-status', component: ReferralStatusTimeline, label: 'Referral Status', icon: 'query_stats' },

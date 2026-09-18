@@ -65,6 +65,19 @@ export const Header: React.FC<HeaderProps> = ({
             <span>Home</span>
           </button>
 
+          <button
+            type="button"
+            onClick={() => navigate('/partner/leaderboard')}
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer shadow-xs active:scale-95 shrink-0 ${
+              location.pathname === '/partner/leaderboard'
+                ? 'bg-[#ffd9e2] text-[#b1005e] border border-[#d91b77]/40 shadow-xs'
+                : 'text-[#594047] bg-[#f0ede9] hover:bg-[#e5e2dd] hover:text-[#b1005e] border border-[#e5e2dd]'
+            }`}
+          >
+            <span className="material-symbols-outlined text-[16px]">emoji_events</span>
+            <span>Leaderboard</span>
+          </button>
+
           {registeredPartner && (
             <button
               type="button"

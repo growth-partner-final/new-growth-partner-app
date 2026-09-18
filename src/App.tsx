@@ -10,6 +10,7 @@ import { EarningsCalculator } from './components/EarningsCalculator';
 import { ActivationRewards } from './components/ActivationRewards';
 import { RecurringShare } from './components/RecurringShare';
 import { MilestoneLadder } from './components/MilestoneLadder';
+import { PartnerLeaderboard } from './components/PartnerLeaderboard';
 import { FraudNotice } from './components/FraudNotice';
 import { FAQSection } from './components/FAQSection';
 import { FinalCTA } from './components/FinalCTA';
@@ -120,6 +121,9 @@ export default function App() {
                 </div>
                 <div className="mt-16 sm:mt-24">
                   <MilestoneLadder />
+                </div>
+                <div className="mt-16 sm:mt-24">
+                  <PartnerLeaderboard />
                 </div>
                 <div className="mt-16 sm:mt-24">
                   <FraudNotice />

@@ -100,3 +100,45 @@ export interface PartnerFormData {
   upiId: string;
   agreedToTerms: boolean;
 }
+
+export interface MilestoneRankDefinition {
+  level: number;
+  name: string;
+  title: string;
+  minSalons: number;
+  maxSalons?: number;
+  reward: string;
+  rewardIcon: string;
+  badgeTag: string;
+  colorName: string;
+  bgGradient: string;
+  borderColor: string;
+  textColor: string;
+  pillColor: string;
+}
+
+export interface LeaderboardPartnerItem {
+  rank: number;
+  id: string;
+  name: string;
+  initials: string;
+  avatarUrl?: string;
+  city: string;
+  state: string;
+  salonOnboardingCount: number;
+  verifiedCount: number;
+  inProgressCount: number;
+  growthTrend: 'up' | 'down' | 'neutral';
+  trendRanks: number;
+  milestoneLevel: number;
+  milestoneTitle: string;
+  milestoneReward: string;
+  milestoneRewardIcon: string;
+  nextMilestoneNeeded: number;
+  nextMilestoneTitle: string;
+  nextMilestoneReward: string;
+  progressToNextMilestone: number;
+  estimatedMonthlyEarnings: number;
+  joinedDate: string;
+  isCurrentUser?: boolean;
+}
