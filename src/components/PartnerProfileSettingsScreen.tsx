@@ -177,7 +177,7 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
 
       {/* Top Header */}
       <header className="fixed top-8 sm:top-7 inset-x-0 z-40 bg-[#fcf9f4]/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(74,14,46,0.04)] border-b border-[#e5e2dd]">
-        <div className="h-20 w-full px-4 sm:px-6 max-w-7xl mx-auto flex items-center justify-between gap-4">
+        <div className="h-20 w-full px-4 sm:px-8 lg:px-12 mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <button
               type="button"
@@ -249,8 +249,8 @@ export const PartnerProfileSettingsScreen: React.FC<PartnerProfileSettingsScreen
       </header>
 
       {/* Main Container */}
-      <main className="w-full pt-32 pb-32 bg-[#fcf9f4]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-6">
+      <main className="w-full pt-6 pb-32 bg-[#fcf9f4]">
+        <div className="w-full mx-auto px-4 sm:px-8 lg:px-12 space-y-6">
           {/* Partner Identity Overview Banner */}
           <section className="bg-white/85 backdrop-blur-xl rounded-3xl p-6 sm:p-8 shadow-[0_8px_32px_0_rgba(74,14,46,0.04)] border border-[#e5e2dd] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex items-center gap-5">

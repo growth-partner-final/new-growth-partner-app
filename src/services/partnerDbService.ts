@@ -141,19 +141,36 @@ export class NexoraPartnerDbService {
     }
 
     // Fetch active salon count
-    const { count: activeSalonsCount, error: activeSalonsErr } = await this.supabase
-      .from('salons')
-      .select('id', { count: 'exact', head: true })
-      .eq('partner_id', partnerId)
-      .eq('status', 'activated');
-
-    if (activeSalonsErr) throw new Error(`Error fetching active salons: ${activeSalonsErr.message}`);
+    // Use shop_attributions to get salon ids
+    const { data: activeAttrs } = await this.supabase
+      .from('shop_attributions')
+      .select('salon_id')
+      .eq('partner_id', partnerId);
+      
+    let activeSalonsCount = 0;
+    if (activeAttrs && activeAttrs.length > 0) {
+      const { count } = await this.supabase
+        .from('salons')
+        .select('id', { count: 'exact', head: true })
+        .in('id', activeAttrs.map(a => a.salon_id))
+        .eq('status', 'activated');
+      activeSalonsCount = count || 0;
+    }
 
     // Fetch total salon count
-    const { count: totalSalonsCount } = await this.supabase
-      .from('salons')
-      .select('id', { count: 'exact', head: true })
+    const { data: totalAttrs } = await this.supabase
+      .from('shop_attributions')
+      .select('salon_id')
       .eq('partner_id', partnerId);
+      
+    let totalSalonsCount = 0;
+    if (totalAttrs && totalAttrs.length > 0) {
+      const { count } = await this.supabase
+        .from('salons')
+        .select('id', { count: 'exact', head: true })
+        .in('id', totalAttrs.map(a => a.salon_id));
+      totalSalonsCount = count || 0;
+    }
 
     // Fetch earnings summary from transactions
     const { data: transactions } = await this.supabase
@@ -295,11 +312,20 @@ export class NexoraPartnerDbService {
     }
 
     // Verify active salons count meets required threshold
-    const { count: activeCount } = await this.supabase
-      .from('salons')
-      .select('id', { count: 'exact', head: true })
-      .eq('partner_id', input.partnerId)
-      .eq('status', 'activated');
+    const { data: attrData } = await this.supabase
+      .from('shop_attributions')
+      .select('salon_id')
+      .eq('partner_id', input.partnerId);
+      
+    let activeCount = 0;
+    if (attrData && attrData.length > 0) {
+      const { count } = await this.supabase
+        .from('salons')
+        .select('id', { count: 'exact', head: true })
+        .in('id', attrData.map(a => a.salon_id))
+        .eq('status', 'activated');
+      activeCount = count || 0;
+    }
 
     if ((activeCount || 0) < milestone.required_active_shops) {
       throw new Error(
@@ -771,9 +797,19 @@ export class NexoraPartnerDbService {
   // ----------------------------------------------------------------------------
   async getLeaderboardData(period: 'weekly' | 'monthly' | 'alltime') {
     try {
+      // 1. Fetch shop attributions to link salon_id to partner_id
+      const { data: attrData } = await this.supabase
+        .from('shop_attributions')
+        .select('salon_id, partner_id');
+        
+      const salonToPartnerMap = new Map<string, string>();
+      if (attrData) {
+        attrData.forEach(a => salonToPartnerMap.set(a.salon_id, a.partner_id));
+      }
+
       const { data: salonsData, error: salonsErr } = await this.supabase
         .from('salons')
-        .select('partner_id, status, created_at, activated_at');
+        .select('id, status, created_at, activated_at');
       if (salonsErr) throw salonsErr;
 
       const { data: partnersData } = await this.supabase
@@ -801,21 +837,23 @@ export class NexoraPartnerDbService {
       else cutoff.setFullYear(2020);
 
       (salonsData || []).forEach(s => {
-        if (!s.partner_id) return;
+        const partner_id = salonToPartnerMap.get(s.id);
+        if (!partner_id) return;
         const createdDate = new Date(s.created_at || now);
         if (createdDate < cutoff && period !== 'alltime') return;
 
-        if (!partnerMap.has(s.partner_id)) {
-          partnerMap.set(s.partner_id, {
-            id: s.partner_id,
-            name: `Partner ${s.partner_id.slice(0, 6)}`,
+        if (!partnerMap.has(partner_id)) {
+          partnerMap.set(partner_id, {
+            id: partner_id,
+            name: `Partner ${partner_id.slice(0, 6)}`,
             initials: 'GP',
             qualifying: 0,
             verified: 0,
             earliestActivated: s.created_at
           });
         }
-        const entry = partnerMap.get(s.partner_id);
+
+        const entry = partnerMap.get(partner_id);
         entry.qualifying += 1;
         if (s.status === 'activated') {
           entry.verified += 1;

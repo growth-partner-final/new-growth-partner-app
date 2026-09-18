@@ -174,7 +174,7 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
       {/* Main Container on lg screens with pl-72 */}
       <div className="lg:pl-72 flex-1 flex flex-col min-h-screen w-full">
         {/* Top Header */}
-        <header className="fixed top-0 left-0 lg:left-72 right-0 h-16 bg-[#fcf9f4]/85 backdrop-blur-xl z-30 px-4 sm:px-6 shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex items-center justify-between border-b border-[#e5e2dd]">
+        <header className="fixed top-0 left-0 lg:left-72 right-0 h-16 bg-[#fcf9f4]/85 backdrop-blur-xl z-30 px-4 sm:px-8 lg:px-12 shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex items-center justify-between border-b border-[#e5e2dd]">
           <div className="flex items-center gap-3 sm:gap-4">
             {/* Mobile Hamburger Menu button */}
             <button
@@ -321,8 +321,8 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
         )}
 
         {/* Main Content Area */}
-        <main className="w-full pt-20 px-4 sm:px-6 py-6 flex-1">
-          <div className="flex flex-col w-full gap-5 max-w-6xl mx-auto">
+        <main className="w-full pt-20 px-4 sm:px-8 lg:px-12 py-6 flex-1">
+          <div className="flex flex-col w-full gap-5 mx-auto">
             {/* Breadcrumb Navigation */}
             <BreadcrumbNavigation
               onNavigateToHub={onNavigateToHub}

@@ -145,7 +145,7 @@ export const PartnerSuccessStories: React.FC = () => {
 
   return (
     <section id="success-stories" className="py-12 sm:py-16 bg-[#fcf9f4] border-t border-[#e5e2dd]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full mx-auto px-4 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div className="flex flex-col gap-2">
@@ -156,7 +156,7 @@ export const PartnerSuccessStories: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl font-black text-[#1c1c19] tracking-tight">
               Partner Success Stories &amp; Testimonials
             </h2>
-            <p className="text-sm text-[#594047] max-w-2xl">
+            <p className="text-sm text-[#594047]">
               देखिए कैसे देश भर के टॉप ग्रोथ पार्टनर्स Nexora के साथ जुड़कर हर महीने ₹50,000 से ₹2 लाख+ कमा रहे हैं और अपने ड्रीम रिवॉर्ड्स अनलॉक कर रहे हैं।
             </p>
           </div>

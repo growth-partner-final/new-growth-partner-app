@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { WeeklyGoalTracker } from './WeeklyGoalTracker';
 import { BreadcrumbNavigation } from './BreadcrumbNavigation';
-import { Sidebar, SidebarItemKey } from './Sidebar';
+import { Sidebar } from './Sidebar';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 
@@ -102,26 +102,43 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
         }
 
         let salons: any[] = [];
-        const res1 = await supabase
-          .from('salons')
-          .select('state, status')
+        
+        // Try via shop_attributions (canonical schema)
+        const { data: attrData, error: attrErr } = await supabase
+          .from('shop_attributions')
+          .select('salon_id')
           .eq('partner_id', partnerDbId);
-
-        if (res1.error) {
-          const res2 = await supabase
+          
+        if (!attrErr && attrData && attrData.length > 0) {
+          const salonIds = attrData.map(a => a.salon_id);
+          const { data: salonData } = await supabase
             .from('salons')
-            .select('state, status')
-            .eq('partner_uuid', partnerDbId);
-          if (res2.error) {
-            const res3 = await supabase
+            .select('status')
+            .in('id', salonIds);
+          salons = salonData || [];
+        } else if (attrErr) {
+          // Fallback to older schemas
+          const res1 = await supabase
+            .from('salons')
+            .select('status')
+            .eq('partner_id', partnerDbId);
+
+          if (res1.error) {
+            const res2 = await supabase
               .from('salons')
-              .select('state, status');
-            salons = res3.data || [];
+              .select('status')
+              .eq('partner_uuid', partnerDbId);
+            if (res2.error) {
+              const res3 = await supabase
+                .from('salons')
+                .select('status');
+              salons = res3.data || [];
+            } else {
+              salons = res2.data || [];
+            }
           } else {
-            salons = res2.data || [];
+            salons = res1.data || [];
           }
-        } else {
-          salons = res1.data || [];
         }
 
         let qualified = 0;
@@ -164,7 +181,7 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
     alert(`Generating vector SVG for Partner QR (Code: ${displayReferralCode})... Ready for digital display or print.`);
   };
 
-  const handleSidebarNavigate = (key: SidebarItemKey) => {
+  const handleSidebarNavigate = (key: string) => {
     setActiveSidebarNav(key);
     if (onNavigateToScreen) {
       onNavigateToScreen(key);
@@ -214,8 +231,8 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
   return (
     <div className="w-full flex flex-col min-h-full bg-[#fcf9f4]">
       {/* Dashboard Main Content Body */}
-      <main className="w-full pt-6 pb-24 lg:pb-12 px-4 sm:px-6 flex-1">
-        <div className="flex flex-col w-full gap-4 max-w-6xl mx-auto">
+      <main className="w-full mx-auto px-4 sm:px-8 lg:px-12 pt-6 pb-24 lg:pb-12 flex-1">
+        <div className="flex flex-col w-full gap-4">
             {/* Breadcrumb Navigation */}
             <BreadcrumbNavigation
               onNavigateToHub={onNavigateToHub}
@@ -754,7 +771,7 @@ export const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                 <div className="rounded-2xl bg-white/90 backdrop-blur-xl p-6 sm:p-8 shadow-xs border border-[#e5e2dd] relative overflow-hidden">
                   <div className="absolute -right-16 -bottom-16 w-80 h-80 rounded-full bg-[#ffd9e2]/30 blur-2xl pointer-events-none"></div>
 
-                  <div className="max-w-3xl flex flex-col gap-4">
+                  <div className="w-full flex flex-col gap-4">
                     <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#ffd8e5] text-[#3c0223] text-xs font-bold w-max">
                       <span className="material-symbols-outlined text-[16px]">celebration</span>
                       <span>₹2,500 Kickstart Activation Bonus</span>

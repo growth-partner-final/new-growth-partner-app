@@ -15,10 +15,10 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onOpenApply, onOpenSupport }
           <span className="material-symbols-outlined text-[32px]">military_tech</span>
         </div>
         
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black max-w-2xl leading-tight">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight">
           आज ही अपनी फाइनेंशियल फ्रीडम की शुरुआत करें!
         </h2>
-        <p className="text-sm sm:text-base text-white/90 max-w-xl leading-relaxed">
+        <p className="text-sm sm:text-base text-white/90 leading-relaxed">
           5,200+ पार्टनर्स के साथ जुड़ें और Nexora के साथ अनलिमिटेड मंथली रेवेन्यू व माइलस्टोन रिवॉर्ड्स अनलॉक करें।
         </p>
 

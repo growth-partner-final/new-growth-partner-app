@@ -207,7 +207,7 @@ export const SalonStepAuditWorkspaceScreen: React.FC<SalonStepAuditWorkspaceScre
       </header>
 
       {/* Main Container */}
-      <main className="w-full pt-32 pb-24 bg-[#fcf9f4]">
+      <main className="w-full pt-6 pb-24 bg-[#fcf9f4]">
         <div className="max-w-6xl mx-auto py-4 px-4 space-y-6">
           {/* Top Sticky Context & Locked Referral Banner */}
           <div className="w-full flex flex-col gap-3">

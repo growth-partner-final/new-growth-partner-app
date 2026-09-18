@@ -12,7 +12,7 @@ export const RecurringShare: React.FC = () => {
           <h2 className="text-2xl sm:text-3xl font-black text-[#1c1c19]">
             Nexora Monthly Passive Income (Recurring Growth Share)
           </h2>
-          <p className="text-sm text-[#594047] max-w-2xl">
+          <p className="text-sm text-[#594047]">
             &ldquo;काम एक बार, कमाई हर महीने&rdquo; — जब भी आपके रेफर किए गए सैलून व मर्चेंट्स सर्विस व बिलिंग प्रोसेस करेंगे, आपका फिक्स्ड कट सीधे आपके अकाउंट में आएगा।
           </p>
         </div>

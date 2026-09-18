@@ -235,7 +235,7 @@ export const PartnerExtraRewardStructureScreen: React.FC<PartnerExtraRewardStruc
       {/* MAIN BODY CONTENT AREA */}
       <div className="flex-1 lg:pl-72 flex flex-col min-w-0">
         {/* Top Header */}
-        <header className="fixed top-8 sm:top-7 left-0 lg:left-72 right-0 h-16 bg-[#fcf9f4]/85 backdrop-blur-xl z-40 flex items-center justify-between px-4 sm:px-6 shadow-[0_1px_8px_rgba(74,14,46,0.04)] border-b border-[#e5e2dd]">
+        <header className="fixed top-8 sm:top-7 left-0 lg:left-72 right-0 h-16 bg-[#fcf9f4]/85 backdrop-blur-xl z-40 flex items-center justify-between px-4 sm:px-8 lg:px-12 shadow-[0_1px_8px_rgba(74,14,46,0.04)] border-b border-[#e5e2dd]">
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -276,7 +276,7 @@ export const PartnerExtraRewardStructureScreen: React.FC<PartnerExtraRewardStruc
         </header>
 
         {/* Main Content Workspace */}
-        <main className="w-full pt-28 pb-24 bg-[#fcf9f4] px-4 sm:px-6 max-w-7xl mx-auto flex-grow">
+        <main className="w-full mx-auto px-4 sm:px-8 lg:px-12 pt-28 pb-24 bg-[#fcf9f4] flex-grow">
           <div className="flex flex-col w-full space-y-8">
             {/* Ambient Lighting & Header */}
             <div className="relative w-full overflow-hidden">
@@ -298,7 +298,7 @@ export const PartnerExtraRewardStructureScreen: React.FC<PartnerExtraRewardStruc
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-1 max-w-4xl">
+                <div className="flex flex-col gap-1 w-full">
                   <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#1c1c19] tracking-tight leading-tight">
                     Extra Onboarding Reward &amp; Commission Structure
                   </h1>

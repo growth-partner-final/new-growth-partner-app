@@ -147,7 +147,7 @@ export const SalonHandoffHubScreen: React.FC<SalonHandoffHubScreenProps> = ({
       </header>
 
       {/* Main Content Area */}
-      <main className="w-full pt-32 pb-24 bg-[#fcf9f4]">
+      <main className="w-full pt-6 pb-24 bg-[#fcf9f4]">
         <div className="relative w-full overflow-hidden bg-[#fcf9f4]">
           <div className="absolute -top-24 left-1/4 w-96 h-96 bg-[#b1005e]/5 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute top-1/2 right-10 w-80 h-80 bg-[#cca730]/5 rounded-full blur-2xl pointer-events-none" />

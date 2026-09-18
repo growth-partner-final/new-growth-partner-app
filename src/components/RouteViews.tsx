@@ -31,7 +31,7 @@ export const PartnerLoginView: React.FC<{ onNavigate: (path: string) => void }> 
   };
 
   return (
-    <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-2xl border border-[#e5e2dd] shadow-lg space-y-5">
+    <div className="w-full max-w-md mx-auto my-10 p-6 bg-white rounded-2xl border border-[#e5e2dd] shadow-lg space-y-5">
       <div className="text-center space-y-1">
         <span className="text-xs font-extrabold uppercase text-[#b1005e] tracking-wider">Nexora Growth Partner</span>
         <h1 className="text-2xl font-extrabold text-[#1c1c19]">Partner Portal Login</h1>
@@ -98,7 +98,7 @@ export const PartnerSignupView: React.FC<{ onNavigate: (path: string) => void }>
   };
 
   return (
-    <div className="max-w-lg mx-auto my-10 p-6 bg-white rounded-2xl border border-[#e5e2dd] shadow-lg space-y-5">
+    <div className="w-full max-w-lg mx-auto my-10 p-6 bg-white rounded-2xl border border-[#e5e2dd] shadow-lg space-y-5">
       <div className="text-center space-y-1">
         <span className="text-xs font-extrabold uppercase text-[#b1005e] tracking-wider">Join Growth Partner Network</span>
         <h1 className="text-2xl font-extrabold text-[#1c1c19]">Partner Enrollment Application</h1>
@@ -182,7 +182,7 @@ export const PartnerForgotPasswordView: React.FC<{ onNavigate: (path: string) =>
   };
 
   return (
-    <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-2xl border border-[#e5e2dd] shadow-lg space-y-5">
+    <div className="w-full max-w-md mx-auto my-10 p-6 bg-white rounded-2xl border border-[#e5e2dd] shadow-lg space-y-5">
       <div className="text-center space-y-1">
         <span className="text-xs font-extrabold uppercase text-[#b1005e] tracking-wider">Account Recovery</span>
         <h1 className="text-2xl font-extrabold text-[#1c1c19]">Reset Partner Password</h1>
@@ -234,7 +234,7 @@ export const PartnerForgotPasswordView: React.FC<{ onNavigate: (path: string) =>
 // Route 5: /partner/application-status
 export const PartnerApplicationStatusView: React.FC<{ onNavigate: (path: string) => void }> = ({ onNavigate }) => {
   return (
-    <div className="max-w-lg mx-auto my-10 p-6 bg-white rounded-2xl border border-[#e5e2dd] shadow-lg space-y-6">
+    <div className="w-full max-w-lg mx-auto my-10 p-6 bg-white rounded-2xl border border-[#e5e2dd] shadow-lg space-y-6">
       <div className="text-center space-y-1">
         <span className="text-xs font-extrabold uppercase text-[#b1005e] tracking-wider">Application Tracking</span>
         <h1 className="text-2xl font-extrabold text-[#1c1c19]">Partner Application Status</h1>
@@ -289,7 +289,7 @@ export const OnboardLoginView: React.FC<{ onNavigate: (path: string) => void }> 
   };
 
   return (
-    <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-2xl border border-[#e5e2dd] shadow-lg space-y-5">
+    <div className="w-full max-w-md mx-auto my-10 p-6 bg-white rounded-2xl border border-[#e5e2dd] shadow-lg space-y-5">
       <div className="text-center space-y-1">
         <span className="text-xs font-extrabold uppercase text-[#b1005e] tracking-wider">Nexora Salon Onboarding</span>
         <h1 className="text-2xl font-extrabold text-[#1c1c19]">Salon Merchant Login</h1>

@@ -20,7 +20,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   registeredPartner
 }) => {
   return (
-    <section id="hero-section" className="w-full pt-2 pb-6 flex flex-col gap-6 lg:gap-8">
+    <section id="hero-section" className="w-full pt-2 pb-6 flex flex-col justify-center min-h-[85vh] gap-6 lg:gap-8">
       {/* 1. TOP ANNOUNCEMENT BADGE */}
       <div className="flex items-center justify-between flex-wrap gap-3 pb-2 border-b border-[#e5e2dd]/70">
         <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/75 backdrop-blur-md text-[#3c0223] shadow-xs border border-white/80 ring-1 ring-[#fda4c9]/40 hover:scale-[1.02] transition-transform duration-300">
@@ -111,7 +111,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
           </div>
 
-          <p className="text-base sm:text-lg text-[#594047] leading-relaxed max-w-2xl">
+          <p className="text-base sm:text-lg text-[#594047] leading-relaxed">
             सैलून, स्पा और वेलनेस मर्चेंट्स को भारत के सबसे एडवांस्ड डिजिटल वेल्थ व सैलून OS से जोड़ें। पाएं <strong className="text-[#1c1c19]">अनलिमिटेड रिकरिंग पेआउट्स</strong>, <strong className="text-[#1c1c19]">₹5,00,000 तक माइलस्टोन रिवॉर्ड्स</strong> और डेडिकेटेड ग्रोथ मैनेजर सपोर्ट।
           </p>
 

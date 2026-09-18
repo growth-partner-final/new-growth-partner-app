@@ -207,7 +207,7 @@ export const PartnerLevelsScreen: React.FC<PartnerLevelsScreenProps> = ({
         </div>
 
         {/* Real Brand Header bar */}
-        <div className="h-16 px-4 flex items-center justify-between max-w-2xl mx-auto w-full">
+        <div className="h-16 px-4 sm:px-8 lg:px-12 flex items-center justify-between mx-auto w-full">
           <button
             onClick={() => onNavigateToHub && onNavigateToHub()}
             className="flex items-center gap-2 text-left cursor-pointer group"
@@ -239,7 +239,7 @@ export const PartnerLevelsScreen: React.FC<PartnerLevelsScreenProps> = ({
       </header>
 
       {/* MAIN CONTAINER */}
-      <main className="max-w-md mx-auto w-full px-4 pt-4 flex flex-col gap-4">
+      <main className="w-full mx-auto px-4 sm:px-8 lg:px-12 pt-6 flex flex-col gap-4">
         {/* Subtle Ambient Glow Element */}
         <div className="relative overflow-hidden w-full">
           <div className="flex flex-col gap-1.5 mb-2">

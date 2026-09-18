@@ -136,7 +136,7 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
       {/* STATE SWITCHER BAR (SHARED ACROSS VIEWPORTS)              */}
       {/* ======================================================== */}
       <aside className="bg-slate-900 text-slate-200 px-4 py-2 text-xs border-b border-slate-800 sticky top-0 z-50" data-purpose="prototype-state-bar">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2.5">
+        <div className="w-full mx-auto px-4 sm:px-8 lg:px-12 flex items-center justify-between gap-2.5">
           <div className="flex items-center gap-1.5 shrink-0">
             <span className="font-bold text-[10px] uppercase tracking-wider text-slate-400 shrink-0">State:</span>
             <div className="flex items-center gap-1 overflow-x-auto hide-scrollbar py-0.5">
@@ -227,7 +227,7 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
           </div>
         </header>
 
-        <main className="px-3.5 pt-3.5 space-y-4">
+        <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3.5 space-y-4">
           <BreadcrumbNavigation
             onNavigateToHub={onNavigateToHub}
             onNavigateToDashboard={onNavigateToWorkspace}
@@ -590,7 +590,7 @@ export const TopPerformersLeaderboard: React.FC<TopPerformersLeaderboardProps> =
       {/* VIEWPORT 2: DESKTOP VIEWPORT (hidden md:flex)            */}
       {/* ======================================================== */}
       <div className="flex-1 hidden md:flex w-full bg-[#fcf9f4] min-h-full">
-        <main className="flex-1 p-6 lg:p-8 max-w-6xl">
+        <main className="w-full mx-auto px-4 sm:px-8 lg:px-12 flex-1 py-6">
           <div className="mb-4">
             <BreadcrumbNavigation
               onNavigateToHub={onNavigateToHub}

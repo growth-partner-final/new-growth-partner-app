@@ -448,7 +448,7 @@ export const SalonWebsiteTemplatesScreen: React.FC<SalonWebsiteTemplatesScreenPr
       </header>
 
       {/* Main Content Area */}
-      <main className="w-full pt-32 pb-24 bg-[#fcf9f4]">
+      <main className="w-full pt-6 pb-24 bg-[#fcf9f4]">
         <div className="flex flex-col w-full space-y-6">
           {/* Clean Visual URL Bar & Obfuscated Token Security Strip */}
           <section className="w-full max-w-7xl mx-auto px-4 sm:px-6">

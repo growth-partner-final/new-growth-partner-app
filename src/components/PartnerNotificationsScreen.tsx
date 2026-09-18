@@ -116,8 +116,8 @@ export const PartnerNotificationsScreen: React.FC<PartnerNotificationsScreenProp
   return (
     <div className="min-h-screen bg-[#fcf9f4] pb-24">
       {/* Top Header */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-[#e5e2dd] px-4 sm:px-6 py-3 shadow-xs">
-        <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-[#e5e2dd] py-3 shadow-xs">
+        <div className="w-full mx-auto px-4 sm:px-8 lg:px-12 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             {onNavigateBack && (
               <button
@@ -149,7 +149,7 @@ export const PartnerNotificationsScreen: React.FC<PartnerNotificationsScreenProp
         </div>
       </header>
 
-      <div className="p-4 sm:p-6 max-w-4xl mx-auto space-y-4">
+      <div className="w-full mx-auto px-4 sm:px-8 lg:px-12 py-6 space-y-4">
         <BreadcrumbNavigation
           onNavigateToHub={onNavigateToHub}
           onNavigateToDashboard={onNavigateToDashboard}

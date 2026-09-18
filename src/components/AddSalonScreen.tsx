@@ -267,8 +267,8 @@ export const AddSalonScreen: React.FC<AddSalonScreenProps> = ({
   return (
     <div className="w-full min-h-screen bg-[#fcf9f4] text-[#1c1c19] flex flex-col font-sans pb-16">
       {/* Top Header Navigation Bar */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-[#e5e2dd] px-4 sm:px-8 py-3.5 shadow-xs">
-        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-[#e5e2dd] py-3.5 shadow-xs">
+        <div className="w-full mx-auto px-4 sm:px-8 lg:px-12 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
               onClick={() => {
@@ -333,8 +333,8 @@ export const AddSalonScreen: React.FC<AddSalonScreenProps> = ({
       </header>
 
       {/* Mode Switcher Tabs */}
-      <div className="bg-[#f6f3ee] border-b border-[#e5e2dd] px-4 sm:px-8 py-2">
-        <div className="max-w-6xl mx-auto flex flex-col gap-2">
+      <div className="bg-[#f6f3ee] border-b border-[#e5e2dd] py-2">
+        <div className="w-full mx-auto px-4 sm:px-8 lg:px-12 flex flex-col gap-2">
           <BreadcrumbNavigation
             onNavigateToHub={onNavigateToHub}
             onNavigateToDashboard={onNavigateToSalonIntelligence}
@@ -396,7 +396,7 @@ export const AddSalonScreen: React.FC<AddSalonScreenProps> = ({
     </div>
 
       {/* Main Container */}
-      <main className="max-w-6xl mx-auto w-full px-4 sm:px-8 py-6 flex-1">
+      <main className="w-full mx-auto px-4 sm:px-8 lg:px-12 py-6 flex-1">
         {/* ========================================================================= */}
         {/* TAB 1: DIRECT MERCHANT REGISTRATION FORM                                  */}
         {/* ========================================================================= */}

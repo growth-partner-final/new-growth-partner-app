@@ -230,7 +230,7 @@ export const MobileJourneyNavigatorScreen: React.FC<MobileJourneyNavigatorScreen
       {/* ========================================================================= */}
       {/* MAIN CONTAINER (Centered Mobile Shell + Responsive Desktop Wrapper)        */}
       {/* ========================================================================= */}
-      <main className="w-full pt-24 pb-28 min-h-screen bg-[#fcf9f4]">
+      <main className="w-full pt-6 pb-28 min-h-screen bg-[#fcf9f4]">
         <div className="max-w-2xl mx-auto px-4 flex flex-col gap-6">
           {/* Top Mobile Ambient Glow & Status Banner */}
           <div className="flex flex-col gap-3">

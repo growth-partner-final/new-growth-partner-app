@@ -260,7 +260,7 @@ export const PartnerMilestoneUnlockCelebrationScreen: React.FC<PartnerMilestoneU
       {/* MAIN CONTAINER */}
       <div className="pl-72 w-full flex flex-col min-h-screen">
         {/* TOP FLOATING APP BAR */}
-        <header className="sticky top-0 right-0 h-20 bg-[#fcf9f4]/90 backdrop-blur-xl border-b border-[#f0ede9] z-30 flex items-center justify-between px-8 shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
+        <header className="sticky top-0 right-0 h-20 bg-[#fcf9f4]/90 backdrop-blur-xl border-b border-[#f0ede9] z-30 flex items-center justify-between px-4 sm:px-8 lg:px-12 shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ebe8e3] border border-[#e5e2dd]">
               <span className="w-2 h-2 rounded-full bg-[#cca730] animate-pulse"></span>
@@ -309,7 +309,7 @@ export const PartnerMilestoneUnlockCelebrationScreen: React.FC<PartnerMilestoneU
         </header>
 
         {/* MAIN BODY: BACKGROUND DASHBOARD CONTEXT LAYER */}
-        <main className="p-8 space-y-8 flex-1">
+        <main className="px-4 sm:px-8 lg:px-12 py-6 space-y-8 flex-1">
           {/* Top KPI Progress Row */}
           <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-[#ffffff] p-6 rounded-xl shadow-xs border border-[#f0ede9] flex flex-col justify-between">

@@ -627,7 +627,7 @@ export function PartnerWithdrawalsScreen({
         </div>
 
         {/* HEADER BAR */}
-        <header className="sticky top-0 z-30 h-16 bg-[#fcf9f4]/85 backdrop-blur-xl flex items-center justify-between px-4 sm:px-6 shadow-sm border-b border-[#e5e2dd]">
+        <header className="sticky top-0 z-30 h-16 bg-[#fcf9f4]/85 backdrop-blur-xl flex items-center justify-between px-4 sm:px-8 lg:px-12 shadow-sm border-b border-[#e5e2dd]">
           <div className="flex items-center gap-2">
             <button
               onClick={() => onNavigateToDashboard && onNavigateToDashboard()}
@@ -690,7 +690,7 @@ export function PartnerWithdrawalsScreen({
         )}
 
         {/* MAIN WORKSPACE CONTENT */}
-        <main className="w-full pb-24 bg-[#fcf9f4] px-4 sm:px-6 max-w-7xl mx-auto flex-grow pt-6">
+        <main className="w-full pb-24 bg-[#fcf9f4] px-4 sm:px-8 lg:px-12 mx-auto flex-grow pt-6">
           <div className="flex flex-col w-full space-y-6">
             
             {/* Page Title Header */}

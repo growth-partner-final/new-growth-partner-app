@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { NotificationBell } from './NotificationBell';
 import { InteractiveCommissionSplitSimulator } from './InteractiveCommissionSplitSimulator';
-import { Sidebar, SidebarItemKey } from './Sidebar';
+import { Sidebar } from './Sidebar';
 
 interface PartnerEarningsLedgerScreenProps {
   onNavigateToHub?: () => void;
@@ -208,7 +208,7 @@ export const PartnerEarningsLedgerScreen: React.FC<PartnerEarningsLedgerScreenPr
       {/* MAIN BODY CONTENT AREA */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Main Workspace */}
-        <main className="w-full pt-12 pb-24 bg-[#fcf9f4] px-4 sm:px-6 max-w-7xl mx-auto flex-grow">
+        <main className="w-full mx-auto px-4 sm:px-8 lg:px-12 py-6 pb-24 bg-[#fcf9f4] flex-grow">
           <div className="flex flex-col w-full space-y-6">
             {/* Payout Announcement Banner */}
             <div className="relative overflow-hidden rounded-3xl bg-white/90 backdrop-blur-xl p-5 sm:p-6 shadow-[0_8px_32px_0_rgba(74,14,46,0.05)] border border-[#e5e2dd] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">

@@ -257,35 +257,54 @@ export const ReferralHistoryScreen: React.FC<ReferralHistoryScreenProps> = ({
         }
 
         // Fetch real referred salons
-        let { data, error: fetchErr } = await supabase
-          .from('salons')
-          .select('*')
-          .eq('partner_id', pId)
-          .order('created_at', { ascending: false });
+        let data: any[] = [];
+        let fetchErr: any = null;
 
-        if (fetchErr) {
-          const { data: altData, error: altFetchErr } = await supabase
+        // Try to fetch via shop_attributions (canonical schema)
+        const { data: attrData, error: attrErr } = await supabase
+          .from('shop_attributions')
+          .select('salon_id')
+          .eq('partner_id', pId);
+
+        if (!attrErr && attrData && attrData.length > 0) {
+          const salonIds = attrData.map(a => a.salon_id);
+          const { data: salonData, error: salonErr } = await supabase
             .from('salons')
             .select('*')
-            .eq('partner_uuid', pId)
+            .in('id', salonIds)
             .order('created_at', { ascending: false });
           
-          if (!altFetchErr) {
-            data = altData;
-            fetchErr = null;
+          if (!salonErr) {
+            data = salonData || [];
           } else {
-            // Fallback: If neither partner_id nor partner_uuid exists on salons,
-            // just fetch all salons to avoid breaking the prototype view.
+            fetchErr = salonErr;
+          }
+        } else if (attrErr) {
+          // If shop_attributions fails (e.g., prototype schema), fallback to partner_id
+          const { data: pData, error: pErr } = await supabase
+            .from('salons')
+            .select('*')
+            .eq('partner_id', pId)
+            .order('created_at', { ascending: false });
+            
+          if (!pErr) {
+            data = pData || [];
+          } else {
+            // Fallback to all salons
             const { data: allData, error: allErr } = await supabase
               .from('salons')
               .select('*')
               .order('created_at', { ascending: false });
-              
+            
             if (!allErr) {
-              data = allData;
-              fetchErr = null;
+              data = allData || [];
+            } else {
+              fetchErr = allErr;
             }
           }
+        } else {
+          // No attributions found, data remains empty array []
+          data = [];
         }
 
         if (fetchErr) throw fetchErr;
@@ -491,7 +510,7 @@ export const ReferralHistoryScreen: React.FC<ReferralHistoryScreenProps> = ({
       
       {/* Simulation state toggler */}
       <aside className="bg-slate-900 text-slate-200 px-4 py-2 text-xs border-b border-slate-800 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div className="w-full mx-auto px-4 sm:px-8 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             <span className="font-bold uppercase tracking-wider text-slate-400 text-[10px]">Simulation State Controller:</span>
@@ -533,7 +552,7 @@ export const ReferralHistoryScreen: React.FC<ReferralHistoryScreenProps> = ({
         </div>
       </aside>
 
-      <div className="max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6 flex-1">
+      <div className="w-full mx-auto px-4 sm:px-8 lg:px-12 py-6 space-y-6 flex-1">
         
         {/* Navigation Breadcrumbs / Title */}
         <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-5">

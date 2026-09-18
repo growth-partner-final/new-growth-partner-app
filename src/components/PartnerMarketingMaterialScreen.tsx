@@ -445,7 +445,7 @@ export function PartnerMarketingMaterialScreen({
       <div className="flex-1 lg:pl-72 flex flex-col min-h-screen relative">
         
         {/* HEADER BAR */}
-        <header className="fixed top-0 left-0 lg:left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg">
+        <header className="fixed top-0 left-0 lg:left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-4 sm:px-8 lg:px-12">
           <div className="flex items-center gap-space-sm text-on-surface-variant font-label-md text-label-md">
             <button
               type="button"
@@ -491,11 +491,11 @@ export function PartnerMarketingMaterialScreen({
         </header>
 
         {/* WORKSPACE MAIN CONTAINER */}
-        <main className="w-full pt-16 bg-surface flex-1 flex flex-col">
+        <main className="w-full mx-auto px-4 sm:px-8 lg:px-12 pt-16 bg-surface flex-1 flex flex-col">
           
           {/* Simulation Controller Bar */}
           <aside aria-label="Interactive State Simulator" className="sticky top-16 z-30 w-full bg-surface-container-high/90 backdrop-blur-md px-space-md py-space-xs shadow-sm">
-            <div className="max-w-[1360px] mx-auto flex flex-wrap items-center justify-between gap-space-sm text-label-sm">
+            <div className="w-full mx-auto flex flex-wrap items-center justify-between gap-space-sm text-label-sm">
               <div className="flex items-center gap-space-xs text-on-surface-variant">
                 <span className="material-symbols-outlined text-[16px] text-primary animate-pulse">science</span>
                 <span className="font-label-sm uppercase tracking-wider text-on-surface font-bold">State Preview:</span>

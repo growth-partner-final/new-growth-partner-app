@@ -38,11 +38,14 @@
     margin: 0;
     padding: 0;
     font-family: var(--font-sans);
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
   body {
     overscroll-behavior-y: none;
     -webkit-tap-highlight-color: transparent;
+    width: 100%;
+    max-width: 100%;
   }
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom, 0px);

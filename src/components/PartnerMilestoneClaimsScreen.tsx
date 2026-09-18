@@ -378,7 +378,7 @@ export const PartnerMilestoneClaimsScreen: React.FC<PartnerMilestoneClaimsScreen
       </AnimatePresence>
 
       {/* MAIN BODY CONTAINER */}
-      <main className="p-8 space-y-8 flex-1 pb-24 lg:pb-12">
+      <main className="w-full mx-auto px-4 sm:px-8 lg:px-12 py-6 space-y-8 flex-1 pb-24 lg:pb-12">
           {/* Header Section with Breadcrumb & Operational Health */}
           <section className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div className="flex flex-col gap-1">
