@@ -1,4 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import {
+  Sparkles,
+  Play,
+  ArrowRight,
+  ShieldCheck,
+  TrendingUp,
+  Award,
+  Zap,
+  CheckCircle2,
+  Clock,
+  ChevronRight,
+  Smartphone,
+  Layers,
+  Store,
+  DollarSign,
+  Users,
+  X,
+  Volume2
+} from 'lucide-react';
+import { NexoraLogo } from './NexoraLogo';
 
 interface HeroSectionProps {
   onOpenApply: () => void;
@@ -19,318 +40,567 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onNavigateToMilestones,
   registeredPartner
 }) => {
+  const [activeTab, setActiveTab] = useState<'salon-os' | 'partner-engine' | 'cinematic-reel'>('salon-os');
+  const [showShowreelModal, setShowShowreelModal] = useState(false);
+  const [liveTickerIndex, setLiveTickerIndex] = useState(0);
+
+  const LIVE_ACTIVITIES = [
+    { text: 'Luxe Salon & Spa, Bandra completed ₹4,850 checkout on Nexora POS', tag: 'Live Billing', icon: '💇' },
+    { text: 'Partner Rohit Verma unlocked ₹3,500 Pro Merchant Activation Reward', tag: 'Partner Payout', icon: '💰' },
+    { text: 'Glamour Room, Indiranagar booked 8 bridal slots via WhatsApp Bot', tag: 'Smart Booking', icon: '✨' },
+    { text: 'Level 4 Milestone achieved: Apple iPhone 16 Pro claimed by Priya M.', tag: 'Milestone Reward', icon: '👑' },
+    { text: 'Truefitt & Hill connected 3 new branches to Nexora Cloud OS', tag: 'Franchise Sync', icon: '🏢' }
+  ];
+
+  // Rotate live activity toast
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setLiveTickerIndex((prev) => (prev + 1) % LIVE_ACTIVITIES.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [LIVE_ACTIVITIES.length]);
+
   return (
-    <section id="hero-section" className="w-full pt-2 pb-6 flex flex-col justify-center min-h-[85vh] gap-6 lg:gap-8">
-      {/* 1. TOP ANNOUNCEMENT BADGE */}
-      <div className="flex items-center justify-between flex-wrap gap-3 pb-2 border-b border-[#e5e2dd]/70">
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/75 backdrop-blur-md text-[#3c0223] shadow-xs border border-white/80 ring-1 ring-[#fda4c9]/40 hover:scale-[1.02] transition-transform duration-300">
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E6007E] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#E6007E]"></span>
-          </span>
-          <span className="text-xs font-extrabold tracking-wide">
-            Nexora Official Partner Program 2025 • ₹0 Investment • Zero Monthly Target
-          </span>
+    <section id="hero-section" className="w-full flex flex-col gap-6 lg:gap-8 relative pb-4">
+      {/* 1. CINEMATIC HERO THEATER BANNER */}
+      <div className="relative rounded-3xl sm:rounded-[36px] overflow-hidden bg-[#0d0309] text-white shadow-2xl border border-white/10 ring-1 ring-[#b1005e]/30">
+        {/* Cinematic Backdrop Image with Layered Atmospheric Shimmer */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <img
+            src="/cinematic-hero-bg.jpg"
+            alt="Nexora Salon OS Cinematic High-End Flagship Showroom"
+            className="w-full h-full object-cover object-center opacity-30 sm:opacity-40 scale-105 filter contrast-110 brightness-90 animate-pulse duration-[10000ms]"
+            referrerPolicy="no-referrer"
+          />
+          {/* Moody Anamorphic Vignette Gradients */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0d0309] via-[#0d0309]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0d0309] via-[#0d0309]/85 to-[#0d0309]/50" />
+          {/* Magenta & Champagne Ambient Lens Flare Blooms */}
+          <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#E6007E]/25 blur-[120px]" />
+          <div className="absolute top-1/2 -right-24 w-96 h-96 rounded-full bg-[#f59e0b]/15 blur-[130px]" />
+          <div className="absolute bottom-0 left-1/3 w-80 h-80 rounded-full bg-[#b1005e]/20 blur-[100px]" />
         </div>
 
-        <div className="flex items-center gap-2">
-          {onNavigateToDashboard && (
-            <button
-              type="button"
-              onClick={onNavigateToDashboard}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#3c0223] text-white text-xs font-bold hover:bg-[#1c1c19] transition-all cursor-pointer shadow-xs active:scale-95"
-            >
-              <span className="material-symbols-outlined text-[16px] text-[#fda4c9]">space_dashboard</span>
-              <span>Open Partner Portal</span>
-            </button>
-          )}
-          {onNavigateToSalonIntelligence && (
-            <button
-              type="button"
-              onClick={onNavigateToSalonIntelligence}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-[#e5e2dd] text-[#1c1c19] text-xs font-bold hover:border-[#E6007E] hover:text-[#E6007E] transition-colors cursor-pointer"
-            >
-              <span className="material-symbols-outlined text-[16px] text-[#E6007E]">storefront</span>
-              <span>Salon CRM</span>
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Main Hero Grid Layout: 2 Columns on Desktop */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-        {/* Left Column: Core Value Proposition & CTAs */}
-        <div className="lg:col-span-7 flex flex-col gap-5 text-left">
-          {/* Badge & Rating Strip */}
-          <div className="flex items-center gap-3 flex-wrap">
-            <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#ffe088]/60 border border-[#cca730]/40 text-[#574500] text-xs font-bold">
-              <span className="material-symbols-outlined text-[16px] text-[#cca730]">verified</span>
-              <span>SEBI &amp; ISO Compliant Platform</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-xs text-[#594047] font-semibold">
-              <div className="flex text-amber-500">
-                {'★★★★★'.split('').map((_, idx) => (
-                  <span key={idx} className="text-amber-500 text-xs">★</span>
-                ))}
-              </div>
-              <span><strong>4.9/5</strong> (5,200+ Active Partners)</span>
-            </div>
-          </div>
-
-          {/* High-Impact Bilingual Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[44px] font-black text-[#1c1c19] tracking-tight leading-[1.15]">
-            Nexora Growth Partner बनें —{' '}
-            <span className="bg-gradient-to-r from-[#E6007E] via-[#d91b77] to-[#b1005e] bg-clip-text text-transparent">
-              Zero Investment
-            </span>{' '}
-            में हर महीने <span className="underline decoration-[#fda4c9] decoration-4 underline-offset-4">₹1,00,000+</span> कमाएं
-          </h1>
-
-          {/* 2. HERO SUB-TEXT HIGHLIGHTS: Premium Glassmorphism Bar with 2 Equal Sections */}
-          <div className="p-3.5 sm:p-4 rounded-2xl bg-white/70 backdrop-blur-xl border border-white/90 shadow-[0_8px_30px_rgba(230,0,126,0.06)] ring-1 ring-black/[0.03] grid grid-cols-1 sm:grid-cols-2 gap-3.5 items-center transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_12px_36px_rgba(230,0,126,0.1)]">
-            {/* Left Section: Zero Monthly Target */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ffd9e2] to-[#ffc2d4] text-[#E6007E] flex items-center justify-center shrink-0 border border-[#fda4c9]/50 shadow-xs">
-                <span className="material-symbols-outlined text-[22px]">verified_user</span>
-              </div>
-              <div className="flex flex-col text-left">
-                <span className="text-xs sm:text-sm font-black text-[#1c1c19] tracking-tight">Zero Monthly Target</span>
-                <span className="text-[11px] sm:text-xs text-[#594047] font-medium leading-tight">Koi pressure nahi, kitna bhi kaam karein</span>
-              </div>
-            </div>
-
-            {/* Right Section: Apni Marzi Ke Malik */}
-            <div className="flex items-center gap-3 sm:border-l sm:border-[#e5e2dd]/80 sm:pl-3.5">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ffe088] to-[#ffd269] text-[#735c00] flex items-center justify-center shrink-0 border border-[#cca730]/40 shadow-xs">
-                <span className="material-symbols-outlined text-[22px]">schedule</span>
-              </div>
-              <div className="flex flex-col text-left">
-                <span className="text-xs sm:text-sm font-black text-[#1c1c19] tracking-tight">Apni Marzi Ke Malik</span>
-                <span className="text-[11px] sm:text-xs text-[#594047] font-medium leading-tight">Apne time aur schedule par boss ban ke kaam karein</span>
-              </div>
-            </div>
-          </div>
-
-          <p className="text-base sm:text-lg text-[#594047] leading-relaxed">
-            सैलून, स्पा और वेलनेस मर्चेंट्स को भारत के सबसे एडवांस्ड डिजिटल वेल्थ व सैलून OS से जोड़ें। पाएं <strong className="text-[#1c1c19]">अनलिमिटेड रिकरिंग पेआउट्स</strong>, <strong className="text-[#1c1c19]">₹5,00,000 तक माइलस्टोन रिवॉर्ड्स</strong> और डेडिकेटेड ग्रोथ मैनेजर सपोर्ट।
-          </p>
-
-          {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-1">
-            {onNavigateToDashboard ? (
-              <button
-                type="button"
-                onClick={onNavigateToDashboard}
-                className="h-12 sm:h-14 px-7 rounded-2xl bg-gradient-to-r from-[#E6007E] via-[#d91b77] to-[#b1005e] text-white font-bold text-base flex items-center justify-center gap-2 shadow-lg shadow-[#E6007E]/25 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
-              >
-                <span className="material-symbols-outlined text-[22px]">space_dashboard</span>
-                <span>Open Partner Dashboard</span>
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={onOpenApply}
-                className="h-12 sm:h-14 px-8 rounded-2xl bg-gradient-to-r from-[#E6007E] via-[#d91b77] to-[#b1005e] text-white font-bold text-base flex items-center justify-center gap-2.5 shadow-lg shadow-[#E6007E]/25 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
-              >
-                <span className="material-symbols-outlined text-[22px]">rocket_launch</span>
-                <span>Join Partner Program (Free)</span>
-              </button>
-            )}
-            
-            <button
-              type="button"
-              onClick={onScrollToCalculator}
-              className="h-12 sm:h-14 px-6 rounded-2xl bg-white/90 backdrop-blur-md text-[#3c0223] font-bold text-base flex items-center justify-center gap-2 border border-[#e5e2dd] transition-all hover:bg-[#f6f3ee] hover:border-[#E6007E] cursor-pointer shadow-xs active:scale-95"
-            >
-              <span className="material-symbols-outlined text-[22px] text-[#E6007E]">calculate</span>
-              <span>Calculate Your Earnings</span>
-            </button>
-          </div>
-
-          {/* 3. KEY FEATURE CHIPS (Prominent Freedom & Independence Badges) */}
-          <div className="flex items-center gap-2.5 flex-wrap pt-1">
-            {/* Prominent Chip 1: Zero Monthly Target */}
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-white via-white to-pink-50/60 backdrop-blur-md border border-[#fda4c9] text-xs font-extrabold text-[#1c1c19] shadow-xs ring-1 ring-[#fda4c9]/30 transition-all duration-200 hover:scale-105 cursor-default">
-              <span className="material-symbols-outlined text-[17px] text-emerald-600">check_circle</span>
-              <span>Zero Monthly Target</span>
-            </div>
-            {/* Prominent Chip 2: 100% Work Independence */}
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-white via-white to-amber-50/60 backdrop-blur-md border border-[#fde68a] text-xs font-extrabold text-[#1c1c19] shadow-xs ring-1 ring-[#fde68a]/40 transition-all duration-200 hover:scale-105 cursor-default">
-              <span className="material-symbols-outlined text-[17px] text-[#E6007E]">lock_open</span>
-              <span>100% Work Independence</span>
-            </div>
-            {/* Chip 3: No Fixed Working Hours */}
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/80 backdrop-blur-md border border-[#e5e2dd] text-xs font-bold text-[#594047] shadow-2xs transition-all duration-200 hover:scale-105 cursor-default">
-              <span className="material-symbols-outlined text-[17px] text-amber-600">hourglass_disabled</span>
-              <span>No Fixed Working Hours</span>
-            </div>
-          </div>
-
-          {/* Live Partner Highlights Strip */}
-          <div className="grid grid-cols-3 gap-3 pt-3 border-t border-[#e5e2dd]/80 max-w-xl">
-            <div className="flex flex-col">
-              <span className="text-xl sm:text-2xl font-black text-[#1c1c19]">₹1.84 Cr+</span>
-              <span className="text-xs text-[#594047] font-medium">Disbursed Payouts</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl sm:text-2xl font-black text-[#E6007E]">Same Day</span>
-              <span className="text-xs text-[#594047] font-medium">Direct Bank / UPI</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl sm:text-2xl font-black text-[#735c00]">₹0 Cost</span>
-              <span className="text-xs text-[#594047] font-medium">100% Free Lifetime</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Column: Visual Graphic Card & Partner Lifestyle Showcase */}
-        <div className="lg:col-span-5 relative">
-          <div className="relative rounded-3xl overflow-hidden shadow-xl border border-white/80 bg-white/90 backdrop-blur-xl p-4 sm:p-5">
-            {/* Visual Header Image Banner */}
-            <div className="relative rounded-2xl overflow-hidden aspect-4/3 mb-4 shadow-sm group">
-              <img
-                src="https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=1200&q=80"
-                alt="Fintech Growth Partner onboarding premium merchant in modern salon lifestyle setting"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 text-white">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/90 text-white text-[11px] font-bold self-start mb-1 backdrop-blur-xs">
-                  <span className="material-symbols-outlined text-[14px]">check_circle</span>
-                  <span>Active Salon Onboarding</span>
-                </div>
-                <h3 className="text-base font-bold text-white leading-snug">
-                  Transform Local Salons into High-Growth Businesses
-                </h3>
-                <p className="text-xs text-white/80">Earn on salon POS setup + recurring merchant billing</p>
-              </div>
-            </div>
-
-            {/* Micro Floating Metric Badges with Clean White Card Styling */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="p-3 rounded-xl bg-white border border-[#e5e2dd] shadow-xs flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-xl bg-[#ffd9e2] text-[#b1005e] flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-[20px]">account_balance_wallet</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[11px] text-[#594047] font-medium">Highest Monthly Payout</span>
-                  <span className="text-sm font-extrabold text-[#1c1c19]">₹3,48,500</span>
-                </div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-white border border-[#e5e2dd] shadow-xs flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-xl bg-[#ffe088] text-[#735c00] flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-[20px]">emoji_events</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[11px] text-[#594047] font-medium">Top Reward Tier</span>
-                  <span className="text-sm font-extrabold text-[#735c00]">₹5,00,000 Car Fund</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Navigation Action Strip inside Graphic Card */}
-            <div className="mt-4 pt-3 border-t border-[#e5e2dd] flex items-center justify-between text-xs">
-              <span className="text-[#594047] font-semibold flex items-center gap-1">
-                <span className="material-symbols-outlined text-[16px] text-[#E6007E]">workspace_premium</span>
-                <span>Verified Partner Network</span>
+        {/* Hero Content Container */}
+        <div className="relative z-10 p-5 sm:p-8 md:p-10 lg:p-14 flex flex-col gap-8">
+          {/* Top Cinematic Status Strip */}
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5">
+            {/* Live Ticker Pill */}
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-xs text-white/90 shadow-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E6007E] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E6007E]" />
               </span>
-              {onNavigateToMilestones && (
+              <span className="font-extrabold tracking-wider uppercase text-[11px] text-[#fda4c9]">
+                Live Network Activity
+              </span>
+              <span className="text-white/30 hidden sm:inline">|</span>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={liveTickerIndex}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.3 }}
+                  className="font-medium text-[11px] sm:text-xs text-white/90 truncate max-w-[280px] sm:max-w-md"
+                >
+                  <span className="mr-1.5">{LIVE_ACTIVITIES[liveTickerIndex].icon}</span>
+                  {LIVE_ACTIVITIES[liveTickerIndex].text}
+                </motion.span>
+              </AnimatePresence>
+            </div>
+
+            {/* Quick Action Navigation */}
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowShowreelModal(true)}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold transition-all cursor-pointer backdrop-blur-xs active:scale-95 group"
+              >
+                <Play className="w-3 h-3 text-[#fda4c9] fill-[#fda4c9] group-hover:scale-110 transition-transform" />
+                <span>60s Cinematic Tour</span>
+              </button>
+
+              {onNavigateToLeaderboard && (
                 <button
                   type="button"
-                  onClick={onNavigateToMilestones}
-                  className="text-[#E6007E] font-bold hover:underline flex items-center gap-0.5 cursor-pointer"
+                  onClick={onNavigateToLeaderboard}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#ffd9e2]/15 hover:bg-[#ffd9e2]/25 text-[#fda4c9] border border-[#fda4c9]/30 text-xs font-bold transition-all cursor-pointer"
                 >
-                  <span>View 7 Milestones</span>
-                  <span className="material-symbols-outlined text-[15px]">arrow_forward</span>
+                  <Award className="w-3.5 h-3.5 text-[#fda4c9]" />
+                  <span>Leaderboard</span>
                 </button>
               )}
             </div>
           </div>
+
+          {/* Main Hero Visual Split: Left Value & Centerpiece, Right Interactive OS Matrix */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            {/* Left Column: Official Logo Branding, Title & Value Prop */}
+            <div className="lg:col-span-7 flex flex-col gap-5 text-left">
+              {/* Official Brand Logo Centerpiece Badge */}
+              <div className="flex items-center gap-4 flex-wrap">
+                <div className="p-2 sm:p-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg inline-flex items-center gap-3">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden p-0.5 bg-gradient-to-tr from-[#E6007E] to-amber-300 shrink-0 shadow-md">
+                    <img
+                      src="/nexora-logo.jpg"
+                      alt="Nexora Salon OS Official Artwork Logo"
+                      className="w-full h-full object-cover rounded-full"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div className="flex flex-col pr-2">
+                    <span className="font-serif font-black text-lg sm:text-xl tracking-[0.14em] uppercase text-white leading-none">
+                      NEXORA
+                    </span>
+                    <span className="text-[10px] sm:text-[11px] font-black tracking-[0.25em] text-[#fda4c9] uppercase leading-tight mt-1">
+                      SALON OS
+                    </span>
+                    <span className="text-[9px] text-white/70 font-semibold uppercase tracking-wider hidden sm:block">
+                      YOUR SALON • YOUR BRAND • YOUR SUCCESS.
+                    </span>
+                  </div>
+                </div>
+
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#f59e0b]/15 border border-[#f59e0b]/40 text-[#fcd34d] text-xs font-bold">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Official Salon Operating System 2026</span>
+                </div>
+              </div>
+
+              {/* High-Impact Bilingual Cinematic Headline */}
+              <div className="space-y-2">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-serif font-black text-white tracking-tight leading-[1.12]">
+                  The Operating System for Every Salon.{' '}
+                  <span className="bg-gradient-to-r from-[#fda4c9] via-[#E6007E] to-[#ffd269] bg-clip-text text-transparent font-sans">
+                    Zero Investment
+                  </span>{' '}
+                  for Growth Partners.
+                </h1>
+                <p className="text-sm sm:text-base text-[#fda4c9] font-medium tracking-wide font-sans">
+                  सैलून, स्पा और वेलनेस स्टोर्स का संपूर्ण डिजिटल पॉवरहाउस — ₹0 निवेश में अनलिमिटेड लाइफटाइम रिकरिंग ब्रोकरेज।
+                </p>
+              </div>
+
+              {/* Tagline Showcase Banner */}
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-white/[0.08] via-white/[0.04] to-transparent border border-white/10 backdrop-blur-md flex items-center justify-between gap-4">
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-bold text-white/50 tracking-widest uppercase">
+                    Brand Philosophy
+                  </span>
+                  <span className="text-xs sm:text-sm font-extrabold text-white tracking-wider">
+                    YOUR SALON<span className="text-[#E6007E] mx-1.5">•</span>YOUR BRAND
+                    <span className="text-[#E6007E] mx-1.5">•</span>YOUR SUCCESS.
+                  </span>
+                </div>
+                <div className="hidden sm:flex items-center gap-1 text-xs text-[#fcd34d] font-bold bg-[#f59e0b]/20 px-3 py-1 rounded-full border border-[#f59e0b]/30">
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>ISO &amp; SEBI Compliant</span>
+                </div>
+              </div>
+
+              {/* Core Value Statement */}
+              <p className="text-sm sm:text-base text-white/80 leading-relaxed font-sans">
+                Join India's most prestigious beauty fintech ecosystem. Enable local salon owners with
+                lightning-fast smart billing POS, staff commission tracking, and automated client rebooking —
+                while earning <strong className="text-white">₹1,500 to ₹10,000 instant activation rewards</strong> and
+                milestone cars, bikes, and international vacations.
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                {registeredPartner ? (
+                  <button
+                    type="button"
+                    onClick={onNavigateToDashboard}
+                    className="h-12 sm:h-14 px-8 rounded-2xl bg-gradient-to-r from-[#E6007E] via-[#d91b77] to-[#b1005e] text-white font-bold text-base flex items-center justify-center gap-2.5 shadow-xl shadow-[#E6007E]/30 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
+                  >
+                    <Layers className="w-5 h-5" />
+                    <span>Open Partner Portal</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={onOpenApply}
+                    className="h-12 sm:h-14 px-8 rounded-2xl bg-gradient-to-r from-[#E6007E] via-[#d91b77] to-[#b1005e] text-white font-bold text-base flex items-center justify-center gap-2.5 shadow-xl shadow-[#E6007E]/30 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer ring-2 ring-[#fda4c9]/40"
+                  >
+                    <Zap className="w-5 h-5 text-amber-300" />
+                    <span>Join Free Partner Program (₹0 Fee)</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={onScrollToCalculator}
+                  className="h-12 sm:h-14 px-6 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-bold text-base flex items-center justify-center gap-2 backdrop-blur-md transition-all cursor-pointer active:scale-95"
+                >
+                  <DollarSign className="w-5 h-5 text-[#fda4c9]" />
+                  <span>Calculate Earnings</span>
+                </button>
+              </div>
+
+              {/* Freedom Chips Strip */}
+              <div className="flex items-center gap-2.5 flex-wrap pt-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold text-white/90 backdrop-blur-xs">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Zero Monthly Target</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold text-white/90 backdrop-blur-xs">
+                  <Clock className="w-3.5 h-3.5 text-amber-300" />
+                  <span>100% Work Freedom</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold text-white/90 backdrop-blur-xs">
+                  <ShieldCheck className="w-3.5 h-3.5 text-blue-300" />
+                  <span>Weekly Monday Payouts</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Interactive Cinematic Showcase Card */}
+            <div className="lg:col-span-5 relative">
+              <div className="rounded-3xl overflow-hidden bg-black/60 backdrop-blur-xl border border-white/15 p-4 sm:p-5 shadow-2xl relative">
+                {/* Interactive Mode Tabs */}
+                <div className="flex items-center gap-1.5 p-1 bg-white/10 rounded-2xl mb-4">
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('salon-os')}
+                    className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                      activeTab === 'salon-os'
+                        ? 'bg-[#E6007E] text-white shadow-md'
+                        : 'text-white/70 hover:text-white'
+                    }`}
+                  >
+                    <Store className="w-3.5 h-3.5" />
+                    <span>Salon OS</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('partner-engine')}
+                    className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                      activeTab === 'partner-engine'
+                        ? 'bg-[#E6007E] text-white shadow-md'
+                        : 'text-white/70 hover:text-white'
+                    }`}
+                  >
+                    <TrendingUp className="w-3.5 h-3.5" />
+                    <span>Partner Engine</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('cinematic-reel')}
+                    className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                      activeTab === 'cinematic-reel'
+                        ? 'bg-[#E6007E] text-white shadow-md'
+                        : 'text-white/70 hover:text-white'
+                    }`}
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Features</span>
+                  </button>
+                </div>
+
+                {/* Tab 1: Live Salon OS POS Showcase */}
+                {activeTab === 'salon-os' && (
+                  <div className="space-y-3.5">
+                    {/* Live Terminal Header */}
+                    <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-9 h-9 rounded-xl bg-[#ffd9e2]/20 border border-[#E6007E]/40 flex items-center justify-center text-[#fda4c9]">
+                          <Store className="w-4 h-4" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-xs font-bold text-white">Nexora Express Billing POS</span>
+                          <span className="text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                            Live Terminal Connected
+                          </span>
+                        </div>
+                      </div>
+                      <span className="text-xs font-mono font-bold text-amber-300">₹4,850.00</span>
+                    </div>
+
+                    {/* Active Order Item Preview */}
+                    <div className="p-3 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                      <div className="flex items-center justify-between text-xs pb-2 border-b border-white/10">
+                        <span className="text-white/70">Client: Rhea Kapoor</span>
+                        <span className="text-[#fda4c9] font-bold">Stylist: Sameer (Chair 2)</span>
+                      </div>
+                      <div className="space-y-1.5 text-[11px]">
+                        <div className="flex justify-between text-white/80">
+                          <span>Balayage Color + Hair Spa</span>
+                          <span className="font-mono text-white">₹3,800</span>
+                        </div>
+                        <div className="flex justify-between text-white/80">
+                          <span>Moroccanoil Treatment Serum</span>
+                          <span className="font-mono text-white">₹1,050</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Split Payout Breakdown */}
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
+                        <span className="text-[10px] text-white/60 block">Salon Net Margin</span>
+                        <span className="text-sm font-extrabold text-emerald-400">₹4,120</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
+                        <span className="text-[10px] text-white/60 block">Partner Brokerage</span>
+                        <span className="text-sm font-extrabold text-amber-300">₹350 Instant</span>
+                      </div>
+                    </div>
+
+                    {/* Action */}
+                    {onNavigateToSalonIntelligence && (
+                      <button
+                        type="button"
+                        onClick={onNavigateToSalonIntelligence}
+                        className="w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer border border-white/10"
+                      >
+                        <span>Open Salon Intelligence CRM</span>
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {/* Tab 2: Partner Growth Engine Showcase */}
+                {activeTab === 'partner-engine' && (
+                  <div className="space-y-3">
+                    <div className="p-3.5 rounded-2xl bg-gradient-to-br from-[#E6007E]/20 to-transparent border border-[#E6007E]/30">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-extrabold text-[#fda4c9]">Partner Payout Engine</span>
+                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">
+                          Zero Investment
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 pt-1">
+                        <div className="p-2 rounded-xl bg-black/40 border border-white/10">
+                          <span className="text-[10px] text-white/60 block">Instant Activation</span>
+                          <span className="text-base font-black text-white">₹1,500 - ₹10,000</span>
+                        </div>
+                        <div className="p-2 rounded-xl bg-black/40 border border-white/10">
+                          <span className="text-[10px] text-white/60 block">Top Milestone Fund</span>
+                          <span className="text-base font-black text-amber-300">₹5,00,000</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 text-xs">
+                      <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="text-amber-300 text-sm">🏍️</span>
+                          <span className="text-white/90">Royal Enfield Hunter 350</span>
+                        </div>
+                        <span className="text-[11px] font-bold text-[#fda4c9]">500 Salons</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="text-blue-300 text-sm">📱</span>
+                          <span className="text-white/90">Apple iPhone 16 Pro Max</span>
+                        </div>
+                        <span className="text-[11px] font-bold text-[#fda4c9]">250 Salons</span>
+                      </div>
+                    </div>
+
+                    {onNavigateToMilestones && (
+                      <button
+                        type="button"
+                        onClick={onNavigateToMilestones}
+                        className="w-full py-2.5 rounded-xl bg-[#E6007E] hover:bg-[#d91b77] text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
+                      >
+                        <span>View All 7 Milestone Ranks</span>
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {/* Tab 3: Cinematic Features Grid */}
+                {activeTab === 'cinematic-reel' && (
+                  <div className="space-y-2.5">
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex flex-col gap-1">
+                        <Smartphone className="w-4 h-4 text-[#fda4c9]" />
+                        <span className="text-xs font-bold text-white">WhatsApp Bot</span>
+                        <span className="text-[10px] text-white/60">Automated re-engagement &amp; reminders</span>
+                      </div>
+                      <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex flex-col gap-1">
+                        <Users className="w-4 h-4 text-emerald-400" />
+                        <span className="text-xs font-bold text-white">Staff Ledger</span>
+                        <span className="text-[10px] text-white/60">Automated chair &amp; tip commissions</span>
+                      </div>
+                      <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex flex-col gap-1">
+                        <Layers className="w-4 h-4 text-amber-300" />
+                        <span className="text-xs font-bold text-white">Multi-Branch Cloud</span>
+                        <span className="text-[10px] text-white/60">Franchise inventory &amp; analytics</span>
+                      </div>
+                      <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex flex-col gap-1">
+                        <ShieldCheck className="w-4 h-4 text-blue-300" />
+                        <span className="text-xs font-bold text-white">Zero Chargebacks</span>
+                        <span className="text-[10px] text-white/60">SEBI &amp; NPCI direct UPI routing</span>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setShowShowreelModal(true)}
+                      className="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-[#E6007E] text-white text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                    >
+                      <Play className="w-3.5 h-3.5 fill-white" />
+                      <span>Launch Cinematic Visual Reel</span>
+                    </button>
+                  </div>
+                )}
+
+                {/* Footer Brand Slogan Watermark */}
+                <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[10px] text-white/60">
+                  <span className="font-extrabold text-[#fda4c9] uppercase tracking-wider">
+                    Nexora Salon OS
+                  </span>
+                  <span>Your Salon • Your Brand • Your Success</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Cinematic Metrics Strip */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-6 border-t border-white/10">
+            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex flex-col">
+              <span className="text-2xl sm:text-3xl font-black text-white font-serif">14,800+</span>
+              <span className="text-xs text-white/70 font-medium">Salons &amp; Spas Powered</span>
+            </div>
+            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex flex-col">
+              <span className="text-2xl sm:text-3xl font-black text-[#fda4c9] font-serif">₹142 Cr+</span>
+              <span className="text-xs text-white/70 font-medium">Processed Billing Volume</span>
+            </div>
+            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex flex-col">
+              <span className="text-2xl sm:text-3xl font-black text-amber-300 font-serif">₹5 Lakh</span>
+              <span className="text-xs text-white/70 font-medium">Top Tier Partner Bonus</span>
+            </div>
+            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex flex-col">
+              <span className="text-2xl sm:text-3xl font-black text-emerald-400 font-serif">99.98%</span>
+              <span className="text-xs text-white/70 font-medium">System Uptime &amp; SLA</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Feature Navigation Quick Chips */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar pt-2">
-        {onNavigateToDashboard && (
-          <button
-            type="button"
-            onClick={onNavigateToDashboard}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-[#e5e2dd] text-xs font-bold text-[#1c1c19] hover:border-[#E6007E] hover:text-[#E6007E] transition-all whitespace-nowrap shadow-xs cursor-pointer shrink-0"
-          >
-            <span className="material-symbols-outlined text-[18px] text-[#E6007E]">analytics</span>
-            <span>Earnings &amp; Stats</span>
-          </button>
-        )}
-        {onNavigateToSalonIntelligence && (
-          <button
-            type="button"
-            onClick={onNavigateToSalonIntelligence}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-[#e5e2dd] text-xs font-bold text-[#1c1c19] hover:border-[#E6007E] hover:text-[#E6007E] transition-all whitespace-nowrap shadow-xs cursor-pointer shrink-0"
-          >
-            <span className="material-symbols-outlined text-[18px] text-[#E6007E]">storefront</span>
-            <span>Salon Intelligence CRM</span>
-          </button>
-        )}
-        {onNavigateToLeaderboard && (
-          <button
-            type="button"
-            onClick={onNavigateToLeaderboard}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-[#e5e2dd] text-xs font-bold text-[#1c1c19] hover:border-[#E6007E] hover:text-[#E6007E] transition-all whitespace-nowrap shadow-xs cursor-pointer shrink-0"
-          >
-            <span className="material-symbols-outlined text-[18px] text-[#cca730]">leaderboard</span>
-            <span>Leaderboard</span>
-          </button>
-        )}
-        {onNavigateToMilestones && (
-          <button
-            type="button"
-            onClick={onNavigateToMilestones}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-[#e5e2dd] text-xs font-bold text-[#1c1c19] hover:border-[#E6007E] hover:text-[#E6007E] transition-all whitespace-nowrap shadow-xs cursor-pointer shrink-0"
-          >
-            <span className="material-symbols-outlined text-[18px] text-[#E6007E]">military_tech</span>
-            <span>Milestones Ladder</span>
-          </button>
-        )}
-        <button
-          type="button"
-          onClick={onScrollToCalculator}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-[#e5e2dd] text-xs font-bold text-[#1c1c19] hover:border-[#E6007E] hover:text-[#E6007E] transition-all whitespace-nowrap shadow-xs cursor-pointer shrink-0"
-        >
-          <span className="material-symbols-outlined text-[18px] text-emerald-600">functions</span>
-          <span>Income Calculator</span>
-        </button>
-      </div>
+      {/* 2. CINEMATIC SHOWREEL MODAL */}
+      <AnimatePresence>
+        {showShowreelModal && (
+          <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="bg-[#12050e] w-full max-w-2xl rounded-3xl overflow-hidden border border-white/20 shadow-2xl flex flex-col text-white"
+            >
+              {/* Modal Header */}
+              <div className="p-4 bg-white/5 border-b border-white/10 flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-full overflow-hidden p-0.5 bg-[#E6007E]">
+                    <img
+                      src="/nexora-logo.jpg"
+                      alt="Nexora Salon OS"
+                      className="w-full h-full object-cover rounded-full"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-xs font-black tracking-wider uppercase text-white">
+                      Nexora Salon OS Cinematic Tour
+                    </span>
+                    <span className="text-[10px] text-[#fda4c9]">
+                      YOUR SALON • YOUR BRAND • YOUR SUCCESS.
+                    </span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowShowreelModal(false)}
+                  className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white transition-colors cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
 
-      {/* Trust & Capability Metric Cards: 3 Column Desktop Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-        <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-[#e5e2dd] shadow-xs">
+              {/* Video Teaser Simulated Showcase */}
+              <div className="relative aspect-16/9 bg-black overflow-hidden flex items-center justify-center">
+                <img
+                  src="/cinematic-hero-bg.jpg"
+                  alt="Cinematic Salon Flagship Showroom"
+                  className="w-full h-full object-cover opacity-60 scale-105"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                
+                {/* Center Audio/Video Visualizer */}
+                <div className="relative z-10 flex flex-col items-center text-center p-6 gap-3">
+                  <div className="w-16 h-16 rounded-full bg-[#E6007E] text-white flex items-center justify-center shadow-xl shadow-[#E6007E]/50 animate-pulse">
+                    <Volume2 className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-xl font-serif font-black text-white">
+                    Nexora Salon Operating System Showreel
+                  </h3>
+                  <p className="text-xs text-white/80 max-w-md">
+                    Experience how India's elite salons leverage Nexora Smart POS, stylist commission tracking, and recurring growth partner networks.
+                  </p>
+                </div>
+              </div>
+
+              {/* Modal Footer Controls */}
+              <div className="p-4 bg-white/5 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2 text-xs text-white/70">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                  <span>Cloud Synchronized • 24/7 Priority Partner Desk</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowShowreelModal(false);
+                    onOpenApply();
+                  }}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#E6007E] to-[#b1005e] text-white text-xs font-black transition-all cursor-pointer shadow-md hover:scale-105"
+                >
+                  Apply as Growth Partner
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* 3. LIGHT THEME QUICK ACCESS TILES & CAPABILITIES (Desktop Grid) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+        <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-[#e5e2dd] shadow-xs hover:border-[#E6007E]/40 transition-colors">
           <div className="w-12 h-12 rounded-xl bg-[#ffd9e2] text-[#b1005e] flex items-center justify-center shrink-0">
-            <span className="material-symbols-outlined text-[26px]">bolt</span>
+            <Zap className="w-6 h-6 text-[#b1005e]" />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-bold text-[#1c1c19]">Instant Activation &amp; KYC</span>
-            <span className="text-xs text-[#594047]">2-minute paperless digital setup with automated verification</span>
+            <span className="text-sm font-bold text-[#1c1c19]">Smart Salon Billing POS</span>
+            <span className="text-xs text-[#594047]">3-second checkout with direct UPI routing &amp; WhatsApp slips</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-[#e5e2dd] shadow-xs">
+        <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-[#e5e2dd] shadow-xs hover:border-amber-400/50 transition-colors">
           <div className="w-12 h-12 rounded-xl bg-[#ffe088] text-[#735c00] flex items-center justify-center shrink-0">
-            <span className="material-symbols-outlined text-[26px]">verified_user</span>
+            <ShieldCheck className="w-6 h-6 text-[#735c00]" />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-bold text-[#1c1c19]">Guaranteed Weekly Settlements</span>
-            <span className="text-xs text-[#594047]">Direct bank transfer &amp; UPI credit every single Monday</span>
+            <span className="text-sm font-bold text-[#1c1c19]">Zero Target Partner Freedom</span>
+            <span className="text-xs text-[#594047]">Work on your own terms with automated weekly Monday settlements</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-[#e5e2dd] shadow-xs">
+        <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-[#e5e2dd] shadow-xs hover:border-[#E6007E]/40 transition-colors">
           <div className="w-12 h-12 rounded-xl bg-[#f6f3ee] text-[#1c1c19] flex items-center justify-center shrink-0 border border-[#e5e2dd]">
-            <span className="material-symbols-outlined text-[26px] text-[#E6007E]">groups</span>
+            <Award className="w-6 h-6 text-[#E6007E]" />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-bold text-[#1c1c19]">5,200+ Active Growth Partners</span>
-            <span className="text-xs text-[#594047]">Pan-India salon referral network with dedicated RM</span>
+            <span className="text-sm font-bold text-[#1c1c19]">5,200+ Active Partners</span>
+            <span className="text-xs text-[#594047]">Pan-India growth network with ₹5 Lakh car fund milestone</span>
           </div>
         </div>
       </div>

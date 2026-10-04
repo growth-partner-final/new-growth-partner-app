@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { NotificationBell } from './NotificationBell';
 import { WeeklyGoalTracker } from './WeeklyGoalTracker';
 import { BreadcrumbNavigation } from './BreadcrumbNavigation';
+import { NexoraLogo } from './NexoraLogo';
 
 interface SalonIntelligenceDashboardProps {
   onNavigateToAuth?: () => void;
@@ -54,17 +55,7 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
             className="flex items-center gap-2 px-2 py-1 cursor-pointer group select-none text-left bg-transparent border-0 p-0"
             title="Return to Main Landing Hub"
           >
-            <img
-              alt="Nexora Brand Logo"
-              className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
-              src="https://lh3.googleusercontent.com/aida/AEtjO1XZxTb-KtdsPjo0U0odHwDY485hRuwmfDBk7sy7hvncIa4xg3AdjCaLVTut6pSuuRiQJj_3YtSdqJ3TLo2klHSJMNebL6mVq0uWtOhluaULb7Cy_34No2AloAlRtDCW1-HCFGFyKGQkrv2OMGEMkXFJpEFLcxUma8v2Z1hXG0pFOlEix77UvOTw-NfNuX20oyBgVrPL--0n2ZNjrI0vKNBImBop03G0p3fTT3hR_Chdf05d_h_ZbzfoKQ"
-            />
-            <div className="flex flex-col leading-tight">
-              <span className="font-bold text-lg text-[#1c1c19] tracking-tight group-hover:text-[#b1005e] transition-colors">Nexora</span>
-              <span className="text-[11px] font-bold text-[#8e4767] uppercase tracking-wider">
-                Growth Partner
-              </span>
-            </div>
+            <NexoraLogo variant="horizontal" size="sm" showTagline={false} />
           </button>
 
           <div className="h-px w-full bg-[#e5e2dd]/60 my-1"></div>
@@ -191,12 +182,7 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
               className="flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 text-left"
               title="Return to Main Landing Hub"
             >
-              <img
-                alt="Nexora Brand Logo"
-                className="h-8 w-auto object-contain shrink-0 transition-transform hover:scale-105"
-                src="https://lh3.googleusercontent.com/aida/AEtjO1XZxTb-KtdsPjo0U0odHwDY485hRuwmfDBk7sy7hvncIa4xg3AdjCaLVTut6pSuuRiQJj_3YtSdqJ3TLo2klHSJMNebL6mVq0uWtOhluaULb7Cy_34No2AloAlRtDCW1-HCFGFyKGQkrv2OMGEMkXFJpEFLcxUma8v2Z1hXG0pFOlEix77UvOTw-NfNuX20oyBgVrPL--0n2ZNjrI0vKNBImBop03G0p3fTT3hR_Chdf05d_h_ZbzfoKQ"
-              />
-              <span className="hidden sm:inline font-bold text-base text-[#1c1c19]">Nexora</span>
+              <NexoraLogo variant="horizontal" size="xs" showTagline={false} />
             </button>
 
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffe088] text-[#241a00] text-[11px] font-bold shadow-[0_2px_8px_rgba(115,92,0,0.1)]">
@@ -249,14 +235,7 @@ export const SalonIntelligenceDashboard: React.FC<SalonIntelligenceDashboardProp
             <div className="w-72 bg-[#fcf9f4] h-full p-4 flex flex-col justify-between overflow-y-auto shadow-2xl border-r border-[#e5e2dd]">
               <div>
                 <div className="flex items-center justify-between pb-4 border-b border-[#e5e2dd]">
-                  <div className="flex items-center gap-2">
-                    <img
-                      alt="Nexora Brand Logo"
-                      className="h-7 w-auto object-contain"
-                      src="https://lh3.googleusercontent.com/aida/AEtjO1XZxTb-KtdsPjo0U0odHwDY485hRuwmfDBk7sy7hvncIa4xg3AdjCaLVTut6pSuuRiQJj_3YtSdqJ3TLo2klHSJMNebL6mVq0uWtOhluaULb7Cy_34No2AloAlRtDCW1-HCFGFyKGQkrv2OMGEMkXFJpEFLcxUma8v2Z1hXG0pFOlEix77UvOTw-NfNuX20oyBgVrPL--0n2ZNjrI0vKNBImBop03G0p3fTT3hR_Chdf05d_h_ZbzfoKQ"
-                    />
-                    <span className="font-bold text-base text-[#1c1c19]">Nexora</span>
-                  </div>
+                  <NexoraLogo variant="horizontal" size="xs" showTagline={false} />
                   <button
                     onClick={() => setMobileMenuOpen(false)}
                     className="p-1 text-[#594047]"

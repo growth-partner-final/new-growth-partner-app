@@ -12,11 +12,14 @@ import { PartnerMarketingMaterialScreen } from '../components/PartnerMarketingMa
 import { PartnerLeaderboard } from '../components/PartnerLeaderboard';
 import { TopPerformersLeaderboard } from '../components/TopPerformersLeaderboard';
 import { PartnerNotificationsScreen } from '../components/PartnerNotificationsScreen';
+import { SalonIntelligenceDashboard } from '../components/SalonIntelligenceDashboard';
 
 export const routes = [
   { path: '/dashboard', component: PartnerDashboard, label: 'Dashboard', icon: 'grid_view' },
   { path: '/partner/leaderboard', component: PartnerLeaderboard, label: 'Leaderboard', icon: 'emoji_events' },
   { path: '/leaderboard', component: PartnerLeaderboard, label: 'Leaderboard', icon: 'emoji_events' },
+  { path: '/salon-intelligence', component: SalonIntelligenceDashboard, label: 'Salon Intelligence', icon: 'insights' },
+  { path: '/partner/rewards-milestones', component: PartnerMilestoneClaimsScreen, label: 'Milestones', icon: 'military_tech' },
   { path: '/partner/share-earn', component: ShareAndEarnScreen, label: 'Share & Earn', icon: 'qr_code_2' },
   { path: '/partner/referred-salons', component: ReferralHistoryScreen, label: 'Referred Salons', icon: 'group' },
   { path: '/partner/referral-status', component: ReferralStatusTimeline, label: 'Referral Status', icon: 'query_stats' },

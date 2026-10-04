@@ -12,6 +12,8 @@ import {
   Sparkles,
   ShieldCheck,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   Store,
   Info,
   Calendar,
@@ -22,7 +24,8 @@ import {
   ArrowUpRight,
   UserCheck,
   Zap,
-  Gift
+  Gift,
+  RefreshCw
 } from 'lucide-react';
 import { MilestoneRankDefinition, LeaderboardPartnerItem } from '../types';
 import { useAuth } from '../context/AuthContext';
@@ -495,12 +498,61 @@ export const PartnerLeaderboard: React.FC<PartnerLeaderboardProps> = ({
   onNavigateToShareEarn
 }) => {
   const { registeredPartner } = useAuth();
+  const [partnersData, setPartnersData] = useState<LeaderboardPartnerItem[]>(INITIAL_LEADERBOARD_PARTNERS);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [lastRefreshedAt, setLastRefreshedAt] = useState<Date>(new Date());
+  const [refreshNotification, setRefreshNotification] = useState<string | null>(null);
+
   const [selectedMilestoneFilter, setSelectedMilestoneFilter] = useState<number | 'all'>('all');
   const [selectedTimeframe, setSelectedTimeframe] = useState<'all-time' | 'month' | 'week'>('month');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'onboardings' | 'earnings' | 'growth'>('onboardings');
   const [isMilestoneModalOpen, setIsMilestoneModalOpen] = useState(false);
   const [selectedPartnerForDetail, setSelectedPartnerForDetail] = useState<LeaderboardPartnerItem | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Trigger simulated live rankings fetch
+  const handleRefresh = () => {
+    if (isRefreshing) return;
+    setIsRefreshing(true);
+    setRefreshNotification(null);
+
+    setTimeout(() => {
+      // Simulate live incoming onboardings & verifications across partner network
+      setPartnersData((prev) => {
+        const updated = prev.map((partner) => {
+          // 40% chance for a partner to have new activity
+          const hasNewActivity = Math.random() > 0.6;
+          if (hasNewActivity) {
+            const added = Math.floor(Math.random() * 3) + 1;
+            const newCount = partner.salonOnboardingCount + added;
+            const newVerified = partner.verifiedCount + added;
+            return {
+              ...partner,
+              salonOnboardingCount: newCount,
+              verifiedCount: newVerified,
+              growthTrend: 'up' as const,
+              trendRanks: Math.max(1, partner.trendRanks + (Math.random() > 0.5 ? 1 : 0))
+            };
+          }
+          return partner;
+        });
+
+        // Re-calculate ranks based on salon onboarding count
+        const sorted = [...updated].sort((a, b) => b.salonOnboardingCount - a.salonOnboardingCount);
+        return sorted.map((item, idx) => ({
+          ...item,
+          rank: idx + 1
+        }));
+      });
+
+      const now = new Date();
+      setLastRefreshedAt(now);
+      setIsRefreshing(false);
+      setRefreshNotification('Rankings updated with live merchant data!');
+      setTimeout(() => setRefreshNotification(null), 3500);
+    }, 700);
+  };
 
   // Helper to get milestone rank config
   const getMilestoneConfig = (level: number) => {
@@ -539,7 +591,7 @@ export const PartnerLeaderboard: React.FC<PartnerLeaderboardProps> = ({
 
   // Filter and sort items
   const filteredAndSortedPartners = useMemo(() => {
-    return INITIAL_LEADERBOARD_PARTNERS
+    return partnersData
       .filter((partner) => {
         // Milestone filter
         if (selectedMilestoneFilter !== 'all' && partner.milestoneLevel !== selectedMilestoneFilter) {
@@ -569,18 +621,27 @@ export const PartnerLeaderboard: React.FC<PartnerLeaderboardProps> = ({
         }
         return 0;
       });
-  }, [selectedMilestoneFilter, searchQuery, sortBy]);
+  }, [partnersData, selectedMilestoneFilter, searchQuery, sortBy]);
+ 
+  // Display top 5 when collapsed, or full list when expanded
+  const displayedPartners = useMemo(() => {
+    if (isExpanded) {
+      return filteredAndSortedPartners;
+    }
+    return filteredAndSortedPartners.slice(0, 5);
+  }, [filteredAndSortedPartners, isExpanded]);
 
   // Top 3 Podium
   const podiumTop3 = useMemo(() => {
-    return INITIAL_LEADERBOARD_PARTNERS.slice(0, 3);
-  }, []);
+    const sorted = [...partnersData].sort((a, b) => b.salonOnboardingCount - a.salonOnboardingCount);
+    return sorted.slice(0, 3);
+  }, [partnersData]);
 
   // Current logged in user standing (mocked or bound to Auth)
   const currentUserStanding = useMemo(() => {
     const partnerId = registeredPartner?.partnerId || 'GP-8821';
     const partnerName = registeredPartner?.name || 'Rohit Verma';
-    const matched = INITIAL_LEADERBOARD_PARTNERS.find(
+    const matched = partnersData.find(
       (p) => p.id === partnerId || p.name.toLowerCase() === partnerName.toLowerCase()
     );
     if (matched) return matched;
@@ -635,8 +696,36 @@ export const PartnerLeaderboard: React.FC<PartnerLeaderboardProps> = ({
               </p>
             </div>
 
-            {/* Quick Action Bar */}
-            <div className="flex flex-wrap items-center gap-3">
+            {/* Quick Action Bar with Refresh Button */}
+            <div className="flex flex-wrap items-center gap-2.5">
+              {/* Refresh icon button with sync status */}
+              <div className="flex items-center gap-2">
+                <button
+                  id="partner-leaderboard-refresh-btn"
+                  type="button"
+                  onClick={handleRefresh}
+                  disabled={isRefreshing}
+                  title={isRefreshing ? 'Fetching latest rankings...' : 'Refresh latest partner rankings'}
+                  className={`inline-flex items-center gap-1.5 px-3 py-2.5 rounded-2xl bg-white border border-[#e5e2dd] hover:border-[#b1005e]/40 hover:bg-[#fff9fc] text-xs font-black transition-all shadow-2xs cursor-pointer active:scale-95 disabled:opacity-75 disabled:cursor-not-allowed group ${
+                    isRefreshing ? 'border-[#b1005e]/50 bg-[#fae8f0]/40 text-[#b1005e]' : 'text-[#1c1c19]'
+                  }`}
+                  aria-label="Refresh latest rankings"
+                >
+                  <RefreshCw
+                    className={`w-3.5 h-3.5 transition-all ${
+                      isRefreshing
+                        ? 'animate-spin text-[#b1005e]'
+                        : 'text-[#594047] group-hover:text-[#b1005e]'
+                    }`}
+                  />
+                  <span>{isRefreshing ? 'Refreshing...' : 'Refresh'}</span>
+                </button>
+
+                <span className="hidden xl:inline-block text-[10px] font-semibold text-[#7d6f72] select-none">
+                  Synced {lastRefreshedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              </div>
+
               <button
                 onClick={() => setIsMilestoneModalOpen(true)}
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white border border-[#e5e2dd] hover:border-[#b1005e]/40 hover:bg-[#fff9fc] text-xs font-extrabold text-[#1c1c19] transition-all shadow-2xs"
@@ -655,6 +744,21 @@ export const PartnerLeaderboard: React.FC<PartnerLeaderboardProps> = ({
               </Link>
             </div>
           </div>
+
+          {/* Real-time Refresh Toast Notification */}
+          <AnimatePresence>
+            {refreshNotification && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                className="absolute top-4 right-4 z-30 px-3.5 py-1.5 rounded-full bg-emerald-700 text-white text-xs font-black flex items-center gap-1.5 shadow-md"
+              >
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-200" />
+                <span>{refreshNotification}</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Quick Metrics Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 mt-6 border-t border-[#f0ede9]">
@@ -1047,6 +1151,48 @@ export const PartnerLeaderboard: React.FC<PartnerLeaderboardProps> = ({
                 <option value="growth">Fastest Rising (+Ranks)</option>
               </select>
             </div>
+
+            {/* Quick Expand Toggle Button */}
+            <button
+              id="partner-leaderboard-top-expand-toggle-btn"
+              type="button"
+              onClick={() => setIsExpanded((prev) => !prev)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer border shrink-0 ${
+                isExpanded
+                  ? 'bg-[#ffd9e2] text-[#b1005e] border-[#d91b77]/40 shadow-2xs'
+                  : 'bg-[#f6f3ee] text-[#1c1c19] border-[#e5e2dd] hover:bg-[#ece8e2]'
+              }`}
+              title={isExpanded ? 'Collapse to show top 5 partners' : 'Expand to view full list'}
+            >
+              {isExpanded ? (
+                <>
+                  <ChevronUp className="w-3.5 h-3.5 text-[#b1005e]" />
+                  <span>Full List ({filteredAndSortedPartners.length})</span>
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="w-3.5 h-3.5 text-[#b1005e]" />
+                  <span>Top 5 Only</span>
+                </>
+              )}
+            </button>
+
+            {/* Table Header Refresh Button */}
+            <button
+              id="partner-leaderboard-table-refresh-btn"
+              type="button"
+              onClick={handleRefresh}
+              disabled={isRefreshing}
+              className={`p-2 rounded-xl border transition-all cursor-pointer active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed ${
+                isRefreshing
+                  ? 'bg-[#fae8f0] text-[#b1005e] border-[#b1005e]/40'
+                  : 'bg-[#f6f3ee] text-[#594047] border-[#e5e2dd] hover:bg-[#ece8e2] hover:text-[#b1005e]'
+              }`}
+              title={isRefreshing ? 'Refreshing rankings...' : 'Refresh rankings'}
+              aria-label="Refresh rankings"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-[#b1005e]' : ''}`} />
+            </button>
           </div>
         </div>
       </section>
@@ -1074,6 +1220,37 @@ export const PartnerLeaderboard: React.FC<PartnerLeaderboardProps> = ({
           </div>
         ) : (
           <div className="bg-white rounded-3xl border border-[#ebe7e0] shadow-xs overflow-hidden">
+            {/* Table Header Summary & Expand Toggle */}
+            <div className="px-6 py-2.5 bg-[#fcfaf7] border-b border-[#ebe7e0] flex items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="font-bold text-[#594047]">
+                  {isExpanded
+                    ? `Showing all ${filteredAndSortedPartners.length} growth partners`
+                    : `Showing top 5 of ${filteredAndSortedPartners.length} growth partners`}
+                </span>
+                {!isExpanded && filteredAndSortedPartners.length > 5 && (
+                  <span className="hidden sm:inline-block px-2 py-0.5 rounded-full bg-[#f0ede9] text-[10px] font-bold text-[#7d6f72]">
+                    +{filteredAndSortedPartners.length - 5} below
+                  </span>
+                )}
+              </div>
+
+              <button
+                id="partner-leaderboard-header-expand-btn"
+                type="button"
+                onClick={() => setIsExpanded((prev) => !prev)}
+                className="text-xs font-black text-[#b1005e] hover:text-[#8e004b] flex items-center gap-1 cursor-pointer transition-colors"
+              >
+                <span>{isExpanded ? 'Collapse to Top 5' : 'Expand Full List'}</span>
+                {isExpanded ? (
+                  <ChevronUp className="w-3.5 h-3.5" />
+                ) : (
+                  <ChevronDown className="w-3.5 h-3.5" />
+                )}
+              </button>
+            </div>
+
             {/* Desktop Table Header */}
             <div className="hidden lg:grid grid-cols-12 gap-4 px-6 py-3.5 bg-[#faf8f5] border-b border-[#ebe7e0] text-[11px] font-black uppercase tracking-wider text-[#7d6f72]">
               <div className="col-span-1">Rank</div>
@@ -1085,154 +1262,211 @@ export const PartnerLeaderboard: React.FC<PartnerLeaderboardProps> = ({
             </div>
 
             {/* List Rows */}
-            <div className="divide-y divide-[#f0ede9]">
-              {filteredAndSortedPartners.map((partner) => {
-                const milestoneConfig = getMilestoneConfig(partner.milestoneLevel);
-                const isCurrentUser = partner.id === currentUserStanding.id;
+            <motion.div layout className="divide-y divide-[#f0ede9]">
+              <AnimatePresence mode="popLayout" initial={false}>
+                {displayedPartners.map((partner, index) => {
+                  const milestoneConfig = getMilestoneConfig(partner.milestoneLevel);
+                  const isCurrentUser = partner.id === currentUserStanding.id;
 
-                return (
-                  <div
-                    key={partner.id}
-                    onClick={() => setSelectedPartnerForDetail(partner)}
-                    className={`p-4 sm:p-5 lg:px-6 lg:py-4 transition-all cursor-pointer hover:bg-[#fcfaf7] ${
-                      isCurrentUser ? 'bg-[#fff5f9]/70 border-l-4 border-l-[#b1005e]' : ''
-                    }`}
-                  >
-                    {/* Responsive Grid for Desktop */}
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-                      {/* 1. Rank + Trend */}
-                      <div className="flex items-center justify-between lg:justify-start gap-3 col-span-1">
-                        <div className="flex items-center gap-2">
-                          {getRankBadge(partner.rank)}
-                          {/* Growth Trend */}
-                          <div className="text-[10px] font-bold flex items-center">
-                            {partner.growthTrend === 'up' && (
-                              <span className="text-emerald-700 flex items-center">
-                                <TrendingUp className="w-3 h-3" />+{partner.trendRanks}
-                              </span>
-                            )}
-                            {partner.growthTrend === 'down' && (
-                              <span className="text-rose-700 flex items-center">
-                                <TrendingDown className="w-3 h-3" />-{partner.trendRanks}
-                              </span>
-                            )}
-                            {partner.growthTrend === 'neutral' && (
-                              <span className="text-slate-400 flex items-center">
-                                <Minus className="w-3 h-3" />
-                              </span>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Mobile view top indicators */}
-                        <div className="lg:hidden flex items-center gap-2">
-                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black ${milestoneConfig.pillColor}`}>
-                            Lvl {partner.milestoneLevel}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* 2. Partner Profile */}
-                      <div className="col-span-3 flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-[#f0ede9] text-[#594047] font-black text-sm flex items-center justify-center shrink-0 border border-[#e5e2dd]">
-                          {partner.initials}
-                        </div>
-                        <div className="min-w-0">
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-extrabold text-sm text-[#1c1c19] truncate">{partner.name}</span>
-                            {isCurrentUser && (
-                              <span className="px-1.5 py-0.2 rounded-md bg-[#b1005e] text-white text-[9px] font-black uppercase">
-                                You
-                              </span>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-2 text-[11px] text-[#7d6f72]">
-                            <span className="font-mono font-bold text-[#8e4767]">{partner.id}</span>
-                            <span>•</span>
-                            <span className="truncate">{partner.city}, {partner.state}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* 3. Salon Onboarding Count (Primary Metric) */}
-                      <div className="col-span-2 text-left lg:text-center">
-                        <div className="flex lg:flex-col items-baseline lg:items-center justify-between lg:justify-center gap-1">
-                          <span className="lg:hidden text-xs font-bold text-[#7d6f72]">Salons Onboarded:</span>
-                          <div className="flex items-baseline gap-1.5">
-                            <span className="text-base sm:text-lg font-black text-[#1c1c19]">
-                              {partner.salonOnboardingCount}
-                            </span>
-                            <span className="text-[11px] font-extrabold text-[#7d6f72]">salons</span>
-                          </div>
-                        </div>
-                        <div className="text-[10px] text-emerald-700 font-bold">
-                          {partner.verifiedCount} fully verified
-                        </div>
-                      </div>
-
-                      {/* 4. Visual Indicator for Milestone Rank */}
-                      <div className="col-span-3 space-y-1.5">
-                        <div className="flex items-center justify-between gap-2">
-                          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-xs font-black bg-white shadow-2xs border-[#e5e2dd]">
-                            <span className="material-symbols-outlined text-[16px] text-amber-600">
-                              {partner.milestoneRewardIcon}
-                            </span>
-                            <span className="text-[#1c1c19]">Level {partner.milestoneLevel}:</span>
-                            <span className="text-[#b1005e]">{partner.milestoneTitle}</span>
-                          </div>
-                        </div>
-
-                        {/* Visual Progress toward next milestone */}
-                        {partner.nextMilestoneNeeded > 0 ? (
-                          <div className="space-y-1">
-                            <div className="flex items-center justify-between text-[10px] text-[#7d6f72] font-semibold">
-                              <span>Reward: <strong className="text-[#1c1c19]">{partner.milestoneReward}</strong></span>
-                              <span className="text-[#b1005e] font-bold">{partner.nextMilestoneNeeded} shops to next</span>
-                            </div>
-                            <div className="w-full bg-[#f0ede9] rounded-full h-1.5 overflow-hidden">
-                              <div
-                                className="bg-gradient-to-r from-amber-500 to-[#b1005e] h-1.5 rounded-full"
-                                style={{ width: `${partner.progressToNextMilestone}%` }}
-                              />
+                  return (
+                    <motion.div
+                      key={partner.id}
+                      layout
+                      initial={{ opacity: 0, y: 16, scale: 0.99 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{
+                        opacity: 0,
+                        y: -12,
+                        scale: 0.98,
+                        transition: { duration: 0.2, ease: 'easeOut' }
+                      }}
+                      transition={{
+                        layout: { duration: 0.28, ease: 'easeInOut' },
+                        opacity: { duration: 0.25, ease: 'easeOut' },
+                        y: { duration: 0.25, ease: 'easeOut' },
+                        delay: isExpanded && index >= 5 ? Math.min((index - 4) * 0.035, 0.25) : 0
+                      }}
+                      onClick={() => setSelectedPartnerForDetail(partner)}
+                      className={`p-4 sm:p-5 lg:px-6 lg:py-4 transition-colors cursor-pointer hover:bg-[#fcfaf7] ${
+                        isCurrentUser ? 'bg-[#fff5f9]/70 border-l-4 border-l-[#b1005e]' : ''
+                      }`}
+                    >
+                      {/* Responsive Grid for Desktop */}
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+                        {/* 1. Rank + Trend */}
+                        <div className="flex items-center justify-between lg:justify-start gap-3 col-span-1">
+                          <div className="flex items-center gap-2">
+                            {getRankBadge(partner.rank)}
+                            {/* Growth Trend */}
+                            <div className="text-[10px] font-bold flex items-center">
+                              {partner.growthTrend === 'up' && (
+                                <span className="text-emerald-700 flex items-center">
+                                  <TrendingUp className="w-3 h-3" />+{partner.trendRanks}
+                                </span>
+                              )}
+                              {partner.growthTrend === 'down' && (
+                                <span className="text-rose-700 flex items-center">
+                                  <TrendingDown className="w-3 h-3" />-{partner.trendRanks}
+                                </span>
+                              )}
+                              {partner.growthTrend === 'neutral' && (
+                                <span className="text-slate-400 flex items-center">
+                                  <Minus className="w-3 h-3" />
+                                </span>
+                              )}
                             </div>
                           </div>
-                        ) : (
-                          <div className="text-[10px] text-amber-700 font-black flex items-center gap-1">
-                            <Sparkles className="w-3 h-3 text-amber-500" />
-                            <span>Top Milestone Crown Achieved!</span>
+
+                          {/* Mobile view top indicators */}
+                          <div className="lg:hidden flex items-center gap-2">
+                            <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black ${milestoneConfig.pillColor}`}>
+                              Lvl {partner.milestoneLevel}
+                            </span>
                           </div>
-                        )}
-                      </div>
-
-                      {/* 5. Monthly Earnings */}
-                      <div className="col-span-2 text-left lg:text-right">
-                        <div className="flex lg:flex-col items-baseline lg:items-end justify-between lg:justify-center">
-                          <span className="lg:hidden text-xs font-bold text-[#7d6f72]">Est. Earnings:</span>
-                          <span className="text-sm sm:text-base font-black text-emerald-800">
-                            ₹{partner.estimatedMonthlyEarnings.toLocaleString('en-IN')}
-                          </span>
                         </div>
-                        <span className="text-[10px] text-[#7d6f72] font-semibold">recurring + bonuses</span>
-                      </div>
 
-                      {/* 6. Action Button */}
-                      <div className="col-span-1 flex items-center justify-end">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedPartnerForDetail(partner);
-                          }}
-                          className="px-3 py-1.5 rounded-xl bg-[#faf8f5] hover:bg-[#fae8f0] border border-[#e5e2dd] hover:border-[#b1005e]/30 text-xs font-bold text-[#b1005e] flex items-center gap-1 transition-all"
-                        >
-                          <span>Profile</span>
-                          <ChevronRight className="w-3 h-3" />
-                        </button>
+                        {/* 2. Partner Profile */}
+                        <div className="col-span-3 flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-[#f0ede9] text-[#594047] font-black text-sm flex items-center justify-center shrink-0 border border-[#e5e2dd]">
+                            {partner.initials}
+                          </div>
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-1.5">
+                              <span className="font-extrabold text-sm text-[#1c1c19] truncate">{partner.name}</span>
+                              {isCurrentUser && (
+                                <span className="px-1.5 py-0.2 rounded-md bg-[#b1005e] text-white text-[9px] font-black uppercase">
+                                  You
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-2 text-[11px] text-[#7d6f72]">
+                              <span className="font-mono font-bold text-[#8e4767]">{partner.id}</span>
+                              <span>•</span>
+                              <span className="truncate">{partner.city}, {partner.state}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 3. Salon Onboarding Count (Primary Metric) */}
+                        <div className="col-span-2 text-left lg:text-center">
+                          <div className="flex lg:flex-col items-baseline lg:items-center justify-between lg:justify-center gap-1">
+                            <span className="lg:hidden text-xs font-bold text-[#7d6f72]">Salons Onboarded:</span>
+                            <div className="flex items-baseline gap-1.5">
+                              <span className="text-base sm:text-lg font-black text-[#1c1c19]">
+                                {partner.salonOnboardingCount}
+                              </span>
+                              <span className="text-[11px] font-extrabold text-[#7d6f72]">salons</span>
+                            </div>
+                          </div>
+                          <div className="text-[10px] text-emerald-700 font-bold">
+                            {partner.verifiedCount} fully verified
+                          </div>
+                        </div>
+
+                        {/* 4. Visual Indicator for Milestone Rank */}
+                        <div className="col-span-3 space-y-1.5">
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-xs font-black bg-white shadow-2xs border-[#e5e2dd]">
+                              <span className="material-symbols-outlined text-[16px] text-amber-600">
+                                {partner.milestoneRewardIcon}
+                              </span>
+                              <span className="text-[#1c1c19]">Level {partner.milestoneLevel}:</span>
+                              <span className="text-[#b1005e]">{partner.milestoneTitle}</span>
+                            </div>
+                          </div>
+
+                          {/* Visual Progress toward next milestone */}
+                          {partner.nextMilestoneNeeded > 0 ? (
+                            <div className="space-y-1">
+                              <div className="flex items-center justify-between text-[10px] text-[#7d6f72] font-semibold">
+                                <span>Reward: <strong className="text-[#1c1c19]">{partner.milestoneReward}</strong></span>
+                                <span className="text-[#b1005e] font-bold">{partner.nextMilestoneNeeded} shops to next</span>
+                              </div>
+                              <div className="w-full bg-[#f0ede9] rounded-full h-1.5 overflow-hidden">
+                                <div
+                                  className="bg-gradient-to-r from-amber-500 to-[#b1005e] h-1.5 rounded-full"
+                                  style={{ width: `${partner.progressToNextMilestone}%` }}
+                                />
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="text-[10px] text-amber-700 font-black flex items-center gap-1">
+                              <Sparkles className="w-3 h-3 text-amber-500" />
+                              <span>Top Milestone Crown Achieved!</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* 5. Monthly Earnings */}
+                        <div className="col-span-2 text-left lg:text-right">
+                          <div className="flex lg:flex-col items-baseline lg:items-end justify-between lg:justify-center">
+                            <span className="lg:hidden text-xs font-bold text-[#7d6f72]">Est. Earnings:</span>
+                            <span className="text-sm sm:text-base font-black text-emerald-800">
+                              ₹{partner.estimatedMonthlyEarnings.toLocaleString('en-IN')}
+                            </span>
+                          </div>
+                          <span className="text-[10px] text-[#7d6f72] font-semibold">recurring + bonuses</span>
+                        </div>
+
+                        {/* 6. Action Button */}
+                        <div className="col-span-1 flex items-center justify-end">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedPartnerForDetail(partner);
+                            }}
+                            className="px-3 py-1.5 rounded-xl bg-[#faf8f5] hover:bg-[#fae8f0] border border-[#e5e2dd] hover:border-[#b1005e]/30 text-xs font-bold text-[#b1005e] flex items-center gap-1 transition-all"
+                          >
+                            <span>Profile</span>
+                            <ChevronRight className="w-3 h-3" />
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </motion.div>
+
+            {/* Bottom Expand / Collapse Toggle Bar */}
+            {filteredAndSortedPartners.length > 5 && (
+              <motion.div
+                layout
+                className="p-4 sm:p-5 bg-[#faf8f5] border-t border-[#ebe7e0] flex flex-col sm:flex-row items-center justify-between gap-3"
+              >
+                <div className="flex items-center gap-2 text-xs text-[#594047]">
+                  <span className="font-bold">
+                    {isExpanded
+                      ? `All ${filteredAndSortedPartners.length} partners currently visible`
+                      : `Currently showing the top 5 highest ranking partners`}
+                  </span>
+                  {!isExpanded && (
+                    <span className="text-[11px] text-[#7d6f72]">
+                      ({filteredAndSortedPartners.length - 5} additional partners in leaderboard)
+                    </span>
+                  )}
+                </div>
+
+                <button
+                  id="partner-leaderboard-expand-btn"
+                  type="button"
+                  onClick={() => setIsExpanded((prev) => !prev)}
+                  className="w-full sm:w-auto px-6 py-2.5 rounded-2xl bg-[#1c1c19] hover:bg-[#b1005e] text-white text-xs font-black transition-all flex items-center justify-center gap-2 shadow-xs hover:shadow-md cursor-pointer active:scale-95"
+                >
+                  {isExpanded ? (
+                    <>
+                      <span>Collapse to Top 5</span>
+                      <ChevronUp className="w-4 h-4" />
+                    </>
+                  ) : (
+                    <>
+                      <span>Expand ({filteredAndSortedPartners.length} Partners)</span>
+                      <ChevronDown className="w-4 h-4" />
+                    </>
+                  )}
+                </button>
+              </motion.div>
+            )}
           </div>
         )}
       </section>

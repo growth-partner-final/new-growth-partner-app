@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PartnerFormData } from '../types';
+import { NexoraLogo } from './NexoraLogo';
 
 interface ApplicationModalProps {
   isOpen: boolean;
@@ -59,17 +60,15 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
       <div className="bg-[#fcf9f4] w-full max-w-md rounded-2xl shadow-2xl border border-[#e5e2dd] overflow-hidden flex flex-col max-h-[92vh]">
         {/* Modal Header */}
         <div className="p-4 bg-white border-b border-[#e5e2dd] flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#ffd9e2] text-[#d91b77] flex items-center justify-center">
-              <span className="material-symbols-outlined text-[20px]">
-                {step === 'success' ? 'verified' : 'rocket_launch'}
-              </span>
-            </div>
+          <div className="flex items-center gap-2.5">
+            <NexoraLogo variant="emblem" size="sm" />
             <div className="flex flex-col">
               <h3 className="text-sm font-bold text-[#1c1c19]">
-                {step === 'success' ? 'Nexora Partner Dashboard' : 'Free Partner Registration'}
+                {step === 'success' ? 'Nexora Partner Dashboard' : 'Nexora Salon OS Partner Registration'}
               </h3>
-              <span className="text-[11px] text-[#594047]">Zero Investment • Instant KYC</span>
+              <span className="text-[10px] text-[#b1005e] font-extrabold uppercase tracking-wider">
+                Your Salon • Your Brand • Your Success
+              </span>
             </div>
           </div>
           <button

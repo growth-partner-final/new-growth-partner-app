@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { NexoraLogo } from './NexoraLogo';
 
 export interface SidebarProps {
   onLogout?: () => void;
@@ -37,6 +38,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside className="hidden lg:flex sticky top-16 h-[calc(100vh-4rem)] w-72 bg-white/80 backdrop-blur-xl border-r border-[#e5e2dd] flex-col justify-between overflow-y-auto z-40">
       <div className="flex flex-col py-4">
+        {/* Official Nexora Salon OS Brand Card */}
+        <div className="mx-4 mb-4 p-3 rounded-2xl bg-gradient-to-br from-[#fff5f8] to-[#fcf9f4] border border-[#d91b77]/20 shadow-2xs">
+          <NexoraLogo variant="horizontal" size="sm" showTagline={false} />
+          <div className="mt-2 pt-2 border-t border-[#f0ede9] flex items-center justify-between text-[10px]">
+            <span className="font-extrabold text-[#b1005e] tracking-wider uppercase">SALON OS</span>
+            <span className="text-[#594047] font-semibold">Your Salon • Your Brand</span>
+          </div>
+        </div>
+
         {/* Partner Info Quick Chip */}
         <div className="mx-4 mb-6 p-3 rounded-2xl bg-[#f6f3ee] border border-[#e5e2dd] flex items-center justify-between shadow-2xs">
           <div className="flex items-center gap-2.5 min-w-0">

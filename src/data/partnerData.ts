@@ -1,7 +1,8 @@
 import { MilestoneLevel, ActivationTier, FAQItem } from '../types';
 
 export const ASSETS = {
-  logo: "https://lh3.googleusercontent.com/aida/AEtjO1XZxTb-KtdsPjo0U0odHwDY485hRuwmfDBk7sy7hvncIa4xg3AdjCaLVTut6pSuuRiQJj_3YtSdqJ3TLo2klHSJMNebL6mVq0uWtOhluaULb7Cy_34No2AloAlRtDCW1-HCFGFyKGQkrv2OMGEMkXFJpEFLcxUma8v2Z1hXG0pFOlEix77UvOTw-NfNuX20oyBgVrPL--0n2ZNjrI0vKNBImBop03G0p3fTT3hR_Chdf05d_h_ZbzfoKQ",
+  logo: "/nexora-logo.jpg",
+  heroBg: "/cinematic-hero-bg.jpg",
   poster: "https://lh3.googleusercontent.com/aida-public/AB6AXuAP0qskITNIqq7z0SlWIz3ym5hqcLI5u3jGdCrtsgzwH_ddwwsiRttJJGi2Jls2SXtJVsDrtG13IVr7OYHUBQDYXM20p-TyITQpme4TBSwxUoysCeIgHUET4dEjbtFXp3XK8lpPl_HEmyb3HnlEK8mMg5EyBbNm8v_D8mMawkIKt1ZkzR4G6gMvkOnkM4GJ4t8oRxybkjSquXiZqz9xjRuql0BBwYwt2abZFCTeDW0R7SANQfoT4QSb"
 };
 

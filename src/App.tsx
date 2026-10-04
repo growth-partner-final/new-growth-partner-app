@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { routes } from './routes/config';
 import { Header } from './components/Header';
 import { BottomNav } from './components/BottomNav';
@@ -24,6 +24,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   const [isApplyOpen, setIsApplyOpen] = React.useState(false);
   const [isSupportOpen, setIsSupportOpen] = React.useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
 
   const scrollToSection = (id: string) => {
@@ -59,7 +60,12 @@ function AppLayout({ children }: { children: React.ReactNode }) {
                     if (innerChild.type === HeroSection) {
                       return React.cloneElement(innerChild as React.ReactElement<any>, {
                         onOpenApply: () => setIsApplyOpen(true),
-                        onScrollToCalculator: () => scrollToSection('calculator')
+                        onScrollToCalculator: () => scrollToSection('calculator'),
+                        onNavigateToDashboard: () => navigate('/dashboard'),
+                        onNavigateToSalonIntelligence: () => navigate('/salon-intelligence'),
+                        onNavigateToLeaderboard: () => navigate('/partner/leaderboard'),
+                        onNavigateToMilestones: () => navigate('/partner/rewards'),
+                        registeredPartner
                       });
                     }
                     if (innerChild.type === FinalCTA) {

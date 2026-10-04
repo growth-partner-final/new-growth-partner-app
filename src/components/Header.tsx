@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation, NavLink } from 'react-router-dom';
-import { ASSETS } from '../data/partnerData';
+import { NexoraLogo } from './NexoraLogo';
 
 interface HeaderProps {
   onOpenApply: () => void;
@@ -38,17 +38,9 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="w-full max-w-full h-16 px-4 sm:px-8 lg:px-12 flex items-center justify-between gap-4">
         <NavLink
           to="/"
-          className="flex items-center gap-3 min-w-0 flex-1 cursor-pointer group select-none text-left no-underline"
+          className="flex items-center gap-2 min-w-0 flex-1 cursor-pointer group select-none text-left no-underline"
         >
-          <img
-            src={ASSETS.logo}
-            alt="Nexora Growth Partner Logo"
-            className="h-8 w-auto object-contain shrink-0 rounded transition-transform group-hover:scale-105"
-          />
-          <div className="flex flex-col min-w-0">
-            <span className="font-bold text-lg tracking-tight text-[#1c1c19] truncate group-hover:text-[#b1005e] transition-colors">Nexora</span>
-            <span className="text-xs text-[#594047] truncate font-medium">Growth Partner Hub</span>
-          </div>
+          <NexoraLogo variant="horizontal" size="sm" showTagline={true} />
         </NavLink>
 
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">

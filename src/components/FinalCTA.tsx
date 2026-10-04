@@ -1,4 +1,5 @@
 import React from 'react';
+import { NexoraLogo } from './NexoraLogo';
 
 interface FinalCTAProps {
   onOpenApply: () => void;
@@ -61,24 +62,9 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onOpenApply, onOpenSupport }
         <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6 border-b border-[#e5e2dd] pb-6 text-center md:text-left">
           {/* Brand Logo & Name */}
           <div className="flex flex-col items-center md:items-start gap-3 max-w-md">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-[#ffd9e2] p-1.5 flex items-center justify-center shadow-xs border border-[#b1005e]/20">
-                <img
-                  src="https://lh3.googleusercontent.com/aida/AEtjO1XZxTb-KtdsPjo0U0odHwDY485hRuwmfDBk7sy7hvncIa4xg3AdjCaLVTut6pSuuRiQJj_3YtSdqJ3TLo2klHSJMNebL6mVq0uWtOhluaULb7Cy_34No2AloAlRtDCW1-HCFGFyKGQkrv2OMGEMkXFJpEFLcxUma8v2Z1hXG0pFOlEix77UvOTw-NfNuX20oyBgVrPL--0n2ZNjrI0vKNBImBop03G0p3fTT3hR_Chdf05d_h_ZbzfoKQ"
-                  alt="NEXORA Logo"
-                  className="w-full h-full object-contain"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-              <div className="flex flex-col text-left">
-                <span className="text-2xl font-black text-[#1c1c19] tracking-wider uppercase">NEXORA</span>
-                <span className="text-[10px] font-extrabold text-[#b1005e] tracking-widest uppercase">
-                  SALONOS • Growth Partner Ecosystem
-                </span>
-              </div>
-            </div>
+            <NexoraLogo variant="horizontal" size="md" showTagline={true} />
             <p className="text-xs text-[#594047] leading-relaxed">
-              Nexora is India's premier salon fintech and growth partner network empowering salons, beauty parlors, and growth advisors with zero-cost digital onboarding, instant rewards, and weekly automated payouts.
+              Nexora Salon OS is India's premier salon fintech and growth partner ecosystem empowering salons, spas, and growth partners with high-speed smart POS billing, staff commissions, and recurring brokerage share.
             </p>
           </div>
 

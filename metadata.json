@@ -1,6 +1,6 @@
 {
-  "name": "Nexora Growth Partner",
-  "description": "Nexora Growth Partner Portal — Zero investment partner program with instant activation rewards, recurring brokerage share, and milestone bonuses.",
+  "name": "Nexora Salon OS",
+  "description": "Nexora Salon OS — Your Salon. Your Brand. Your Success. India's #1 Salon Operating System & Zero Investment Growth Partner Program.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
