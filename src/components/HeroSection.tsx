@@ -60,10 +60,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     return () => clearInterval(timer);
   }, [LIVE_ACTIVITIES.length]);
 
+  // Lock body scroll when showreel modal is active
+  useEffect(() => {
+    if (showShowreelModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showShowreelModal]);
+
   return (
-    <section id="hero-section" className="w-full flex flex-col gap-6 lg:gap-8 relative pb-4">
+    <section id="hero-section" className="w-full max-w-full flex flex-col gap-4 sm:gap-6 lg:gap-8 relative pb-2 sm:pb-4">
       {/* 1. CINEMATIC HERO THEATER BANNER */}
-      <div className="relative rounded-3xl sm:rounded-[36px] overflow-hidden bg-[#0d0309] text-white shadow-2xl border border-white/10 ring-1 ring-[#b1005e]/30">
+      <div className="relative rounded-2xl sm:rounded-3xl md:rounded-[36px] overflow-hidden bg-[#0d0309] text-white shadow-2xl border border-white/10 ring-1 ring-[#b1005e]/30">
         {/* Cinematic Backdrop Image with Layered Atmospheric Shimmer */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img
@@ -76,25 +88,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="absolute inset-0 bg-gradient-to-t from-[#0d0309] via-[#0d0309]/80 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0d0309] via-[#0d0309]/85 to-[#0d0309]/50" />
           {/* Magenta & Champagne Ambient Lens Flare Blooms */}
-          <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#E6007E]/25 blur-[120px]" />
-          <div className="absolute top-1/2 -right-24 w-96 h-96 rounded-full bg-[#f59e0b]/15 blur-[130px]" />
-          <div className="absolute bottom-0 left-1/3 w-80 h-80 rounded-full bg-[#b1005e]/20 blur-[100px]" />
+          <div className="absolute -top-24 -left-24 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-[#E6007E]/25 blur-[100px] sm:blur-[120px]" />
+          <div className="absolute top-1/2 -right-24 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-[#f59e0b]/15 blur-[100px] sm:blur-[130px]" />
+          <div className="absolute bottom-0 left-1/3 w-64 sm:w-80 h-64 sm:h-80 rounded-full bg-[#b1005e]/20 blur-[80px] sm:blur-[100px]" />
         </div>
 
         {/* Hero Content Container */}
-        <div className="relative z-10 p-5 sm:p-8 md:p-10 lg:p-14 flex flex-col gap-8">
+        <div className="relative z-10 p-4 sm:p-7 md:p-10 lg:p-14 flex flex-col gap-5 sm:gap-8">
           {/* Top Cinematic Status Strip */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4 sm:pb-5">
             {/* Live Ticker Pill */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-xs text-white/90 shadow-sm">
-              <span className="relative flex h-2 w-2">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-xs text-white/90 shadow-sm max-w-full overflow-hidden">
+              <span className="relative flex h-2 w-2 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E6007E] opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E6007E]" />
               </span>
-              <span className="font-extrabold tracking-wider uppercase text-[11px] text-[#fda4c9]">
-                Live Network Activity
+              <span className="font-extrabold tracking-wider uppercase text-[10px] sm:text-[11px] text-[#fda4c9] shrink-0">
+                Live Network
               </span>
-              <span className="text-white/30 hidden sm:inline">|</span>
+              <span className="text-white/30">|</span>
               <AnimatePresence mode="wait">
                 <motion.span
                   key={liveTickerIndex}
@@ -102,30 +114,30 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.3 }}
-                  className="font-medium text-[11px] sm:text-xs text-white/90 truncate max-w-[280px] sm:max-w-md"
+                  className="font-medium text-[10px] sm:text-xs text-white/90 truncate flex-1"
                 >
-                  <span className="mr-1.5">{LIVE_ACTIVITIES[liveTickerIndex].icon}</span>
+                  <span className="mr-1">{LIVE_ACTIVITIES[liveTickerIndex].icon}</span>
                   {LIVE_ACTIVITIES[liveTickerIndex].text}
                 </motion.span>
               </AnimatePresence>
             </div>
 
             {/* Quick Action Navigation */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 self-start sm:self-auto">
               <button
                 type="button"
                 onClick={() => setShowShowreelModal(true)}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold transition-all cursor-pointer backdrop-blur-xs active:scale-95 group"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-[11px] sm:text-xs font-bold transition-all cursor-pointer backdrop-blur-xs active:scale-95 group"
               >
                 <Play className="w-3 h-3 text-[#fda4c9] fill-[#fda4c9] group-hover:scale-110 transition-transform" />
-                <span>60s Cinematic Tour</span>
+                <span>60s Tour</span>
               </button>
 
               {onNavigateToLeaderboard && (
                 <button
                   type="button"
                   onClick={onNavigateToLeaderboard}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#ffd9e2]/15 hover:bg-[#ffd9e2]/25 text-[#fda4c9] border border-[#fda4c9]/30 text-xs font-bold transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#ffd9e2]/15 hover:bg-[#ffd9e2]/25 text-[#fda4c9] border border-[#fda4c9]/30 text-[11px] sm:text-xs font-bold transition-all cursor-pointer"
                 >
                   <Award className="w-3.5 h-3.5 text-[#fda4c9]" />
                   <span>Leaderboard</span>
@@ -135,13 +147,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
 
           {/* Main Hero Visual Split: Left Value & Centerpiece, Right Interactive OS Matrix */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
             {/* Left Column: Official Logo Branding, Title & Value Prop */}
-            <div className="lg:col-span-7 flex flex-col gap-5 text-left">
+            <div className="lg:col-span-7 flex flex-col gap-4 sm:gap-5 text-left">
               {/* Official Brand Logo Centerpiece Badge */}
-              <div className="flex items-center gap-4 flex-wrap">
-                <div className="p-2 sm:p-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg inline-flex items-center gap-3">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden p-0.5 bg-gradient-to-tr from-[#E6007E] to-amber-300 shrink-0 shadow-md">
+              <div className="flex items-center gap-3 flex-wrap">
+                <div className="p-2 sm:p-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg inline-flex items-center gap-2.5 sm:gap-3">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full overflow-hidden p-0.5 bg-gradient-to-tr from-[#E6007E] to-amber-300 shrink-0 shadow-md">
                     <img
                       src="/nexora-logo.jpg"
                       alt="Nexora Salon OS Official Artwork Logo"
@@ -149,58 +161,58 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                       referrerPolicy="no-referrer"
                     />
                   </div>
-                  <div className="flex flex-col pr-2">
-                    <span className="font-serif font-black text-lg sm:text-xl tracking-[0.14em] uppercase text-white leading-none">
+                  <div className="flex flex-col pr-1 sm:pr-2">
+                    <span className="font-serif font-black text-base sm:text-xl tracking-[0.14em] uppercase text-white leading-none">
                       NEXORA
                     </span>
-                    <span className="text-[10px] sm:text-[11px] font-black tracking-[0.25em] text-[#fda4c9] uppercase leading-tight mt-1">
+                    <span className="text-[10px] sm:text-[11px] font-black tracking-[0.25em] text-[#fda4c9] uppercase leading-tight mt-0.5 sm:mt-1">
                       SALON OS
                     </span>
-                    <span className="text-[9px] text-white/70 font-semibold uppercase tracking-wider hidden sm:block">
+                    <span className="text-[8px] sm:text-[9px] text-white/70 font-semibold uppercase tracking-wider hidden sm:block">
                       YOUR SALON • YOUR BRAND • YOUR SUCCESS.
                     </span>
                   </div>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#f59e0b]/15 border border-[#f59e0b]/40 text-[#fcd34d] text-xs font-bold">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                  <span>Official Salon Operating System 2026</span>
+                <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#f59e0b]/15 border border-[#f59e0b]/40 text-[#fcd34d] text-[10px] sm:text-xs font-bold">
+                  <Sparkles className="w-3 h-3 text-amber-300" />
+                  <span>Salon OS 2026</span>
                 </div>
               </div>
 
               {/* High-Impact Bilingual Cinematic Headline */}
-              <div className="space-y-2">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-serif font-black text-white tracking-tight leading-[1.12]">
+              <div className="space-y-1.5 sm:space-y-2">
+                <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[46px] font-serif font-black text-white tracking-tight leading-[1.18] sm:leading-[1.12]">
                   The Operating System for Every Salon.{' '}
                   <span className="bg-gradient-to-r from-[#fda4c9] via-[#E6007E] to-[#ffd269] bg-clip-text text-transparent font-sans">
                     Zero Investment
                   </span>{' '}
                   for Growth Partners.
                 </h1>
-                <p className="text-sm sm:text-base text-[#fda4c9] font-medium tracking-wide font-sans">
+                <p className="text-xs sm:text-base text-[#fda4c9] font-medium tracking-wide font-sans">
                   सैलून, स्पा और वेलनेस स्टोर्स का संपूर्ण डिजिटल पॉवरहाउस — ₹0 निवेश में अनलिमिटेड लाइफटाइम रिकरिंग ब्रोकरेज।
                 </p>
               </div>
 
               {/* Tagline Showcase Banner */}
-              <div className="p-4 rounded-2xl bg-gradient-to-r from-white/[0.08] via-white/[0.04] to-transparent border border-white/10 backdrop-blur-md flex items-center justify-between gap-4">
+              <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-white/[0.08] via-white/[0.04] to-transparent border border-white/10 backdrop-blur-md flex items-center justify-between gap-3">
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-bold text-white/50 tracking-widest uppercase">
+                  <span className="text-[9px] sm:text-[10px] font-bold text-white/50 tracking-widest uppercase">
                     Brand Philosophy
                   </span>
-                  <span className="text-xs sm:text-sm font-extrabold text-white tracking-wider">
-                    YOUR SALON<span className="text-[#E6007E] mx-1.5">•</span>YOUR BRAND
-                    <span className="text-[#E6007E] mx-1.5">•</span>YOUR SUCCESS.
+                  <span className="text-[11px] sm:text-sm font-extrabold text-white tracking-wider">
+                    YOUR SALON<span className="text-[#E6007E] mx-1">•</span>YOUR BRAND
+                    <span className="text-[#E6007E] mx-1">•</span>YOUR SUCCESS.
                   </span>
                 </div>
-                <div className="hidden sm:flex items-center gap-1 text-xs text-[#fcd34d] font-bold bg-[#f59e0b]/20 px-3 py-1 rounded-full border border-[#f59e0b]/30">
+                <div className="hidden sm:flex items-center gap-1 text-xs text-[#fcd34d] font-bold bg-[#f59e0b]/20 px-3 py-1 rounded-full border border-[#f59e0b]/30 shrink-0">
                   <ShieldCheck className="w-4 h-4" />
                   <span>ISO &amp; SEBI Compliant</span>
                 </div>
               </div>
 
               {/* Core Value Statement */}
-              <p className="text-sm sm:text-base text-white/80 leading-relaxed font-sans">
+              <p className="text-xs sm:text-base text-white/80 leading-relaxed font-sans">
                 Join India's most prestigious beauty fintech ecosystem. Enable local salon owners with
                 lightning-fast smart billing POS, staff commission tracking, and automated client rebooking —
                 while earning <strong className="text-white">₹1,500 to ₹10,000 instant activation rewards</strong> and
@@ -208,14 +220,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </p>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 pt-1 w-full sm:w-auto">
                 {registeredPartner ? (
                   <button
                     type="button"
                     onClick={onNavigateToDashboard}
-                    className="h-12 sm:h-14 px-8 rounded-2xl bg-gradient-to-r from-[#E6007E] via-[#d91b77] to-[#b1005e] text-white font-bold text-base flex items-center justify-center gap-2.5 shadow-xl shadow-[#E6007E]/30 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
+                    className="w-full sm:w-auto min-h-[44px] h-12 sm:h-14 px-6 sm:px-8 rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#E6007E] via-[#d91b77] to-[#b1005e] text-white font-bold text-xs sm:text-base flex items-center justify-center gap-2 shadow-xl shadow-[#E6007E]/30 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
                   >
-                    <Layers className="w-5 h-5" />
+                    <Layers className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span>Open Partner Portal</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
@@ -223,9 +235,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   <button
                     type="button"
                     onClick={onOpenApply}
-                    className="h-12 sm:h-14 px-8 rounded-2xl bg-gradient-to-r from-[#E6007E] via-[#d91b77] to-[#b1005e] text-white font-bold text-base flex items-center justify-center gap-2.5 shadow-xl shadow-[#E6007E]/30 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer ring-2 ring-[#fda4c9]/40"
+                    className="w-full sm:w-auto min-h-[44px] h-12 sm:h-14 px-6 sm:px-8 rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#E6007E] via-[#d91b77] to-[#b1005e] text-white font-bold text-xs sm:text-base flex items-center justify-center gap-2 shadow-xl shadow-[#E6007E]/30 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer ring-2 ring-[#fda4c9]/40"
                   >
-                    <Zap className="w-5 h-5 text-amber-300" />
+                    <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-amber-300" />
                     <span>Join Free Partner Program (₹0 Fee)</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
@@ -234,26 +246,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <button
                   type="button"
                   onClick={onScrollToCalculator}
-                  className="h-12 sm:h-14 px-6 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-bold text-base flex items-center justify-center gap-2 backdrop-blur-md transition-all cursor-pointer active:scale-95"
+                  className="w-full sm:w-auto min-h-[44px] h-12 sm:h-14 px-5 sm:px-6 rounded-xl sm:rounded-2xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-bold text-xs sm:text-base flex items-center justify-center gap-2 backdrop-blur-md transition-all cursor-pointer active:scale-95"
                 >
-                  <DollarSign className="w-5 h-5 text-[#fda4c9]" />
+                  <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-[#fda4c9]" />
                   <span>Calculate Earnings</span>
                 </button>
               </div>
 
               {/* Freedom Chips Strip */}
-              <div className="flex items-center gap-2.5 flex-wrap pt-1">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold text-white/90 backdrop-blur-xs">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Zero Monthly Target</span>
+              <div className="flex items-center gap-1.5 sm:gap-2.5 flex-wrap pt-1">
+                <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg sm:rounded-xl bg-white/10 border border-white/15 text-[10px] sm:text-xs font-bold text-white/90 backdrop-blur-xs">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                  <span>Zero Target</span>
                 </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold text-white/90 backdrop-blur-xs">
-                  <Clock className="w-3.5 h-3.5 text-amber-300" />
-                  <span>100% Work Freedom</span>
+                <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg sm:rounded-xl bg-white/10 border border-white/15 text-[10px] sm:text-xs font-bold text-white/90 backdrop-blur-xs">
+                  <Clock className="w-3 h-3 text-amber-300" />
+                  <span>100% Freedom</span>
                 </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold text-white/90 backdrop-blur-xs">
-                  <ShieldCheck className="w-3.5 h-3.5 text-blue-300" />
-                  <span>Weekly Monday Payouts</span>
+                <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg sm:rounded-xl bg-white/10 border border-white/15 text-[10px] sm:text-xs font-bold text-white/90 backdrop-blur-xs">
+                  <ShieldCheck className="w-3 h-3 text-blue-300" />
+                  <span>Monday Payouts</span>
                 </div>
               </div>
             </div>
@@ -466,22 +478,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
 
           {/* Cinematic Metrics Strip */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-6 border-t border-white/10">
-            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex flex-col">
-              <span className="text-2xl sm:text-3xl font-black text-white font-serif">14,800+</span>
-              <span className="text-xs text-white/70 font-medium">Salons &amp; Spas Powered</span>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 pt-4 sm:pt-6 border-t border-white/10">
+            <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/5 border border-white/10 flex flex-col">
+              <span className="text-lg sm:text-2xl md:text-3xl font-black text-white font-serif">14,800+</span>
+              <span className="text-[10px] sm:text-xs text-white/70 font-medium">Salons &amp; Spas Powered</span>
             </div>
-            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex flex-col">
-              <span className="text-2xl sm:text-3xl font-black text-[#fda4c9] font-serif">₹142 Cr+</span>
-              <span className="text-xs text-white/70 font-medium">Processed Billing Volume</span>
+            <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/5 border border-white/10 flex flex-col">
+              <span className="text-lg sm:text-2xl md:text-3xl font-black text-[#fda4c9] font-serif">₹142 Cr+</span>
+              <span className="text-[10px] sm:text-xs text-white/70 font-medium">Processed Billing Volume</span>
             </div>
-            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex flex-col">
-              <span className="text-2xl sm:text-3xl font-black text-amber-300 font-serif">₹5 Lakh</span>
-              <span className="text-xs text-white/70 font-medium">Top Tier Partner Bonus</span>
+            <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/5 border border-white/10 flex flex-col">
+              <span className="text-lg sm:text-2xl md:text-3xl font-black text-amber-300 font-serif">₹5 Lakh</span>
+              <span className="text-[10px] sm:text-xs text-white/70 font-medium">Top Tier Partner Bonus</span>
             </div>
-            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex flex-col">
-              <span className="text-2xl sm:text-3xl font-black text-emerald-400 font-serif">99.98%</span>
-              <span className="text-xs text-white/70 font-medium">System Uptime &amp; SLA</span>
+            <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/5 border border-white/10 flex flex-col">
+              <span className="text-lg sm:text-2xl md:text-3xl font-black text-emerald-400 font-serif">99.98%</span>
+              <span className="text-[10px] sm:text-xs text-white/70 font-medium">System Uptime &amp; SLA</span>
             </div>
           </div>
         </div>
@@ -490,17 +502,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* 2. CINEMATIC SHOWREEL MODAL */}
       <AnimatePresence>
         {showShowreelModal && (
-          <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="bg-[#12050e] w-full max-w-2xl rounded-3xl overflow-hidden border border-white/20 shadow-2xl flex flex-col text-white"
+              className="bg-[#12050e] w-[calc(100%-16px)] sm:w-full max-w-2xl max-h-[90dvh] overflow-y-auto rounded-2xl sm:rounded-3xl border border-white/20 shadow-2xl flex flex-col text-white"
             >
               {/* Modal Header */}
-              <div className="p-4 bg-white/5 border-b border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full overflow-hidden p-0.5 bg-[#E6007E]">
+              <div className="p-3.5 sm:p-4 bg-white/5 border-b border-white/10 flex items-center justify-between">
+                <div className="flex items-center gap-2 sm:gap-2.5">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden p-0.5 bg-[#E6007E] shrink-0">
                     <img
                       src="/nexora-logo.jpg"
                       alt="Nexora Salon OS"
@@ -509,10 +521,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-xs font-black tracking-wider uppercase text-white">
-                      Nexora Salon OS Cinematic Tour
+                    <span className="text-[11px] sm:text-xs font-black tracking-wider uppercase text-white">
+                      Nexora Salon OS Showreel
                     </span>
-                    <span className="text-[10px] text-[#fda4c9]">
+                    <span className="text-[9px] sm:text-[10px] text-[#fda4c9]">
                       YOUR SALON • YOUR BRAND • YOUR SUCCESS.
                     </span>
                   </div>
@@ -537,24 +549,24 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                 
                 {/* Center Audio/Video Visualizer */}
-                <div className="relative z-10 flex flex-col items-center text-center p-6 gap-3">
-                  <div className="w-16 h-16 rounded-full bg-[#E6007E] text-white flex items-center justify-center shadow-xl shadow-[#E6007E]/50 animate-pulse">
-                    <Volume2 className="w-8 h-8" />
+                <div className="relative z-10 flex flex-col items-center text-center p-4 sm:p-6 gap-2 sm:gap-3">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-[#E6007E] text-white flex items-center justify-center shadow-xl shadow-[#E6007E]/50 animate-pulse">
+                    <Volume2 className="w-6 h-6 sm:w-8 sm:h-8" />
                   </div>
-                  <h3 className="text-xl font-serif font-black text-white">
+                  <h3 className="text-base sm:text-xl font-serif font-black text-white">
                     Nexora Salon Operating System Showreel
                   </h3>
-                  <p className="text-xs text-white/80 max-w-md">
+                  <p className="text-[11px] sm:text-xs text-white/80 max-w-md">
                     Experience how India's elite salons leverage Nexora Smart POS, stylist commission tracking, and recurring growth partner networks.
                   </p>
                 </div>
               </div>
 
               {/* Modal Footer Controls */}
-              <div className="p-4 bg-white/5 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-2 text-xs text-white/70">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  <span>Cloud Synchronized • 24/7 Priority Partner Desk</span>
+              <div className="p-3.5 sm:p-4 bg-white/5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-white/70">
+                  <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
+                  <span>Cloud Synchronized • 24/7 Priority Desk</span>
                 </div>
                 <button
                   type="button"
@@ -562,7 +574,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     setShowShowreelModal(false);
                     onOpenApply();
                   }}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#E6007E] to-[#b1005e] text-white text-xs font-black transition-all cursor-pointer shadow-md hover:scale-105"
+                  className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#E6007E] to-[#b1005e] text-white text-xs font-black transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
                 >
                   Apply as Growth Partner
                 </button>

@@ -35,14 +35,14 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="h-dvh w-full flex flex-col overflow-x-hidden overflow-y-hidden bg-[#fcf9f4] text-[#1c1c19] font-sans">
+    <div className="min-h-screen w-full flex flex-col bg-[#fcf9f4] text-[#1c1c19] font-sans">
       <Header 
         onOpenApply={() => setIsApplyOpen(true)} 
         onOpenSupport={() => setIsSupportOpen(true)} 
         registeredPartner={registeredPartner} 
         onLogout={signOut} 
       />
-      <div className="flex-1 w-full flex overflow-hidden pt-[64px]">
+      <div className="flex-1 w-full max-w-full flex pt-14 sm:pt-16 pb-20 md:pb-8">
         {!isHomePage && (
           <Sidebar 
             onLogout={signOut}
@@ -50,7 +50,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
             partnerId={registeredPartner?.partnerId}
           />
         )}
-        <main className="flex-1 w-full overflow-y-auto overflow-x-hidden overscroll-contain">
+        <main className="flex-1 w-full max-w-full overflow-x-hidden">
           {React.Children.map(children, child => {
             if (React.isValidElement(child) && (child as any).type === 'div' && ((child as any).props['data-landing-wrapper'] || (child as any).props.className?.includes('min-h-[calc(100vh-64px)]') || (child as any).props.className?.includes('max-w-7xl'))) {
               // This is the root landing page div, we need to pass the state down
@@ -83,7 +83,12 @@ function AppLayout({ children }: { children: React.ReactNode }) {
           })}
         </main>
       </div>
-      <BottomNav onOpenSupport={() => setIsSupportOpen(true)} />
+      <BottomNav
+        onOpenApply={() => setIsApplyOpen(true)}
+        onOpenSupport={() => setIsSupportOpen(true)}
+        onScrollToCalculator={() => scrollToSection('calculator')}
+        onScrollToFAQ={() => scrollToSection('faq')}
+      />
       
       {/* Modals */}
       <ApplicationModal
@@ -108,36 +113,36 @@ export default function App() {
         <Routes>
           <Route path="/" element={
             <AppLayout>
-              <div data-landing-wrapper="true" className="w-full mx-auto px-4 sm:px-8 lg:px-12 py-8 md:py-12 min-h-[calc(100vh-64px)]">
+              <div data-landing-wrapper="true" className="w-full max-w-full mx-auto px-3 sm:px-6 lg:px-12 py-4 sm:py-8">
                 <HeroSection onOpenApply={() => {}} onScrollToCalculator={() => {}} />
-                <div className="mt-16 sm:mt-24">
+                <div className="mt-8 sm:mt-16">
                   <HowItWorks />
                 </div>
-                <div className="mt-16 sm:mt-24">
+                <div className="mt-8 sm:mt-16">
                   <RulesSection />
                 </div>
-                <div className="mt-16 sm:mt-24">
+                <div className="mt-8 sm:mt-16">
                   <EarningsCalculator />
                 </div>
-                <div className="mt-16 sm:mt-24">
+                <div className="mt-8 sm:mt-16">
                   <ActivationRewards />
                 </div>
-                <div className="mt-16 sm:mt-24">
+                <div className="mt-8 sm:mt-16">
                   <RecurringShare />
                 </div>
-                <div className="mt-16 sm:mt-24">
+                <div className="mt-8 sm:mt-16">
                   <MilestoneLadder />
                 </div>
-                <div className="mt-16 sm:mt-24">
+                <div className="mt-8 sm:mt-16">
                   <PartnerLeaderboard />
                 </div>
-                <div className="mt-16 sm:mt-24">
+                <div className="mt-8 sm:mt-16">
                   <FraudNotice />
                 </div>
-                <div className="mt-16 sm:mt-24">
+                <div className="mt-8 sm:mt-16">
                   <FAQSection />
                 </div>
-                <div className="mt-16 sm:mt-24">
+                <div className="mt-8 sm:mt-16">
                   <FinalCTA onOpenApply={() => {}} onOpenSupport={() => {}} />
                 </div>
               </div>

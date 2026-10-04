@@ -1,0 +1,26 @@
+{
+  "id": "/",
+  "name": "Nexora Salon OS",
+  "short_name": "Nexora OS",
+  "description": "Nexora Salon OS — Your Salon. Your Brand. Your Success. India's #1 Salon Operating System & Zero Investment Growth Partner Program.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#ffffff",
+  "background_color": "#fcf9f4",
+  "icons": [
+    {
+      "src": "/nexora-logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/nexora-logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}

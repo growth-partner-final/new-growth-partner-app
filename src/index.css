@@ -32,20 +32,26 @@
 }
 
 @layer base {
+  * {
+    box-sizing: border-box;
+  }
   html, body, #root {
-    height: 100%;
     width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
     margin: 0;
     padding: 0;
     font-family: var(--font-sans);
-    overflow-x: hidden;
-    overflow-y: hidden;
   }
   body {
-    overscroll-behavior-y: none;
+    margin: 0;
+    touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
-    width: 100%;
-    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    background-color: #fcf9f4;
+    color: #1c1c19;
   }
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom, 0px);

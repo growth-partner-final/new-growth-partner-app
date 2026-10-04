@@ -2,68 +2,68 @@ import React from 'react';
 
 export const RulesSection: React.FC = () => {
   return (
-    <section className="w-full py-8 flex flex-col gap-6">
+    <section className="w-full max-w-full py-4 sm:py-8 flex flex-col gap-4 sm:gap-6">
       <div className="flex flex-col gap-1 text-left">
         <div className="flex items-center gap-2 text-[#8e4767]">
-          <span className="material-symbols-outlined text-[20px]">gavel</span>
-          <span className="text-xs font-bold tracking-wider uppercase">Code of Conduct</span>
+          <span className="material-symbols-outlined text-[18px] sm:text-[20px]">gavel</span>
+          <span className="text-[10px] sm:text-xs font-bold tracking-wider uppercase">Code of Conduct</span>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-black text-[#1c1c19]">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#1c1c19]">
           Nexora Partner Work &amp; Compliance Rules (पार्टनर का काम और नियम)
         </h2>
-        <p className="text-sm text-[#594047]">
+        <p className="text-xs sm:text-sm text-[#594047]">
           स्वच्छ और भरोसेमंद इकोसिस्टम ही आपकी स्थायी कमाई की गारंटी है।
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
         {/* Responsibilities (Do's) */}
-        <div className="p-6 rounded-3xl bg-white shadow-xs border border-[#e5e2dd] flex flex-col gap-4">
+        <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white shadow-xs border border-[#e5e2dd] flex flex-col gap-3 sm:gap-4">
           <div className="flex items-center gap-2.5 text-[#d91b77]">
-            <div className="w-10 h-10 rounded-xl bg-[#ffd9e2] flex items-center justify-center">
-              <span className="material-symbols-outlined text-[24px]">task_alt</span>
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#ffd9e2] flex items-center justify-center shrink-0">
+              <span className="material-symbols-outlined text-[20px] sm:text-[24px]">task_alt</span>
             </div>
-            <h3 className="text-lg font-bold text-[#1c1c19]">आपकी ज़िम्मेदारियां (Do's)</h3>
+            <h3 className="text-base sm:text-lg font-bold text-[#1c1c19]">आपकी ज़िम्मेदारियां (Do's)</h3>
           </div>
-          <ul className="flex flex-col gap-3 text-xs sm:text-sm text-[#1c1c19]">
-            <li className="flex items-start gap-2.5">
-              <span className="material-symbols-outlined text-emerald-600 text-[20px] shrink-0 mt-0.5">check_circle</span>
+          <ul className="flex flex-col gap-2.5 sm:gap-3 text-xs sm:text-sm text-[#1c1c19]">
+            <li className="flex items-start gap-2">
+              <span className="material-symbols-outlined text-emerald-600 text-[18px] sm:text-[20px] shrink-0 mt-0.5">check_circle</span>
               <span className="leading-relaxed">सैलून और स्पा ओनर्स को Nexora OS के अपॉइंटमेंट व बिलिंग फीचर्स का सही लाभ समझाना।</span>
             </li>
-            <li className="flex items-start gap-2.5">
-              <span className="material-symbols-outlined text-emerald-600 text-[20px] shrink-0 mt-0.5">check_circle</span>
+            <li className="flex items-start gap-2">
+              <span className="material-symbols-outlined text-emerald-600 text-[18px] sm:text-[20px] shrink-0 mt-0.5">check_circle</span>
               <span className="leading-relaxed">जेनुइन और एक्टिव आउटलेट्स को ऑनबोर्ड करके डिजिटल क्यूआर कोड एक्टिवेट करवाना।</span>
             </li>
-            <li className="flex items-start gap-2.5">
-              <span className="material-symbols-outlined text-emerald-600 text-[20px] shrink-0 mt-0.5">check_circle</span>
+            <li className="flex items-start gap-2">
+              <span className="material-symbols-outlined text-emerald-600 text-[18px] sm:text-[20px] shrink-0 mt-0.5">check_circle</span>
               <span className="leading-relaxed">कंपनी की गाइडलाइन्स और एथिकल फाइनेंशियल प्रैक्टिसेज का निष्ठा से पालन करना।</span>
             </li>
           </ul>
         </div>
 
         {/* Strict Restrictions (Don'ts) */}
-        <div className="p-6 rounded-3xl bg-[#ffdad6]/30 text-[#93000a] shadow-xs border border-[#ffdad6] flex flex-col gap-4">
+        <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#ffdad6]/30 text-[#93000a] shadow-xs border border-[#ffdad6] flex flex-col gap-3 sm:gap-4">
           <div className="flex items-center gap-2.5 text-[#ba1a1a]">
-            <div className="w-10 h-10 rounded-xl bg-[#ffdad6] flex items-center justify-center">
-              <span className="material-symbols-outlined text-[24px]">block</span>
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#ffdad6] flex items-center justify-center shrink-0">
+              <span className="material-symbols-outlined text-[20px] sm:text-[24px]">block</span>
             </div>
-            <h3 className="text-lg font-bold text-[#93000a]">सख्त प्रतिबंध (Don'ts)</h3>
+            <h3 className="text-base sm:text-lg font-bold text-[#93000a]">सख्त प्रतिबंध (Don'ts)</h3>
           </div>
-          <ul className="flex flex-col gap-3 text-xs sm:text-sm text-[#1c1c19]">
-            <li className="flex items-start gap-2.5">
-              <span className="material-symbols-outlined text-[#ba1a1a] text-[20px] shrink-0 mt-0.5">cancel</span>
+          <ul className="flex flex-col gap-2.5 sm:gap-3 text-xs sm:text-sm text-[#1c1c19]">
+            <li className="flex items-start gap-2">
+              <span className="material-symbols-outlined text-[#ba1a1a] text-[18px] sm:text-[20px] shrink-0 mt-0.5">cancel</span>
               <span className="leading-relaxed">
                 <strong>Zero Spam Policy:</strong> सोशल मीडिया या व्हाट्सएप पर गैर-ज़रूरी और अनाधिकृत स्पैमिंग सख्त वर्जित है।
               </span>
             </li>
-            <li className="flex items-start gap-2.5">
-              <span className="material-symbols-outlined text-[#ba1a1a] text-[20px] shrink-0 mt-0.5">cancel</span>
+            <li className="flex items-start gap-2">
+              <span className="material-symbols-outlined text-[#ba1a1a] text-[18px] sm:text-[20px] shrink-0 mt-0.5">cancel</span>
               <span className="leading-relaxed">
                 <strong>No Fake Guarantees:</strong> मर्चेंट्स को अवास्तविक कमाई या झूठे वादे न करें। केवल वास्तविक फीचर्स की जानकारी दें।
               </span>
             </li>
-            <li className="flex items-start gap-2.5">
-              <span className="material-symbols-outlined text-[#ba1a1a] text-[20px] shrink-0 mt-0.5">cancel</span>
+            <li className="flex items-start gap-2">
+              <span className="material-symbols-outlined text-[#ba1a1a] text-[18px] sm:text-[20px] shrink-0 mt-0.5">cancel</span>
               <span className="leading-relaxed">
                 <strong>No Upfront Cash:</strong> किसी भी सैलून से व्यक्तिगत नकद शुल्क या अवैध डिपॉजिट न लें।
               </span>
@@ -73,28 +73,28 @@ export const RulesSection: React.FC = () => {
       </div>
 
       {/* Reward Release Verification & Required Documents Policy */}
-      <div className="p-6 rounded-3xl bg-white shadow-xs border border-[#e5e2dd] flex flex-col gap-5">
-        <div className="flex items-center justify-between border-b border-[#e5e2dd] pb-4 flex-wrap gap-2">
+      <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white shadow-xs border border-[#e5e2dd] flex flex-col gap-4 sm:gap-5">
+        <div className="flex items-center justify-between border-b border-[#e5e2dd] pb-3 sm:pb-4 flex-wrap gap-2">
           <div className="flex items-center gap-2.5 text-[#b1005e]">
-            <div className="w-10 h-10 rounded-xl bg-[#ffd9e2] flex items-center justify-center">
-              <span className="material-symbols-outlined text-[24px]">verified_user</span>
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#ffd9e2] flex items-center justify-center shrink-0">
+              <span className="material-symbols-outlined text-[20px] sm:text-[24px]">verified_user</span>
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-bold text-[#1c1c19]">
-                Reward Release से पहले Growth Partner से मांगे जा सकने वाले Documents
+              <h3 className="text-sm sm:text-lg font-bold text-[#1c1c19]">
+                Reward Release Verification Documents
               </h3>
-              <p className="text-xs text-[#8d6f77] font-medium">
-                Documents That May Be Required Before Reward Release
+              <p className="text-[10px] sm:text-xs text-[#8d6f77] font-medium">
+                Documents That May Be Required Before Physical Asset Delivery
               </p>
             </div>
           </div>
-          <span className="px-3 py-1 rounded-full bg-[#f6f3ee] text-[#594047] text-xs font-bold border border-[#e5e2dd]">
-            Compliance &amp; Statutory Guidelines
+          <span className="px-2.5 py-0.5 rounded-full bg-[#f6f3ee] text-[#594047] text-[10px] sm:text-xs font-bold border border-[#e5e2dd]">
+            Compliance &amp; Statutory
           </span>
         </div>
 
         {/* 8 Required Documents Checklist */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
           <div className="p-3.5 rounded-2xl bg-[#f6f3ee] border border-[#e5e2dd] flex items-center gap-3">
             <span className="material-symbols-outlined text-[#b1005e] text-[22px] shrink-0">badge</span>
             <div>

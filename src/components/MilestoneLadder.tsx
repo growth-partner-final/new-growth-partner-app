@@ -204,30 +204,42 @@ export const MilestoneLadder: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const isSectionInView = useInView(sectionRef, { once: true, amount: 0.1 });
 
+  // Lock body scroll for lightbox
+  useEffect(() => {
+    if (isPosterOpen || lightboxAsset) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isPosterOpen, lightboxAsset]);
+
   return (
-    <section ref={sectionRef} className="w-full py-8 flex flex-col gap-6" id="rewards">
+    <section ref={sectionRef} className="w-full max-w-full py-4 sm:py-8 flex flex-col gap-4 sm:gap-6" id="rewards">
       {/* Header with Title, Milestones Pool Badge & Poster Button */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4">
+        <div className="flex flex-col gap-1 text-left">
           <div className="flex items-center gap-2 text-[#d91b77]">
-            <span className="material-symbols-outlined text-[20px]">military_tech</span>
-            <span className="text-xs font-black tracking-widest uppercase">7-Stage Career Milestone Ladder</span>
+            <span className="material-symbols-outlined text-[18px] sm:text-[20px]">military_tech</span>
+            <span className="text-[10px] sm:text-xs font-black tracking-widest uppercase">7-Stage Career Milestone Ladder</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-[#1c1c19] tracking-tight">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#1c1c19] tracking-tight">
             Nexora Milestone Rewards &amp; Asset Gifts
           </h2>
-          <p className="text-sm text-[#594047] max-w-2xl">
+          <p className="text-xs sm:text-sm text-[#594047] max-w-2xl">
             जैसे-जैसे आप सैलून ऑनबोर्ड करते हैं, आपको आधिकारिक Nexora मर्चेंडाइज, सैमसंग टैबलेट, HP का लेटेस्ट मॉडल AI लैपटॉप, स्मार्ट इलेक्ट्रिक स्कूटर, आईफोन, रॉयल एनफील्ड 350cc और लग्जरी एसयूवी कार जैसे ओरिजिनल एसेट रिवॉर्ड्स दिए जाते हैं।
           </p>
         </div>
 
         {/* Milestone Ladder Top Target Pill */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-          <div className="px-4 py-2 rounded-2xl bg-gradient-to-r from-[#ffd9e2] to-[#ffe088]/40 border border-[#fda4c9]/60 shadow-xs flex items-center gap-2.5">
-            <span className="material-symbols-outlined text-[20px] text-[#d91b77]">workspace_premium</span>
+        <div className="flex flex-wrap items-center gap-2.5">
+          <div className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#ffd9e2] to-[#ffe088]/40 border border-[#fda4c9]/60 shadow-xs flex items-center gap-2">
+            <span className="material-symbols-outlined text-[18px] sm:text-[20px] text-[#d91b77]">workspace_premium</span>
             <div className="flex flex-col text-left">
-              <span className="text-[10px] uppercase font-bold text-[#8e4767] tracking-wider">Top Fleet Milestone</span>
-              <span className="text-sm sm:text-base font-black text-[#1c1c19]">
+              <span className="text-[9px] sm:text-[10px] uppercase font-bold text-[#8e4767] tracking-wider">Top Fleet Milestone</span>
+              <span className="text-xs sm:text-base font-black text-[#1c1c19]">
                 <AnimatedShopCounter targetValue={1000} suffix="Shops Milestone" duration={1.8} />
               </span>
             </div>
@@ -236,9 +248,9 @@ export const MilestoneLadder: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsPosterOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-[#e5e2dd] text-xs font-bold text-[#1c1c19] hover:border-[#d91b77] hover:text-[#d91b77] transition-all shadow-xs cursor-pointer self-start md:self-auto"
+            className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-white border border-[#e5e2dd] text-xs font-bold text-[#1c1c19] hover:border-[#d91b77] hover:text-[#d91b77] transition-all shadow-xs cursor-pointer active:scale-95"
           >
-            <span className="material-symbols-outlined text-[18px] text-[#d91b77]">image</span>
+            <span className="material-symbols-outlined text-[16px] sm:text-[18px] text-[#d91b77]">image</span>
             <span>Official Poster</span>
           </button>
         </div>
@@ -247,10 +259,10 @@ export const MilestoneLadder: React.FC = () => {
       {/* Lightbox Modal for Poster */}
       {isPosterOpen && (
         <div 
-          className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-3 sm:p-4 backdrop-blur-sm"
           onClick={() => setIsPosterOpen(false)}
         >
-          <div className="relative max-w-2xl w-full max-h-[90vh] overflow-auto flex flex-col items-center">
+          <div className="relative max-w-2xl w-[calc(100%-24px)] max-h-[90dvh] overflow-auto flex flex-col items-center">
             <button
               onClick={() => setIsPosterOpen(false)}
               className="sticky top-2 right-2 self-end mb-2 p-2 rounded-full bg-white/20 hover:bg-white/40 text-white transition-colors cursor-pointer"
@@ -271,11 +283,11 @@ export const MilestoneLadder: React.FC = () => {
       {/* Lightbox Modal for High-Res Original Asset Photo */}
       {lightboxAsset && (
         <div 
-          className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-4 backdrop-blur-md"
+          className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-3 sm:p-4 backdrop-blur-md"
           onClick={() => setLightboxAsset(null)}
         >
           <div 
-            className="relative max-w-3xl w-full bg-[#1c1c19] text-white rounded-3xl overflow-hidden shadow-2xl border border-white/20 flex flex-col"
+            className="relative max-w-3xl w-[calc(100%-24px)] max-h-[90dvh] overflow-y-auto bg-[#1c1c19] text-white rounded-2xl sm:rounded-3xl shadow-2xl border border-white/20 flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative w-full aspect-16/10 bg-black">
@@ -287,27 +299,27 @@ export const MilestoneLadder: React.FC = () => {
               />
               <button
                 onClick={() => setLightboxAsset(null)}
-                className="absolute top-3 right-3 p-2 rounded-full bg-black/60 hover:bg-black/90 text-white transition-colors cursor-pointer"
+                className="absolute top-2.5 right-2.5 p-1.5 sm:p-2 rounded-full bg-black/60 hover:bg-black/90 text-white transition-colors cursor-pointer"
                 aria-label="Close Lightbox"
               >
-                <span className="material-symbols-outlined text-[24px]">close</span>
+                <span className="material-symbols-outlined text-[20px] sm:text-[24px]">close</span>
               </button>
-              <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-[#d91b77] text-white text-xs font-black shadow-md flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-[16px]">verified</span>
-                <span>Original Physical Asset Photo</span>
+              <div className="absolute bottom-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-[#d91b77] text-white text-[10px] sm:text-xs font-black shadow-md flex items-center gap-1">
+                <span className="material-symbols-outlined text-[14px]">verified</span>
+                <span>Original Asset Photo</span>
               </div>
             </div>
 
-            <div className="p-6 flex flex-col gap-2 bg-[#262623]">
-              <div className="flex items-center justify-between">
-                <span className="px-3 py-0.5 rounded-full bg-[#ffe088] text-[#241a00] text-xs font-black uppercase tracking-wider">
+            <div className="p-4 sm:p-6 flex flex-col gap-2 bg-[#262623]">
+              <div className="flex items-center justify-between flex-wrap gap-1">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#ffe088] text-[#241a00] text-[10px] sm:text-xs font-black uppercase tracking-wider">
                   Level {lightboxAsset.level} Milestone
                 </span>
-                <span className="text-xs text-rose-300 font-bold">
+                <span className="text-[11px] sm:text-xs text-rose-300 font-bold">
                   Requirement: {lightboxAsset.clientsRequired} Active Salons
                 </span>
               </div>
-              <h3 className="text-xl font-black text-white">
+              <h3 className="text-base sm:text-xl font-black text-white">
                 {lightboxAsset.rewardGift} — {lightboxAsset.rewardHeadline}
               </h3>
               <p className="text-xs text-neutral-300">
@@ -324,12 +336,12 @@ export const MilestoneLadder: React.FC = () => {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-[#ffd9e2]/30 via-white to-[#ffe088]/20 border border-[#fda4c9]/50 shadow-md"
+        className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#ffd9e2]/30 via-white to-[#ffe088]/20 border border-[#fda4c9]/50 shadow-md"
       >
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 items-center">
           <div 
             onClick={() => setLightboxAsset(selectedReward)}
-            className="md:col-span-4 rounded-2xl overflow-hidden aspect-16/10 shadow-sm relative group cursor-pointer bg-black/5"
+            className="md:col-span-4 rounded-xl sm:rounded-2xl overflow-hidden aspect-16/10 shadow-sm relative group cursor-pointer bg-black/5"
           >
             <img
               src={selectedReward.rewardAsset}
@@ -337,27 +349,27 @@ export const MilestoneLadder: React.FC = () => {
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               referrerPolicy="no-referrer"
             />
-            <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-xs text-white text-[11px] font-bold flex items-center gap-1">
-              <span className="material-symbols-outlined text-[14px] text-amber-400">verified</span>
-              <span>Level {selectedReward.level} HD Original Photo</span>
+            <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/75 backdrop-blur-xs text-white text-[10px] sm:text-[11px] font-bold flex items-center gap-1">
+              <span className="material-symbols-outlined text-[12px] sm:text-[14px] text-amber-400">verified</span>
+              <span>Level {selectedReward.level} HD Photo</span>
             </div>
-            <div className="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-lg bg-black/80 text-white text-[10px] font-bold opacity-90 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-              <span className="material-symbols-outlined text-[14px]">zoom_in</span>
-              <span>Zoom Image</span>
+            <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded-lg bg-black/80 text-white text-[9px] sm:text-[10px] font-bold opacity-90 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+              <span className="material-symbols-outlined text-[12px]">zoom_in</span>
+              <span>Zoom</span>
             </div>
           </div>
 
-          <div className="md:col-span-8 flex flex-col gap-2.5">
+          <div className="md:col-span-8 flex flex-col gap-2 sm:gap-2.5">
             <div className="flex items-center justify-between flex-wrap gap-2">
-              <span className="px-3 py-1 rounded-full bg-[#d91b77] text-white text-xs font-bold">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#d91b77] text-white text-[10px] sm:text-xs font-bold">
                 {selectedReward.badgeTag}
               </span>
-              <span className="text-lg sm:text-xl font-black text-[#d91b77] bg-rose-50 px-3 py-1 rounded-xl border border-rose-200">
+              <span className="text-base sm:text-xl font-black text-[#d91b77] bg-rose-50 px-2.5 py-0.5 rounded-lg sm:rounded-xl border border-rose-200">
                 🎁 {selectedReward.rewardGift}
               </span>
             </div>
 
-            <h3 className="text-xl sm:text-2xl font-black text-[#1c1c19]">
+            <h3 className="text-base sm:text-2xl font-black text-[#1c1c19]">
               {selectedReward.name} — {selectedReward.rewardHeadline}
             </h3>
 
@@ -365,21 +377,21 @@ export const MilestoneLadder: React.FC = () => {
               {selectedReward.perks}
             </p>
 
-            <div className="flex items-center gap-4 pt-2 border-t border-[#e5e2dd] mt-1 text-xs flex-wrap">
-              <div className="flex items-center gap-1.5 font-bold text-[#1c1c19]">
-                <span className="material-symbols-outlined text-[18px] text-[#d91b77]">storefront</span>
+            <div className="flex items-center gap-3 pt-2 border-t border-[#e5e2dd] mt-1 text-xs flex-wrap">
+              <div className="flex items-center gap-1.5 font-bold text-[#1c1c19] text-[11px] sm:text-xs">
+                <span className="material-symbols-outlined text-[16px] sm:text-[18px] text-[#d91b77]">storefront</span>
                 <span>Requirement: <strong>{selectedReward.clientsRequired} Active Salons</strong></span>
               </div>
-              <div className="flex items-center gap-1.5 font-bold text-emerald-700">
-                <span className="material-symbols-outlined text-[18px]">verified</span>
+              <div className="flex items-center gap-1.5 font-bold text-emerald-700 text-[11px] sm:text-xs">
+                <span className="material-symbols-outlined text-[16px] sm:text-[18px]">verified</span>
                 <span>100% Guaranteed Physical Asset Handover</span>
               </div>
               <button
                 type="button"
                 onClick={() => setLightboxAsset(selectedReward)}
-                className="ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#b1005e] text-white font-bold text-xs shadow-xs hover:bg-[#d91b77] transition-all cursor-pointer"
+                className="ml-auto inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#b1005e] text-white font-bold text-[11px] sm:text-xs shadow-xs hover:bg-[#d91b77] transition-all cursor-pointer active:scale-95"
               >
-                <span className="material-symbols-outlined text-[16px]">visibility</span>
+                <span className="material-symbols-outlined text-[14px] sm:text-[16px]">visibility</span>
                 <span>View HD Image</span>
               </button>
             </div>

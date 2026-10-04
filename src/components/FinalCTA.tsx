@@ -8,56 +8,56 @@ interface FinalCTAProps {
 
 export const FinalCTA: React.FC<FinalCTAProps> = ({ onOpenApply, onOpenSupport }) => {
   return (
-    <section className="w-full py-8 flex flex-col gap-6" id="apply">
+    <section className="w-full py-4 sm:py-8 flex flex-col gap-4 sm:gap-6" id="apply">
       {/* Final Punchy Banner */}
-      <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#d91b77] via-[#b1005e] to-[#3c0223] text-white shadow-xl flex flex-col items-center text-center gap-4 relative overflow-hidden">
+      <div className="p-5 sm:p-8 md:p-12 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#d91b77] via-[#b1005e] to-[#3c0223] text-white shadow-xl flex flex-col items-center text-center gap-3 sm:gap-4 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
-        <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-xs flex items-center justify-center text-[#ffe088] shadow-inner">
-          <span className="material-symbols-outlined text-[32px]">military_tech</span>
+        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-white/15 backdrop-blur-xs flex items-center justify-center text-[#ffe088] shadow-inner">
+          <span className="material-symbols-outlined text-[26px] sm:text-[32px]">military_tech</span>
         </div>
         
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight">
+        <h2 className="text-xl sm:text-2xl md:text-4xl font-black leading-tight">
           आज ही अपनी फाइनेंशियल फ्रीडम की शुरुआत करें!
         </h2>
-        <p className="text-sm sm:text-base text-white/90 leading-relaxed">
+        <p className="text-xs sm:text-base text-white/90 leading-relaxed max-w-2xl">
           5,200+ पार्टनर्स के साथ जुड़ें और Nexora के साथ अनलिमिटेड मंथली रेवेन्यू व माइलस्टोन रिवॉर्ड्स अनलॉक करें।
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 pt-2">
+        <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 pt-2 w-full sm:w-auto">
           <button
             type="button"
             onClick={onOpenApply}
-            className="h-12 sm:h-14 px-8 rounded-2xl bg-white text-[#d91b77] font-black text-base flex items-center justify-center gap-2 shadow-lg transition-transform hover:scale-[1.02] active:scale-95 hover:bg-[#fcf9f4] cursor-pointer"
+            className="w-full sm:w-auto min-h-[44px] h-12 sm:h-14 px-6 sm:px-8 rounded-xl sm:rounded-2xl bg-white text-[#d91b77] font-black text-xs sm:text-base flex items-center justify-center gap-2 shadow-lg transition-transform hover:scale-[1.02] active:scale-95 hover:bg-[#fcf9f4] cursor-pointer"
           >
-            <span className="material-symbols-outlined text-[20px]">how_to_reg</span>
+            <span className="material-symbols-outlined text-[18px] sm:text-[20px]">how_to_reg</span>
             <span>रजिस्टर करें — बिल्कुल मुफ्त (₹0)</span>
           </button>
           
           <button
             type="button"
             onClick={onOpenSupport}
-            className="h-12 sm:h-14 px-6 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 backdrop-blur-xs cursor-pointer transition-colors"
+            className="w-full sm:w-auto min-h-[44px] h-12 sm:h-14 px-5 sm:px-6 rounded-xl sm:rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs sm:text-base flex items-center justify-center gap-2 backdrop-blur-xs cursor-pointer transition-colors"
           >
-            <span className="material-symbols-outlined text-[20px] text-[#25D366]">chat</span>
+            <span className="material-symbols-outlined text-[18px] sm:text-[20px] text-[#25D366]">chat</span>
             <span>WhatsApp Support</span>
           </button>
         </div>
 
-        <div className="flex items-center gap-4 text-xs text-white/80 pt-2">
+        <div className="flex items-center gap-3 text-[11px] sm:text-xs text-white/80 pt-1 flex-wrap justify-center">
           <span className="flex items-center gap-1">
-            <span className="material-symbols-outlined text-[16px] text-emerald-400">lock</span>
+            <span className="material-symbols-outlined text-[14px] sm:text-[16px] text-emerald-400">lock</span>
             100% Secure Platform
           </span>
           <span>•</span>
           <span className="flex items-center gap-1">
-            <span className="material-symbols-outlined text-[16px] text-emerald-400">verified</span>
+            <span className="material-symbols-outlined text-[14px] sm:text-[16px] text-emerald-400">verified</span>
             SEBI Compliant Payouts
           </span>
         </div>
       </div>
 
-      {/* Footer & Brand Identity Section */}
-      <footer className="p-6 sm:p-8 rounded-3xl bg-white border border-[#e5e2dd] flex flex-col gap-6 text-[#594047] shadow-xs">
+      {/* Footer & Brand Identity Section: Hidden on mobile (md:flex) as per requirement 11 */}
+      <footer className="hidden md:flex p-6 sm:p-8 rounded-3xl bg-white border border-[#e5e2dd] flex-col gap-6 text-[#594047] shadow-xs">
         {/* Top Brand Header Row */}
         <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6 border-b border-[#e5e2dd] pb-6 text-center md:text-left">
           {/* Brand Logo & Name */}

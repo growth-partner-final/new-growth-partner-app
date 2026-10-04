@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PartnerFormData } from '../types';
 import { NexoraLogo } from './NexoraLogo';
 
@@ -28,6 +28,18 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
 
+  // Lock background scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -56,8 +68,8 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-[#fcf9f4] w-full max-w-md rounded-2xl shadow-2xl border border-[#e5e2dd] overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+      <div className="bg-[#fcf9f4] w-[calc(100%-24px)] max-w-[420px] rounded-2xl shadow-2xl border border-[#e5e2dd] overflow-hidden flex flex-col max-h-[90dvh]">
         {/* Modal Header */}
         <div className="p-4 bg-white border-b border-[#e5e2dd] flex items-center justify-between">
           <div className="flex items-center gap-2.5">

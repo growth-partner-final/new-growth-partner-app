@@ -3,30 +3,30 @@ import { ACTIVATION_TIERS } from '../data/partnerData';
 
 export const ActivationRewards: React.FC = () => {
   return (
-    <section className="w-full py-8 flex flex-col gap-6">
-      <div className="flex flex-col gap-1.5 text-left">
+    <section className="w-full max-w-full py-4 sm:py-8 flex flex-col gap-4 sm:gap-6">
+      <div className="flex flex-col gap-1 text-left">
         <div className="flex items-center gap-2 text-[#d91b77]">
-          <span className="material-symbols-outlined text-[20px]">payments</span>
-          <span className="text-xs font-bold tracking-wider uppercase">Direct Activation Payouts</span>
+          <span className="material-symbols-outlined text-[18px] sm:text-[20px]">payments</span>
+          <span className="text-[10px] sm:text-xs font-bold tracking-wider uppercase">Direct Activation Payouts</span>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-black text-[#1c1c19]">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#1c1c19]">
           Nexora One-Time Activation Rewards (वन-टाइम एक्टिवेशन रिवॉर्ड्स)
         </h2>
-        <p className="text-sm text-[#594047]">
+        <p className="text-xs sm:text-sm text-[#594047]">
           क्लाइंट और सैलून ऑनबोर्ड होते ही सेम-डे आपके बैंक खाते या UPI आईडी में डायरेक्ट क्रेडिट।
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-5">
         {ACTIVATION_TIERS.map((tier) => (
           <div
             key={tier.id}
-            className="p-5 rounded-3xl bg-white shadow-xs border border-[#e5e2dd] flex flex-col justify-between gap-4 transition-all hover:border-[#fda4c9] hover:shadow-md"
+            className="p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white shadow-xs border border-[#e5e2dd] flex flex-col justify-between gap-3 sm:gap-4 transition-all hover:border-[#fda4c9] hover:shadow-md"
           >
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2.5 sm:gap-3">
               <div className="flex items-center justify-between">
                 <div
-                  className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
+                  className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 ${
                     tier.id === 'standard'
                       ? 'bg-[#fda4c9]/40 text-[#7a3656]'
                       : tier.id === 'pro'
@@ -34,27 +34,27 @@ export const ActivationRewards: React.FC = () => {
                       : 'bg-[#ffe088] text-[#241a00]'
                   }`}
                 >
-                  <span className="material-symbols-outlined text-[26px]">{tier.icon}</span>
+                  <span className="material-symbols-outlined text-[22px] sm:text-[26px]">{tier.icon}</span>
                 </div>
                 {tier.badge && (
-                  <span className="px-2.5 py-1 rounded-full bg-[#d91b77] text-white text-[11px] font-black tracking-wide">
+                  <span className="px-2 py-0.5 rounded-full bg-[#d91b77] text-white text-[10px] font-black tracking-wide">
                     {tier.badge}
                   </span>
                 )}
               </div>
 
               <div className="flex flex-col">
-                <h3 className="text-lg font-bold text-[#1c1c19]">
+                <h3 className="text-base sm:text-lg font-bold text-[#1c1c19]">
                   {tier.name}
                 </h3>
-                <span className="text-xs text-[#594047]">
+                <span className="text-[11px] sm:text-xs text-[#594047]">
                   {tier.subtitle}
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-[#f6f3ee] border border-[#e5e2dd]/60 flex items-baseline justify-between">
+              <div className="p-3 rounded-xl sm:rounded-2xl bg-[#f6f3ee] border border-[#e5e2dd]/60 flex items-baseline justify-between">
                 <span className="text-xs text-[#594047] font-semibold">Per Salon Payout</span>
-                <span className="text-2xl font-black text-[#d91b77]">
+                <span className="text-xl sm:text-2xl font-black text-[#d91b77]">
                   {tier.payout}
                 </span>
               </div>

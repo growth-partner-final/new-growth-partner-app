@@ -1002,7 +1002,7 @@ export const PartnerLeaderboard: React.FC<PartnerLeaderboardProps> = ({
             </div>
 
             {/* Progress to Next Milestone */}
-            <div className="min-w-[200px] flex flex-col justify-center">
+            <div className="w-full sm:w-auto sm:min-w-[200px] flex flex-col justify-center">
               <div className="flex items-center justify-between text-[11px] font-bold mb-1">
                 <span className="text-[#594047]">Next: {currentUserStanding.nextMilestoneReward}</span>
                 <span className="text-[#b1005e]">{currentUserStanding.nextMilestoneNeeded} more</span>

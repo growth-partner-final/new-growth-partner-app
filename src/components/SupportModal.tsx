@@ -14,6 +14,18 @@ export const SupportModal: React.FC<SupportModalProps> = ({
   const [callRequested, setCallRequested] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
 
+  // Lock background scroll when modal is open
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleRequestCall = (e: React.FormEvent) => {
@@ -23,8 +35,8 @@ export const SupportModal: React.FC<SupportModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-[#fcf9f4] w-full max-w-md rounded-2xl shadow-2xl border border-[#e5e2dd] overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+      <div className="bg-[#fcf9f4] w-[calc(100%-24px)] max-w-[420px] max-h-[90dvh] rounded-2xl shadow-2xl border border-[#e5e2dd] overflow-hidden flex flex-col">
         {/* Modal Header */}
         <div className="p-4 bg-white border-b border-[#e5e2dd] flex items-center justify-between">
           <div className="flex items-center gap-2">
